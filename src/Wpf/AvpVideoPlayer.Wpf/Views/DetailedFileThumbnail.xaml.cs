@@ -29,16 +29,5 @@ public partial class DetailedFileThumbnail : UserControl
 
     private static void OnFileChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is not DetailedFileThumbnail instance)
-            return;
-        instance.UpdateFile(e.NewValue as FileViewModel);
-    }
-
-    private void UpdateFile(FileViewModel? filetypeViewModel)
-    {
-        if (this.DataContext is DetailedFileViewModel dc)
-        {
-            dc.FiletypeViewModel = filetypeViewModel;
-        }
     }
 }

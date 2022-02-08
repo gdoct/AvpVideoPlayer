@@ -9,7 +9,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection RegisterViewModels(this IServiceCollection services)
     {
-        return services.AddTransient<DetailedFileViewModel>()
+        return services
             .AddTransient<LibraryViewModel>()
             .AddTransient<FileListViewModel>()
             .AddTransient<FolderDropDownViewModel>()
