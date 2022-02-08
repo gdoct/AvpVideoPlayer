@@ -4,8 +4,6 @@
 
 This is a simple mediaplayer written in .net 6 with c#/wpf, basically as a portfolio project
 
-[Download latest AvpVideoplayer.msi](https://github.com/gdoct/AvpVideoPlayer/releases/download/beta/SetupAvpVideoPlayer.msi)
-
 ## Features: 
 * supports most video formats
 * supports external subtitles
