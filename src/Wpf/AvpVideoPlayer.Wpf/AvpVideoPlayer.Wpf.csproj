@@ -1,0 +1,126 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<OutputType>WinExe</OutputType>
+	<TargetFramework>net6.0-windows</TargetFramework>
+	  <RuntimeIdentifiers>win-x86</RuntimeIdentifiers>
+	  <Nullable>enable</Nullable>
+	<UseWPF>true</UseWPF>
+	<ApplicationIcon>app.ico</ApplicationIcon>
+	<PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<None Remove="app.ico" />
+	<None Remove="Images\clear.png" />
+	<None Remove="Images\folder.png" />
+	<None Remove="Images\folderwhite.png" />
+	<None Remove="Images\folderyellow.png" />
+	<None Remove="Images\harddisk.png" />
+	<None Remove="Images\next.png" />
+	<None Remove="Images\openfolderyellow.png" />
+	<None Remove="Images\pause.png" />
+	<None Remove="Images\play.png" />
+	<None Remove="Images\previous.png" />
+	<None Remove="Images\repeat.png" />
+	<None Remove="Images\search.png" />
+	<None Remove="Images\speaker.png" />
+	<None Remove="Images\speakermuted.png" />
+	<None Remove="Images\stop.png" />
+	<None Remove="Images\subs.png" />
+	<None Remove="Images\video.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+	<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+	<PackageReference Include="SubtitlesParser" Version="1.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\AvpVideoPlayer.Api\AvpVideoPlayer.Api.csproj" />
+	<ProjectReference Include="..\AvpVideoPlayer.Configuration\AvpVideoPlayer.Configuration.csproj" />
+	<ProjectReference Include="..\AvpVideoPlayer.Localization\AvpVideoPlayer.Localization.csproj" />
+	<ProjectReference Include="..\AvpVideoPlayer.ViewModels\AvpVideoPlayer.ViewModels.csproj" />
+	<ProjectReference Include="..\AvpVideoPlayer.Utility\AvpVideoPlayer.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Content Include="app.ico">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
+	<Resource Include="Images\folderyellow.png" />
+	<Resource Include="Images\harddisk.png" />
+	<Resource Include="Images\openfolderyellow.png" />
+	<Resource Include="Images\previous.png" />
+	<Resource Include="Images\clear.png" />
+	<Resource Include="Images\folder.png" />
+	<Resource Include="Images\folderwhite.png" />
+	<Resource Include="Images\next.png" />
+	<Resource Include="Images\pause.png" />
+	<Resource Include="Images\play.png" />
+	<Resource Include="Images\repeat.png" />
+	<Resource Include="Images\search.png" />
+	<Resource Include="Images\speaker.png" />
+	<Resource Include="Images\speakermuted.png" />
+	<Resource Include="Images\stop.png" />
+	<Resource Include="Images\subs.png" />
+	<Resource Include="Images\video.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Compile Update="Properties\Settings.Designer.cs">
+	  <DesignTimeSharedInput>True</DesignTimeSharedInput>
+	  <AutoGen>True</AutoGen>
+	  <DependentUpon>Settings.settings</DependentUpon>
+	</Compile>
+	<Compile Update="Views\PlayerControls.xaml.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Update="Views\SearchBox.xaml.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Update="Properties\Settings.settings">
+	  <Generator>SettingsSingleFileGenerator</Generator>
+	  <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+	</None>
+  </ItemGroup>
+
+  <ItemGroup>
+	<Page Update="Styles\SlideOutMenu.xaml">
+	  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
+	<Page Update="Views\Library.xaml">
+	  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
+	<Page Update="Views\PlayerControls.xaml">
+	  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
+	<Page Update="Views\SearchBox.xaml">
+	  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
+	<Page Update="Views\VideoPlayer.xaml">
+	  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
+	<Page Update="Views\VideoThumbnail.xaml">
+	  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
+  </ItemGroup>
+
+	<!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<MSBuild Condition="'$(DeployOnBuild)'!='true'" Projects="$(MSBuildProjectFullPath)" Properties="DeployOnBuild=true;PublishProfile=Folderprofile;BuildingInsideVisualStudio=False"/>
+	</Target>-->
+	<Target Name="TestTarget" AfterTargets="Build">
+		<Message Importance="High" Text="Publishing application" />
+		<MSBuild Condition="'$(DeployOnBuild)'!='true'" Projects="$(MSBuildProjectFullPath)" Properties="DeployOnBuild=true;PublishProfile=Folderprofile;BuildingInsideVisualStudio=False" />
+	</Target>
+</Project>

@@ -1,0 +1,11 @@
+{
+  "SourceFolder": "..\\..\\..\\..\\..\\..\\build\\release",
+  "ProductName": "Avp VideoPlayer",
+  "ProductDescription": "Yet another video player",
+  "Template": "Product.wxs.template",
+  "Version": "1.0.0.1",
+  "Manufacturer": "drdata.nl",
+  "OutputFile": "..\\..\\..\\..\\..\\..\\installer\\AvpVideoPlayer.Installer\\Product.wxs",
+  "MainExecutable": "AvpVideoPlayer.Wpf.exe",
+  "RegistryPath": "Software\\drdata.nl\\AvpVideoPlayer"
+}

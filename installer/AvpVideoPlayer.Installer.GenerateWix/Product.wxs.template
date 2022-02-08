@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<?define RootDir="{rootdir}"?>
+	<Product Id="*" Name="{productname}"
+			 Language="1033"
+			 Version="{version}"
+			 Manufacturer="{manufacturer}"
+			 UpgradeCode="0ff9cd6a-e7bf-4fbe-b46a-72c16ab1f55c">
+		<Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<Media Id="1" Cabinet="avpvideoplayer.cab" EmbedCab="yes" />
+		<Feature Id="ProductFeature" Title="{productname}" Level="1">
+			<!-- productfeature -->
+			<ComponentRef Id="ApplicationShortcut" />
+		</Feature>
+		<WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+		<WixVariable Id="WixUIDialogBmp" Value="background.jpg" />
+		<WixVariable Id="WixUIBannerBmp" Value="productbanner.jpg" />
+		<UIRef Id="WixUI_InstallDir" />
+	</Product>
+	
+	<Fragment>
+		<Icon Id="app.ico" SourceFile="app.ico"/>
+		<Property Id="ARPPRODUCTICON" Value="app.ico" />
+	</Fragment>
+
+	<Fragment>
+		<DirectoryRef Id="ApplicationProgramsFolder">
+			<Component Id="ApplicationShortcut" Guid="c8e7dded-fe31-4263-bbee-4968eb1c62f3">
+				<Shortcut Id="ApplicationStartMenuShortcut"
+						  Name="{productname}"
+						  Description="{productdescription}"
+						  Target="{mainexecutable}"
+						  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+				<RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+				<RegistryValue Root="HKCU"
+							   Key="{registrypath}"
+							   Name="installed"
+							   Type="integer"
+							   Value="1"
+							   KeyPath="yes"/>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+	
+	<!-- productcontents -->
+
+</Wix>

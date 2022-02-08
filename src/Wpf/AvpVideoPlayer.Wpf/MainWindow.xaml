@@ -1,0 +1,42 @@
+﻿<Window x:Class="AvpVideoPlayer.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:viewmodels="clr-namespace:AvpVideoPlayer.ViewModels;assembly=AvpVideoPlayer.ViewModels" 
+        xmlns:views="clr-namespace:AvpVideoPlayer.Wpf.Views"
+        xmlns:utility="clr-namespace:AvpVideoPlayer.Utility;assembly=AvpVideoPlayer.Utility"
+        mc:Ignorable="d"
+        Name="Main"
+        Title="{Binding Title}" 
+        Height="600" 
+        Width="900" 
+        Icon="app.ico"
+        WindowStyle="{Binding WindowStyle}"
+        MinHeight="100" 
+        MinWidth="150" 
+        WindowState="{Binding WindowState}"
+        Topmost="{Binding IsTopMost}"
+        d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel, IsDesignTimeCreatable=False}">
+
+    <Window.Resources>
+        <utility:HeightWithOffsetConverter Offset="-100" x:Key="HeightWithOffsetConverter" />
+    </Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="KeyUp">
+            <i:InvokeCommandAction Command="{Binding OnKeyDownCommand}" PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Style="{StaticResource DarkGridStyle}" VerticalAlignment="Stretch" >
+
+        <GroupBox Style="{StaticResource SlideOutMenuStyle}" Panel.ZIndex="2" >
+            <Border Background="DarkSlateGray" CornerRadius="5" BorderThickness="4" BorderBrush="{StaticResource LessDarkBackgroundBrush}">
+                <Border Margin="10 10 20 8">
+                    <views:Library x:Name="Library" DataContext="{Binding LibraryViewModel}" />
+                </Border>
+            </Border>
+        </GroupBox>
+        <views:VideoPlayer x:Name="MediaPlayer" DataContext="{Binding VideoPlayerViewModel}" />
+    </Grid>
+</Window>

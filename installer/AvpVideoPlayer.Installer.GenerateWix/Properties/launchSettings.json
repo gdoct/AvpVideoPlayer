@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AvpVideoPlayer.Installer.GenerateWix": {
+      "commandName": "Project",
+      "commandLineArgs": "E:\\Development\\AvpVideoPlayer\\build\\debug"
+    }
+  }
+}

@@ -1,0 +1,285 @@
+﻿<UserControl
+    x:Class="AvpVideoPlayer.Uwp.Views.FileList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AvpVideoPlayer.Uwp.Views"
+    xmlns:viewmodels="using:AvpVideoPlayer.Uwp.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    d:DataContext="{d:DesignInstance Type=viewmodels:FileListViewModel, IsDesignTimeCreatable=False}">
+
+    <ListView Margin="0 0 20 0"
+                  Grid.Row="1"
+                  VerticalAlignment="Stretch" 
+                  ItemsSource="{Binding SourceCollection}" 
+                  SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  x:Name="LibraryListView" 
+                  FontSize="14"
+                  Background="Transparent"
+                  BorderBrush="Transparent"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <local:VideoThumbnail DataContext="{Binding File}" />
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+
+    <!--ScrollViewer.PanningMode="None"
+                  utility:GridViewSort.AutoSort="True"
+              KeyboardNavigation.IsTabStop="False"
+              KeyboardNavigation.TabNavigation="None"
+              KeyboardNavigation.DirectionalNavigation="None"-->
+
+    <!--<ListView.Resources>-->
+
+    <!--<Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0"
+                           EndPoint="0,1">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                    <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
+                                    <GradientStop Color="{DynamicResource BorderDarkColor}" Offset="1.0" />
+                                </GradientStopCollection>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Border Padding="{TemplateBinding Padding}" Background="Transparent">
+                                <Rectangle HorizontalAlignment="Center" Width="1" Fill="{TemplateBinding Background}" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1"
+                           StartPoint="0.5,0">
+                            <GradientStop Color="Black"
+                      Offset="0" />
+                            <GradientStop Color="White"
+                      Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
+
+    <!--<Style x:Key="{x:Type GridViewColumnHeader}" TargetType="GridViewColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="{DynamicResource LightForegroundBrush}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewColumnHeader">
+                            <Grid >
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).
+                    (GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                Storyboard.TargetName="HeaderBorder">
+                                                    <EasingColorKeyFrame KeyTime="0"
+                                         Value="{StaticResource NearlyBlackColor}" />
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed" />
+                                        <VisualState x:Name="Disabled" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border x:Name="HeaderBorder"
+                  BorderThickness="0,1,0,1"
+                  Padding="2,0,2,0">
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0,0"
+                                   EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="{DynamicResource BorderLightColor}"
+                                  Offset="0.0" />
+                                                    <GradientStop Color="{DynamicResource BorderDarkColor}"
+                                  Offset="1.0" />
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+
+                                    </Border.BorderBrush>
+                                    <Border.Background>
+
+                                        <LinearGradientBrush StartPoint="0,0"
+                                   EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="{DynamicResource LessBlackColor}"
+                                  Offset="0.0" />
+                                                    <GradientStop Color="{DynamicResource NearlyBlackColor}"
+                                  Offset="1.0" />
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+
+                                    </Border.Background>
+                                    <ContentPresenter x:Name="HeaderContent"
+                              Margin="0,0,0,1"
+                              RecognizesAccessKey="True"
+                              VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                              HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                                <Thumb x:Name="PART_HeaderGripper"
+                 HorizontalAlignment="Right"
+                 Margin="0,0,-9,0"
+                 Style="{StaticResource GridViewColumnHeaderGripper}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                -->
+    <!--<Style.Triggers>
+                    <Trigger Property="Role"
+             Value="Floating">
+                        <Setter Property="Opacity"
+              Value="0.7" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="GridViewColumnHeader">
+                                    <Canvas Name="PART_FloatingHeaderCanvas">
+                                        <Rectangle Fill="#60000000"
+                         Width="{TemplateBinding ActualWidth}"
+                         Height="{TemplateBinding ActualHeight}" />
+                                    </Canvas>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="Role"
+             Value="Padding">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="GridViewColumnHeader">
+                                    <Border Name="HeaderBorder"
+                    BorderThickness="0,1,0,1">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{StaticResource ControlLightColor}" />
+                                        </Border.Background>
+                                        <Border.BorderBrush>
+                                            <LinearGradientBrush StartPoint="0,0"
+                                     EndPoint="0,1">
+                                                <LinearGradientBrush.GradientStops>
+                                                    <GradientStopCollection>
+                                                        <GradientStop Color="{StaticResource BorderLightColor}"
+                                    Offset="0.0" />
+                                                        <GradientStop Color="{StaticResource BorderDarkColor}"
+                                    Offset="1.0" />
+                                                    </GradientStopCollection>
+                                                </LinearGradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Border.BorderBrush>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>-->
+    <!--
+            </Style>-->
+
+    <!--<ControlTemplate x:Key="DefaultItem" TargetType="{x:Type ListViewItem}">
+                <StackPanel Background="Transparent">
+                    <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
+                </StackPanel>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ActivatedItem" TargetType="{x:Type ListViewItem}">
+                <StackPanel Background="{StaticResource LessDarkBackgroundBrush}">
+                    <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
+                </StackPanel>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="SelectedItem" TargetType="{x:Type ListViewItem}">
+                <StackPanel Background="{StaticResource DarkBackgroundBrush}">
+                    <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
+                </StackPanel>
+            </ControlTemplate>-->
+    <!--</ListView.Resources>-->
+    <!--<i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseDoubleClick"  >
+                <i:InvokeCommandAction 
+                        Command="{Binding ActivateFileCommand}" 
+                        CommandParameter="{Binding SelectedItem, ElementName=LibraryListView}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeftButtonUp"  >
+                <i:InvokeCommandAction 
+                        Command="{Binding SelectFileCommand}"
+                        CommandParameter="{Binding SelectedItem, ElementName=LibraryListView}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>-->
+    <!--<ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem"  >
+                <Setter Property="Template"
+          Value="{StaticResource DefaultItem}"/>-->
+    <!--<Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=IsActivated}" Value="True">
+                        <Setter Property="Template" 
+              Value="{StaticResource ActivatedItem}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                        <Setter Property="Template" 
+              Value="{StaticResource SelectedItem}"/>
+                    </DataTrigger>
+                </Style.Triggers>-->
+    <!--</Style>
+        </ListView.ItemContainerStyle>-->
+    <!--<ListView.View>
+            <GridView AllowsColumnReorder="true">
+
+                <GridViewColumn Header="{x:Static localization:Resources.NameColumn}" 
+                                    Width="300" 
+                                    utility:GridViewSort.PropertyName="File.Name">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <local:VideoThumbnail DataContext="{Binding File}" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="{x:Static localization:Resources.LastWriteColumn}" 
+                                    Width="140" 
+                                    utility:GridViewSort.PropertyName="File.LastWriteTime" >
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=File.LastWriteTime, Mode=OneWay}" Background="Transparent" Foreground="{StaticResource LightForegroundBrush}" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="{x:Static localization:Resources.SizeColumn}" 
+                                    Width="100" 
+                                    utility:GridViewSort.PropertyName="File.Size">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=File.Size, Mode=OneWay, Converter={StaticResource SizeToStringConverter}}" Foreground="{StaticResource LightForegroundBrush}" Background="Transparent" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="500" Header="" >
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+            </GridView>
+        </ListView.View>-->
+    <!--</ListView>-->
+</UserControl>

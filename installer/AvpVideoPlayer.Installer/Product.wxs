@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define RootDir="E:\Development\AvpVideoPlayer\build\Release\"?>
+  <Product Id="*" Name="Avp VideoPlayer" Language="1033" Version="1.0.0.1" Manufacturer="drdata.nl" UpgradeCode="0ff9cd6a-e7bf-4fbe-b46a-72c16ab1f55c">
+    <Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Media Id="1" Cabinet="avpvideoplayer.cab" EmbedCab="yes" />
+    <Feature Id="ProductFeature" Title="Avp VideoPlayer" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="da_files" />
+      <ComponentGroupRef Id="de_files" />
+      <ComponentGroupRef Id="es_files" />
+      <ComponentGroupRef Id="fr_files" />
+      <ComponentGroupRef Id="it_files" />
+      <ComponentGroupRef Id="nl_files" />
+      <ComponentGroupRef Id="pl_files" />
+      <ComponentGroupRef Id="sk_files" />
+      <ComponentGroupRef Id="sv_files" />
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="background.jpg" />
+    <WixVariable Id="WixUIBannerBmp" Value="productbanner.jpg" />
+    <UIRef Id="WixUI_InstallDir" />
+  </Product>
+  <Fragment>
+    <Icon Id="app.ico" SourceFile="app.ico" />
+    <Property Id="ARPPRODUCTICON" Value="app.ico" />
+  </Fragment>
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="c8e7dded-fe31-4263-bbee-4968eb1c62f3">
+        <Shortcut Id="ApplicationStartMenuShortcut" Name="Avp VideoPlayer" Description="Yet another video player" Target="AvpVideoPlayer.Wpf.exe" WorkingDirectory="APPLICATIONROOTDIRECTORY" />
+        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\drdata.nl\AvpVideoPlayer" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Avp VideoPlayer" />
+      </Directory>
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Avp VideoPlayer">
+          <Directory Id="da" Name="da" />
+          <Directory Id="de" Name="de" />
+          <Directory Id="es" Name="es" />
+          <Directory Id="fr" Name="fr" />
+          <Directory Id="it" Name="it" />
+          <Directory Id="nl" Name="nl" />
+          <Directory Id="pl" Name="pl" />
+          <Directory Id="sk" Name="sk" />
+          <Directory Id="sv" Name="sv" />
+        </Directory>
+      </Directory>
+    </Directory>
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="app.ico" Guid="c1f33780-6140-4b51-b072-80eef18f91a9">
+        <File Id="app.ico" Name="app.ico" Source="$(var.RootDir)app.ico" />
+      </Component>
+      <Component Id="AvpVideoPlayer.Api.dll" Guid="833881e7-6690-41bc-bfb9-699231b98f78">
+        <File Id="AvpVideoPlayer.Api.dll" Name="AvpVideoPlayer.Api.dll" Source="$(var.RootDir)AvpVideoPlayer.Api.dll" />
+      </Component>
+      <Component Id="AvpVideoPlayer.Configuration.dll" Guid="a8230939-16c3-45d5-b29f-cc44c09c4c8f">
+        <File Id="AvpVideoPlayer.Configuration.dll" Name="AvpVideoPlayer.Configuration.dll" Source="$(var.RootDir)AvpVideoPlayer.Configuration.dll" />
+      </Component>
+      <Component Id="AvpVideoPlayer.EventHub.dll" Guid="de02f89a-c5be-41de-9eb4-38a9ee94f5c9">
+        <File Id="AvpVideoPlayer.EventHub.dll" Name="AvpVideoPlayer.EventHub.dll" Source="$(var.RootDir)AvpVideoPlayer.EventHub.dll" />
+      </Component>
+      <Component Id="AvpVideoPlayer.Localization.dll" Guid="803746cf-70df-4563-a52c-f5ac0a4e8dc8">
+        <File Id="AvpVideoPlayer.Localization.dll" Name="AvpVideoPlayer.Localization.dll" Source="$(var.RootDir)AvpVideoPlayer.Localization.dll" />
+      </Component>
+      <Component Id="AvpVideoPlayer.Utility.dll" Guid="de49cb94-2836-4437-85e1-0109f747d548">
+        <File Id="AvpVideoPlayer.Utility.dll" Name="AvpVideoPlayer.Utility.dll" Source="$(var.RootDir)AvpVideoPlayer.Utility.dll" />
+      </Component>
+      <Component Id="AvpVideoPlayer.Video.dll" Guid="b4989a76-d078-41ce-a88d-a23f4ab7d6ec">
+        <File Id="AvpVideoPlayer.Video.dll" Name="AvpVideoPlayer.Video.dll" Source="$(var.RootDir)AvpVideoPlayer.Video.dll" />
+      </Component>
+      <Component Id="AvpVideoPlayer.ViewModels.dll" Guid="c7bb4fb1-0944-47e8-8500-6a34552c9b31">
+        <File Id="AvpVideoPlayer.ViewModels.dll" Name="AvpVideoPlayer.ViewModels.dll" Source="$(var.RootDir)AvpVideoPlayer.ViewModels.dll" />
+      </Component>
+      <Component Id="AvpVideoPlayer.Wpf.deps.json" Guid="a7bbfe14-28e9-4bbb-b7c2-1c063ef6c27c">
+        <File Id="AvpVideoPlayer.Wpf.deps.json" Name="AvpVideoPlayer.Wpf.deps.json" Source="$(var.RootDir)AvpVideoPlayer.Wpf.deps.json" />
+      </Component>
+      <Component Id="AvpVideoPlayer.Wpf.dll" Guid="e237ed6b-ad23-41e9-931f-82cc1efd1e7a">
+        <File Id="AvpVideoPlayer.Wpf.dll" Name="AvpVideoPlayer.Wpf.dll" Source="$(var.RootDir)AvpVideoPlayer.Wpf.dll" />
+      </Component>
+      <Component Id="AvpVideoPlayer.Wpf.exe" Guid="cbfb279d-3e0b-4560-bb77-be2767dcadea">
+        <File Id="AvpVideoPlayer.Wpf.exe" Name="AvpVideoPlayer.Wpf.exe" Source="$(var.RootDir)AvpVideoPlayer.Wpf.exe" />
+      </Component>
+      <Component Id="AvpVideoPlayer.Wpf.runtimeconfig.json" Guid="d4ae4806-95a6-4653-b890-bb951c063cdc">
+        <File Id="AvpVideoPlayer.Wpf.runtimeconfig.json" Name="AvpVideoPlayer.Wpf.runtimeconfig.json" Source="$(var.RootDir)AvpVideoPlayer.Wpf.runtimeconfig.json" />
+      </Component>
+      <Component Id="FFMpegCore.dll" Guid="eb94a903-93d3-4f38-a4af-f5dcf932d65b">
+        <File Id="FFMpegCore.dll" Name="FFMpegCore.dll" Source="$(var.RootDir)FFMpegCore.dll" />
+      </Component>
+      <Component Id="Instances.dll" Guid="d4d25ffd-d5e0-42e7-86fb-579829228261">
+        <File Id="Instances.dll" Name="Instances.dll" Source="$(var.RootDir)Instances.dll" />
+      </Component>
+      <Component Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Guid="f35920f6-6f0f-4063-aae5-13616141af68">
+        <File Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Name="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Source="$(var.RootDir)Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+      </Component>
+      <Component Id="Microsoft.Extensions.DependencyInjection.dll" Guid="a5f00580-db60-4fd4-b770-34373c6cf2d6">
+        <File Id="Microsoft.Extensions.DependencyInjection.dll" Name="Microsoft.Extensions.DependencyInjection.dll" Source="$(var.RootDir)Microsoft.Extensions.DependencyInjection.dll" />
+      </Component>
+      <Component Id="Microsoft.Xaml.Behaviors.dll" Guid="c862f1af-a5d1-42f6-9832-6a9f99612da9">
+        <File Id="Microsoft.Xaml.Behaviors.dll" Name="Microsoft.Xaml.Behaviors.dll" Source="$(var.RootDir)Microsoft.Xaml.Behaviors.dll" />
+      </Component>
+      <Component Id="SubtitlesParser.dll" Guid="6101e62e-c370-4f14-b171-90656814f865">
+        <File Id="SubtitlesParser.dll" Name="SubtitlesParser.dll" Source="$(var.RootDir)SubtitlesParser.dll" />
+      </Component>
+      <Component Id="System.Reactive.dll" Guid="75fe25f9-549e-4919-8ad2-fa2739dae20c">
+        <File Id="System.Reactive.dll" Name="System.Reactive.dll" Source="$(var.RootDir)System.Reactive.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="da_files" Directory="da">
+      <Component Id="da_AvpVideoPlayer.Localization.resources.dll" Guid="c1949ed2-2356-4e3a-bd98-43feba5a37aa">
+        <File Id="da_AvpVideoPlayer.Localization.resources.dll" Name="AvpVideoPlayer.Localization.resources.dll" Source="$(var.RootDir)da\AvpVideoPlayer.Localization.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="de_files" Directory="de">
+      <Component Id="de_AvpVideoPlayer.Localization.resources.dll" Guid="b015c281-3edc-4ec9-b2f2-af6ec3aa0c44">
+        <File Id="de_AvpVideoPlayer.Localization.resources.dll" Name="AvpVideoPlayer.Localization.resources.dll" Source="$(var.RootDir)de\AvpVideoPlayer.Localization.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="es_files" Directory="es">
+      <Component Id="es_AvpVideoPlayer.Localization.resources.dll" Guid="753a09d9-76c9-4f3b-bc26-dc59d454e249">
+        <File Id="es_AvpVideoPlayer.Localization.resources.dll" Name="AvpVideoPlayer.Localization.resources.dll" Source="$(var.RootDir)es\AvpVideoPlayer.Localization.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="fr_files" Directory="fr">
+      <Component Id="fr_AvpVideoPlayer.Localization.resources.dll" Guid="3015771b-3dbc-4fa4-9f57-c3f6815c2e41">
+        <File Id="fr_AvpVideoPlayer.Localization.resources.dll" Name="AvpVideoPlayer.Localization.resources.dll" Source="$(var.RootDir)fr\AvpVideoPlayer.Localization.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="it_files" Directory="it">
+      <Component Id="it_AvpVideoPlayer.Localization.resources.dll" Guid="5097606a-576d-43c9-9469-228069fca054">
+        <File Id="it_AvpVideoPlayer.Localization.resources.dll" Name="AvpVideoPlayer.Localization.resources.dll" Source="$(var.RootDir)it\AvpVideoPlayer.Localization.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="nl_files" Directory="nl">
+      <Component Id="nl_AvpVideoPlayer.Localization.resources.dll" Guid="3e2a8244-3343-4f3d-a1d0-138fca0f2bfd">
+        <File Id="nl_AvpVideoPlayer.Localization.resources.dll" Name="AvpVideoPlayer.Localization.resources.dll" Source="$(var.RootDir)nl\AvpVideoPlayer.Localization.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="pl_files" Directory="pl">
+      <Component Id="pl_AvpVideoPlayer.Localization.resources.dll" Guid="06e03ad3-0e16-4e62-b550-cbf046a6e70f">
+        <File Id="pl_AvpVideoPlayer.Localization.resources.dll" Name="AvpVideoPlayer.Localization.resources.dll" Source="$(var.RootDir)pl\AvpVideoPlayer.Localization.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="sk_files" Directory="sk">
+      <Component Id="sk_AvpVideoPlayer.Localization.resources.dll" Guid="f7b3429d-18da-41d8-875d-368fec828ff0">
+        <File Id="sk_AvpVideoPlayer.Localization.resources.dll" Name="AvpVideoPlayer.Localization.resources.dll" Source="$(var.RootDir)sk\AvpVideoPlayer.Localization.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="sv_files" Directory="sv">
+      <Component Id="sv_AvpVideoPlayer.Localization.resources.dll" Guid="b2ac68f7-e4c4-4c53-8216-c73b6c737bcd">
+        <File Id="sv_AvpVideoPlayer.Localization.resources.dll" Name="AvpVideoPlayer.Localization.resources.dll" Source="$(var.RootDir)sv\AvpVideoPlayer.Localization.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

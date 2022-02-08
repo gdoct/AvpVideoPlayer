@@ -1,0 +1,43 @@
+﻿<UserControl
+    x:Class="AvpVideoPlayer.Uwp.Views.SearchBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AvpVideoPlayer.Uwp.Views"
+    xmlns:utils="using:AvpVideoPlayer.Uwp.Utility"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <utils:BoolToStringConverter x:Key="SearchIconConverter" 
+                                     ValueWhenTrue="/Images/clear.png" 
+                                     ValueWhenFalse="/Images/search.png" />
+    </UserControl.Resources>
+    <Grid>
+        <Border BorderBrush="WhiteSmoke" BorderThickness="2" CornerRadius="3">
+            <StackPanel Orientation="Horizontal" Height="28" HorizontalAlignment="Stretch" Width="200">
+                <Border HorizontalAlignment="Stretch">
+                    <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
+                         Width="140"
+                         Height="24" 
+                         Foreground="WhiteSmoke" 
+                         FontSize="18"  
+                         BorderBrush="Transparent"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Margin="2 2 2 2">
+                    </TextBox>
+                </Border>
+                <Button Style="{StaticResource InvisibleButtonStyle}" 
+                        Width="32"
+                        Margin="0 5 0 5"
+                        HorizontalAlignment="Right"
+                        Command="{Binding ClearCommand}">
+                    <Image Source="{Binding HasText, Converter={StaticResource SearchIconConverter}}" />
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

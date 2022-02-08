@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<RuntimeIdentifiers>win-x86</RuntimeIdentifiers>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AvpVideoPlayer.Api\AvpVideoPlayer.Api.csproj" />
+		<ProjectReference Include="..\AvpVideoPlayer.Events\AvpVideoPlayer.EventHub.csproj" />
+	</ItemGroup>
+
+</Project>

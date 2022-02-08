@@ -1,0 +1,188 @@
+﻿<UserControl x:Class="AvpVideoPlayer.Wpf.Views.PlayerControls"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:localization="clr-namespace:AvpVideoPlayer.Localization.Properties;assembly=AvpVideoPlayer.Localization"
+             xmlns:models="clr-namespace:AvpVideoPlayer.ViewModels;assembly=AvpVideoPlayer.ViewModels"
+             xmlns:utils="clr-namespace:AvpVideoPlayer.Utility;assembly=AvpVideoPlayer.Utility" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance models:PlayerControlsViewModel, IsDesignTimeCreatable=False}">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="TransparentDarkBackgroundBrush" 
+                         Color="#282828"
+                         Opacity="0.2"/>
+        <utils:BoolToStringConverter ValueWhenFalse="/Images/speaker.png" ValueWhenTrue="/Images/speakermuted.png" x:Key="SpeakerMuteStateConverter" />
+    </UserControl.Resources>
+    
+    <Grid HorizontalAlignment="Stretch" Height="100" VerticalAlignment="Bottom" Background="Transparent" Name="OuterGrid">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseEnter">
+                <i:InvokeCommandAction Command="{Binding MouseEnterCommand}" />
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeave">
+                <i:InvokeCommandAction Command="{Binding MouseLeaveCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="InnerGrid" 
+              Grid.Column="1" 
+              Height="80" 
+              VerticalAlignment="Center" 
+              Margin="0 0 0 0" 
+              Background="{StaticResource TransparentDarkBackgroundBrush}">
+           
+            <StackPanel Name="OuterPanel"
+                    Orientation="Vertical" >
+                <StackPanel Name="PlayControlsPanel"
+                        HorizontalAlignment="Center"  
+                        Orientation="Horizontal">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                    <Button Command="{Binding PreviousVideoCommand}" 
+                            ToolTip="{x:Static localization:Resources.PreviousVideoCommand}"
+                            Width="34" 
+                            Focusable="False"
+                            Style="{StaticResource InvisibleButtonStyle}" >
+                        <Image Width="24" 
+                               Source="{StaticResource PreviousImage}"  />
+                    </Button>
+                    <Button Command="{Binding PlayCommand}" 
+                            ToolTip="{x:Static localization:Resources.PlayCommand}"
+                            Width="34" 
+                            Focusable="False"
+                            Visibility="{Binding IsPlaybuttonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                            Style="{StaticResource InvisibleButtonStyle}" >
+                        <Image Width="24" 
+                           Source="{StaticResource PlayImage}"  />
+                    </Button>
+                    <Button Command="{Binding PauseCommand}" 
+                            ToolTip="{x:Static localization:Resources.PauseCommand}"
+                            Visibility="{Binding IsPlaybuttonVisible, Converter={StaticResource BooleanToInvisibilityConverter}}" 
+                            Width="34" 
+                            Focusable="False"
+                            Style="{StaticResource InvisibleButtonStyle}">
+                        <Image Width="24" 
+                               Source="{StaticResource PauseImage}"   />
+                    </Button>
+                    <Button Command="{Binding StopCommand}" 
+                            ToolTip="{x:Static localization:Resources.StopCommand}"
+                            Width="34" 
+                            Focusable="False"
+                            Style="{StaticResource InvisibleButtonStyle}" >
+                        <Image Width="24"
+                               Source="{StaticResource StopImage}"  />
+                    </Button>
+                    <ToggleButton Command="{Binding ToggleSubtitlesCommand}" 
+                            ToolTip="{x:Static localization:Resources.ToggleSubtitlesCommand}"
+                            Width="34" 
+                            Focusable="False"
+                            IsChecked="{Binding IsSubtitlesVisible, Mode=OneWay}"
+                            Style="{StaticResource InvisibleToggleButtonStyle}" >
+                        <Image Width="24" 
+                               Source="{StaticResource SubtitlesImage}"  />
+                    </ToggleButton>
+                    <ToggleButton Command="{Binding ToggleRepeatCommand}" 
+                            Width="34" 
+                            Focusable="False"
+                            IsChecked="{Binding IsRepeatEnabled, Mode=OneWay}"
+                            Style="{StaticResource InvisibleToggleButtonStyle}" >
+                        <Image Width="24" 
+                               Source="{StaticResource RepeatImage}"  />
+                    </ToggleButton>
+                    <Button Command="{Binding NextVideoCommand}" 
+                            ToolTip="{x:Static localization:Resources.NextVideoCommand}"
+                            Width="34" 
+                            Focusable="False"
+                            Style="{StaticResource InvisibleButtonStyle}" >
+                        <Image Width="24" 
+                               Source="{StaticResource NextImage}"  />
+                    </Button>
+                    <Button Command="{Binding MuteCommand}" 
+                            ToolTip="{x:Static localization:Resources.MuteCommand}"
+                            Width="34" 
+                            Focusable="False"
+                            Style="{StaticResource InvisibleButtonStyle}" >
+                        <Image Width="24" 
+                               Source="{Binding IsMuted, Converter={StaticResource SpeakerMuteStateConverter}}"/>
+                    </Button>
+                    <Slider Name="volumeSlider" 
+                            IsMoveToPointEnabled="True"
+                            Orientation="Horizontal"
+                            Minimum="0"
+                            Maximum="100"
+                            Margin="0 10 0 10"
+                            Width="80"
+                            Value="{Binding Volume}"
+                            Focusable="False"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Style="{StaticResource VolumeSliderStyle}"
+                          >
+                    </Slider>
+                    <!--<ToggleButton x:Name="ToggleVisibilityButton" Style="{StaticResource InvisibleToggleButtonStyle}" Width="0" Height="0"
+                                  IsChecked="{Binding IsPanelVisible}"
+                                  ></ToggleButton>-->
+                </StackPanel>
+                <Grid Name="SliderGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"  />
+                        <ColumnDefinition Width="9*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                           Text="{Binding PositionLabelText}"
+                           Focusable="False"
+                           Foreground="{StaticResource LightForegroundBrush}"
+                           HorizontalAlignment="Right" 
+                           Margin="0,0,5,0" />
+                    <Slider Name="PositionSlider"   
+                           Grid.Column="1"
+                           IsMoveToPointEnabled="True"
+                           Focusable="False"
+                           Orientation="Horizontal"
+                           Margin="0 2 0 0" 
+                           TickPlacement="None"
+                           AutoToolTipPlacement="TopLeft"
+                           HorizontalAlignment="Stretch"
+                           Minimum="0"
+                           Maximum="{Binding PlayDurationInMilliSeconds}"
+                           Value="{Binding Position}"
+                            MouseMove="PositionSlider_MouseMove"
+                          >
+                        <Slider.ToolTip>
+                            <ToolTip x:Name="PositionSliderTooltip" Placement="Top" ToolTipService.InitialShowDelay="0"
+      ToolTipService.ShowDuration="3000"
+      ToolTipService.BetweenShowDelay="0">
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                    <Image Source="{Binding PositionImage}" />
+                                    <TextBlock Text="{Binding PositionTooltip}" />
+                                </StackPanel>
+                            </ToolTip>
+                        </Slider.ToolTip>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseMove" >
+                                <i:InvokeCommandAction Command="{Binding PositionMouseOverCommand}" PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Slider>
+                    <TextBlock Grid.Column="2"
+                           Focusable="False"
+                           Text="{Binding PlayDurationLabelText}" 
+                           Foreground="{StaticResource LightForegroundBrush}"
+                           HorizontalAlignment="Left"
+                           Margin="5,0,0,0"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

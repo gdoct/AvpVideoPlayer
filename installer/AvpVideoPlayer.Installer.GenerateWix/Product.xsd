@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Wix" targetNamespace="http://schemas.microsoft.com/wix/2006/wi" xmlns:mstns="http://schemas.microsoft.com/wix/2006/wi" xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:element name="Directory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Directory" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="Id" form="unqualified" type="xs:string" />
+      <xs:attribute name="Name" form="unqualified" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Wix" msdata:IsDataSet="true" msdata:Locale="en-US">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Directory" />
+        <xs:element name="Product">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Package" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="InstallerVersion" form="unqualified" type="xs:string" />
+                  <xs:attribute name="Compressed" form="unqualified" type="xs:string" />
+                  <xs:attribute name="InstallScope" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="MajorUpgrade" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="DowngradeErrorMessage" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="MediaTemplate" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="EmbedCab" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Feature" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ComponentGroupRef" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="Id" form="unqualified" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Id" form="unqualified" type="xs:string" />
+                  <xs:attribute name="Title" form="unqualified" type="xs:string" />
+                  <xs:attribute name="Level" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="WixVariable" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="Id" form="unqualified" type="xs:string" />
+                  <xs:attribute name="Value" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="UIRef" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="Id" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Id" form="unqualified" type="xs:string" />
+            <xs:attribute name="Name" form="unqualified" type="xs:string" />
+            <xs:attribute name="Language" form="unqualified" type="xs:string" />
+            <xs:attribute name="Version" form="unqualified" type="xs:string" />
+            <xs:attribute name="Manufacturer" form="unqualified" type="xs:string" />
+            <xs:attribute name="UpgradeCode" form="unqualified" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Fragment">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ComponentGroup" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Component" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="File" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="Id" form="unqualified" type="xs:string" />
+                              <xs:attribute name="Name" form="unqualified" type="xs:string" />
+                              <xs:attribute name="Source" form="unqualified" type="xs:string" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Id" form="unqualified" type="xs:string" />
+                        <xs:attribute name="Guid" form="unqualified" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Id" form="unqualified" type="xs:string" />
+                  <xs:attribute name="Directory" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element ref="Directory" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="Property" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="Id" form="unqualified" type="xs:string" />
+                  <xs:attribute name="Value" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

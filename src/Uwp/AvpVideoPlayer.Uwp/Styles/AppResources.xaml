@@ -1,0 +1,241 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:wpf="using:AvpVideoPlayer.Uwp.Utility">
+
+    <wpf:BoolToVisibilityConverter x:Key="BooleanToInvisibilityConverter" 
+                                       ValueWhenTrue="Collapsed" 
+                                       ValueWhenFalse="Visible" />
+    <wpf:BoolToVisibilityConverter x:Key="BooleanToVisibilityConverter" 
+                                       ValueWhenTrue="Visible" 
+                                       ValueWhenFalse="Collapsed" />
+
+    <wpf:FiletypeToIconConverter x:Key="FileTypeToIconConverter" />
+
+    <wpf:SizeToStringConverter x:Key="SizeToStringConverter" />
+    
+    <SolidColorBrush x:Key="DarkBackgroundBrush" 
+                         Color="#0E0E0E" />
+    <SolidColorBrush x:Key="LessDarkBackgroundBrush" 
+                         Color="#282828" />
+    <SolidColorBrush x:Key="BlackColorBrush" 
+                         Color="Black" />
+    <SolidColorBrush x:Key="LightForegroundBrush" 
+                         Color="AntiqueWhite" />
+
+    <SolidColorBrush x:Key="DarkBgBrush" 
+                         Color="#0E0E0E" />
+    <SolidColorBrush x:Key="LessDarkBgBrush" 
+                         Color="#282828" />
+    <SolidColorBrush x:Key="BlackBrush" 
+                         Color="Black" />
+    <SolidColorBrush x:Key="LightFgBrush" 
+                         Color="AntiqueWhite" />
+    <Style x:Key="BasicStyle" TargetType="ItemsControl">
+        <Setter Property="Background" Value="{StaticResource DarkBgBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightFgBrush}" />
+    </Style>
+
+    <!--<Color x:Key="BlackColor"  R="0" G="0" B="0" />
+    <Color x:Key="NearlyBlackColor" R="13" G="13" B="13" />
+    <Color x:Key="LessBlackColor" R="40" G="40" B="40" />-->
+
+    <Style x:Key="DarkGridStyle" TargetType="Grid" >
+        <Setter Property="Background" Value="{StaticResource LessDarkBackgroundBrush}"/>
+    </Style>
+
+    <Style x:Key="InvisibleButtonStyle" TargetType="Button"  >
+        <Setter Property="Control.Width" Value="34"></Setter>
+        <Setter Property="Control.Background" Value="Transparent"/>
+        <Setter Property="Control.BorderBrush" Value="Transparent"/>
+        <Setter Property="Control.BorderThickness" Value="0"/>
+    </Style>
+
+    <Style x:Key="InvisibleToggleButtonStyle" TargetType="ToggleButton"  >
+        <Setter Property="Control.Width" Value="34"></Setter>
+        <Setter Property="Control.Background" Value="Transparent"/>
+        <Setter Property="Control.BorderBrush" Value="Transparent"/>
+        <Setter Property="Control.BorderThickness" Value="0"/>
+    </Style>
+
+    <BitmapImage x:Key="PlayImage" UriSource="/Images/play.png" />
+    <BitmapImage x:Key="PauseImage" UriSource="/Images/pause.png" />
+    <BitmapImage x:Key="StopImage" UriSource="/Images/stop.png" />
+    <BitmapImage x:Key="SpeakerImage" UriSource="/Images/speaker.png" />
+    <BitmapImage x:Key="VideoImage" UriSource="/Images/video.png" />
+    <BitmapImage x:Key="FolderImage" UriSource="/Images/folder.png" />
+    <BitmapImage x:Key="PreviousImage" UriSource="/Images/previous.png" />
+    <BitmapImage x:Key="RepeatImage" UriSource="/Images/repeat.png" />
+    <BitmapImage x:Key="NextImage" UriSource="/Images/next.png" />
+    <BitmapImage x:Key="SubtitlesImage" UriSource="/Images/subs.png" />
+
+    <!-- slider-->
+
+    <!--Control colors.-->
+    <Color x:Key="WindowColor">#FFE8EDF9</Color>
+    <Color x:Key="ContentAreaColorLight">#FFC5CBF9</Color>
+    <Color x:Key="ContentAreaColorDark">#FF7381F9</Color>
+
+    <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
+    <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
+    <Color x:Key="DisabledForegroundColor">#FF888888</Color>
+
+    <Color x:Key="SelectedBackgroundColor">#FFC5CBF9</Color>
+    <Color x:Key="SelectedUnfocusedColor">#FFDDDDDD</Color>
+
+    <Color x:Key="ControlLightColor">White</Color>
+    <Color x:Key="ControlMediumColor">#FF7381F9</Color>
+    <Color x:Key="ControlDarkColor">#FF211AA9</Color>
+
+    <Color x:Key="ControlMouseOverColor">#FF3843C4</Color>
+    <Color x:Key="ControlPressedColor">#FF211AA9</Color>
+
+
+    <Color x:Key="GlyphColor">#FF444444</Color>
+    <Color x:Key="GlyphMouseOver">sc#1, 0.004391443, 0.002428215, 0.242281124</Color>
+
+    <!--Border colors-->
+    <Color x:Key="BorderLightColor">#FFCCCCCC</Color>
+    <Color x:Key="BorderMediumColor">#FF888888</Color>
+    <Color x:Key="BorderDarkColor">#FF444444</Color>
+
+    <Color x:Key="PressedBorderLightColor">#FF888888</Color>
+    <Color x:Key="PressedBorderDarkColor">#FF444444</Color>
+
+    <Color x:Key="DisabledBorderLightColor">#FFAAAAAA</Color>
+    <Color x:Key="DisabledBorderDarkColor">#FF888888</Color>
+
+    <!-- Slider -->
+    
+    <Color x:Key="DefaultBorderBrushDarkColor">Black</Color>
+
+    <!--Control-specific resources.-->
+    <Color x:Key="HeaderTopColor">#FFC5CBF9</Color>
+    <Color x:Key="DatagridCurrentCellBorderColor">Black</Color>
+    <Color x:Key="SliderTrackDarkColor">#FFC5CBF9</Color>
+
+    <Color x:Key="NavButtonFrameColor">#FF3843C4</Color>
+
+    <LinearGradientBrush x:Key="MenuPopupBrush"
+                     EndPoint="0.5,1"
+                     StartPoint="0.5,0">
+        <GradientStop Color="{StaticResource ControlLightColor}"
+                Offset="0" />
+        <GradientStop Color="{StaticResource ControlMediumColor}"
+                Offset="0.5" />
+        <GradientStop Color="{StaticResource ControlLightColor}"
+                Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill"
+                     StartPoint="0,0"
+                     EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#000000FF"
+                    Offset="0" />
+                <GradientStop Color="#600000FF"
+                    Offset="0.4" />
+                <GradientStop Color="#600000FF"
+                    Offset="0.6" />
+                <GradientStop Color="#000000FF"
+                    Offset="1" />
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <Style x:Key="SliderButtonStyle"
+       TargetType="RepeatButton">
+        <!--<Setter Property="SnapsToDevicePixels"
+          Value="true" />
+        <Setter Property="OverridesDefaultStyle"
+          Value="true" />-->
+        <Setter Property="IsTabStop"
+          Value="false" />
+        <!--<Setter Property="Focusable"
+          Value="false" />-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SliderThumbStyle"
+       TargetType="Thumb">
+        <!--<Setter Property="SnapsToDevicePixels"
+          Value="true" />-->
+        <!--<Setter Property="OverridesDefaultStyle"
+          Value="true" />-->
+        <Setter Property="Height"
+          Value="14" />
+        <Setter Property="Width"
+          Value="14" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb" >
+                    <Ellipse x:Name="Ellipse"
+                 StrokeThickness="1">
+                        <Ellipse.Stroke>
+                            <LinearGradientBrush StartPoint="0,0"
+                                 EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="{StaticResource BorderLightColor}"
+                                Offset="0.0" />
+                                        <GradientStop Color="{StaticResource BorderDarkColor}"
+                                Offset="1.0" />
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Ellipse.Stroke>
+                        <Ellipse.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1"
+                                 StartPoint="0.5,0">
+                                <GradientStop Color="{StaticResource ControlMediumColor}"
+                            Offset="1" />
+                                <GradientStop Color="{StaticResource ControlLightColor}" />
+                            </LinearGradientBrush>
+                        </Ellipse.Fill>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).
+                    (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                Storyboard.TargetName="Ellipse">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                         Value="{StaticResource ControlMouseOverColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).
+                    (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                Storyboard.TargetName="Ellipse">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                         Value="{StaticResource ControlPressedColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).
+                    (GradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                Storyboard.TargetName="Ellipse">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                         Value="{StaticResource DisabledControlDarkColor}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Ellipse>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
