@@ -4,6 +4,10 @@
 
 This is a simple mediaplayer written in .net 6 with c#/wpf, basically as a portfolio project
 
+Subtitles and thumbnails require the [ffmpeg](https://ffmpeg.org) library which is currently not bundled. Install it with chocolatey:
+
+`choco install ffmpeg`
+
 ## Features: 
 * supports most video formats
 * supports external subtitles
