@@ -43,7 +43,7 @@ internal class EmbeddedSubtitleContext : FileSubtitleContext
             {
                 Filename = videofile,
                 Index = stream.Index,
-                SubtitleName = $"{stream.Language}",
+                SubtitleName = $"{stream.CodecName} ({stream.Language})",
                 StreamInfo = $"0:{stream.Index}"
             };
         }
