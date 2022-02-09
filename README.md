@@ -1,8 +1,8 @@
 ### Avp Videoplayer
 [![Build](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/dotnet.yml/badge.svg)](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/dotnet.yml)
 [![.NET Core Desktop](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/dotnet-desktop.yml)
-
-This is a simple mediaplayer written in .net 6 with c#/wpf, basically as a portfolio project
+[![CodeQL](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/codeql-analysis.yml)
+This is a simple mediaplayer written in .net 6 with c#/wpf
 
 Subtitles and thumbnails require the [ffmpeg](https://ffmpeg.org) library which is currently not bundled. Install it with chocolatey:
 
