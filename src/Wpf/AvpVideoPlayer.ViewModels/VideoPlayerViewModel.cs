@@ -134,7 +134,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
     {
         var openFileDialog = new OpenFileDialog()
         {
-            Filter = "Subtitles|*.srt",
+            Filter = "Subtitles(*.srt; *.sub)|*.srt;*.sub|All files (*.*)|*.*",
             InitialDirectory = new FileInfo(Url).DirectoryName
         };
         if (openFileDialog.ShowDialog() == true)

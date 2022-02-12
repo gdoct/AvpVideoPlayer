@@ -33,8 +33,14 @@ internal class SnapshotGenerator : ISnapshotGenerator
         foreach(var i in set)
         {
             var timestamp = i * avg;
-            var bitmap = FFMpeg.Snapshot(inputPath, imagesize, timestamp);
-            yield return new SnapshotData(bitmap, timestamp, i);
+            Bitmap? bitmap = null;
+            try
+            {
+                bitmap = FFMpeg.Snapshot(inputPath, imagesize, timestamp);
+            }
+            catch { }
+            if (bitmap != null)
+                yield return new SnapshotData(bitmap, timestamp, i);
         }
     }
 }
