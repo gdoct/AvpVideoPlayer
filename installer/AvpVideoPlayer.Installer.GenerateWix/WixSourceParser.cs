@@ -107,7 +107,7 @@ public class WixSourceParser
             var componentgroup = new WixFragmentComponentGroup()
             {
                 Id = folderkey,
-                Directory = (folderkey == PRODUCT_COMPONENTS) ? INSTALL_FOLDER_VAR : path.Name,
+                Directory = (folderkey == PRODUCT_COMPONENTS) ? INSTALL_FOLDER_VAR : folder,
                 Component = new WixFragmentComponentGroupComponent[filesInFolder.Length]
             };
             var relativepath = GetRelativePath(path.FullName, _settings.SourceFolder);

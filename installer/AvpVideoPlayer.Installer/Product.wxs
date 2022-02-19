@@ -11,6 +11,8 @@
       <ComponentGroupRef Id="de_files" />
       <ComponentGroupRef Id="es_files" />
       <ComponentGroupRef Id="ffmpeg_files" />
+      <ComponentGroupRef Id="ffmpeg_x64_files" />
+      <ComponentGroupRef Id="ffmpeg_x86_files" />
       <ComponentGroupRef Id="fr_files" />
       <ComponentGroupRef Id="it_files" />
       <ComponentGroupRef Id="nl_files" />
@@ -47,7 +49,10 @@
           <Directory Id="da" Name="da" />
           <Directory Id="de" Name="de" />
           <Directory Id="es" Name="es" />
-          <Directory Id="ffmpeg" Name="ffmpeg" />
+          <Directory Id="ffmpeg" Name="ffmpeg">
+            <Directory Id="ffmpeg_x64" Name="x64" />
+            <Directory Id="ffmpeg_x86" Name="x86" />
+          </Directory>
           <Directory Id="fr" Name="fr" />
           <Directory Id="it" Name="it" />
           <Directory Id="nl" Name="nl" />
@@ -142,12 +147,25 @@
     </ComponentGroup>
   </Fragment>
   <Fragment>
-    <ComponentGroup Id="ffmpeg_files" Directory="ffmpeg">
-      <Component Id="ffmpeg_ffmpeg.exe" Guid="992f4c77-bb60-4b6c-98f2-4af6e97fbce6">
-        <File Id="ffmpeg_ffmpeg.exe" Name="ffmpeg.exe" Source="$(var.RootDir)ffmpeg\ffmpeg.exe" />
+    <ComponentGroup Id="ffmpeg_files" Directory="ffmpeg" />
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="ffmpeg_x64_files" Directory="ffmpeg_x64">
+      <Component Id="ffmpeg_x64_ffmpeg.exe" Guid="92b4d6fa-636a-4af1-aee8-001860e38e97">
+        <File Id="ffmpeg_x64_ffmpeg.exe" Name="ffmpeg.exe" Source="$(var.RootDir)ffmpeg\x64\ffmpeg.exe" />
       </Component>
-      <Component Id="ffmpeg_ffprobe.exe" Guid="4b8eba79-3299-4740-8316-50bad6587b7d">
-        <File Id="ffmpeg_ffprobe.exe" Name="ffprobe.exe" Source="$(var.RootDir)ffmpeg\ffprobe.exe" />
+      <Component Id="ffmpeg_x64_ffprobe.exe" Guid="82d78306-f14d-4570-b6fd-b92730e7cfe9">
+        <File Id="ffmpeg_x64_ffprobe.exe" Name="ffprobe.exe" Source="$(var.RootDir)ffmpeg\x64\ffprobe.exe" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="ffmpeg_x86_files" Directory="ffmpeg_x86">
+      <Component Id="ffmpeg_x86_ffmpeg.exe" Guid="b7d83f44-f4f8-4ade-87b3-52f704d8d76c">
+        <File Id="ffmpeg_x86_ffmpeg.exe" Name="ffmpeg.exe" Source="$(var.RootDir)ffmpeg\x86\ffmpeg.exe" />
+      </Component>
+      <Component Id="ffmpeg_x86_ffprobe.exe" Guid="730b2da1-111c-4be3-9c23-8c6af5dd68e2">
+        <File Id="ffmpeg_x86_ffprobe.exe" Name="ffprobe.exe" Source="$(var.RootDir)ffmpeg\x86\ffprobe.exe" />
       </Component>
     </ComponentGroup>
   </Fragment>

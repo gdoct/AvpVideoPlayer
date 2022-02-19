@@ -3,7 +3,7 @@
   <PropertyGroup>
 	<OutputType>WinExe</OutputType>
 	<TargetFramework>net6.0-windows</TargetFramework>
-	  <RuntimeIdentifiers>win-x86</RuntimeIdentifiers>
+	  <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
 	  <Nullable>enable</Nullable>
 	<UseWPF>true</UseWPF>
 	<ApplicationIcon>app.ico</ApplicationIcon>
@@ -31,6 +31,8 @@
 	<None Remove="Images\video.png" />
 	<None Remove="ffmpeg\ffmpeg.exe" />
 	<None Remove="ffmpeg\ffprobe.exe" />
+	<None Remove="ffmpeg\x86\ffmpeg.exe" />
+	<None Remove="ffmpeg\x86\ffprobe.exe" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,11 +53,17 @@
 	<Content Include="app.ico">
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</Content>
-	<Content Include="ffmpeg\ffmpeg.exe">
-	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	<Content Include="ffmpeg\x64\ffmpeg.exe">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</Content>
-	<Content Include="ffmpeg\ffprobe.exe">
-	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	<Content Include="ffmpeg\x64\ffprobe.exe">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Include="ffmpeg\x86\ffmpeg.exe">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Include="ffmpeg\x86\ffprobe.exe">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</Content>
 	<Resource Include="Images\folderyellow.png" />
 	<Resource Include="Images\harddisk.png" />
@@ -98,6 +106,9 @@
   </ItemGroup>
 
   <ItemGroup>
+	<Page Update="MainWindow.xaml">
+	  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	</Page>
 	<Page Update="Styles\SlideOutMenu.xaml">
 	  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
 	  <SubType>Designer</SubType>

@@ -1,2 +1,3 @@
 ﻿The file "Product.wxs" is regenerated when running the build.ps1 script.
-Modify the template "Product.wxs.template" in the GenerateWix project instead
+Modify the template "Product.wxs.template" in the GenerateWix project 
+instead and see the documentation in that project for more details

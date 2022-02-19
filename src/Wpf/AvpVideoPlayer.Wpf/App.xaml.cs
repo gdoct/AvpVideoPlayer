@@ -8,6 +8,7 @@ using AvpVideoPlayer.Wpf.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 
 namespace AvpVideoPlayer.Wpf;
@@ -27,7 +28,9 @@ public partial class App : Application
         ServiceCollection services = new ();
         ConfigureServices(services);
         _serviceProvider = services.BuildServiceProvider();
-        FFMpegCore.GlobalFFOptions.Configure(options => options.BinaryFolder = "./ffmpeg");
+        var folder = (Environment.Is64BitProcess) ? @"ffmpeg\x64" : @"ffmpeg\x86";
+        var binfolder = Path.Combine(AppContext.BaseDirectory, folder);
+        FFMpegCore.GlobalFFOptions.Configure(options => options.BinaryFolder = binfolder);
     }
 
     private static void ConfigureServices(ServiceCollection services)

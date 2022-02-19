@@ -37,7 +37,7 @@ function Write-Prompt ($msg) {
 
 function CleanBuildOutput {
     Write-Prompt "Cleaning..."
-    dotnet clean $mainSolutionFile --configuration $activeconfiguration /v:q
+    dotnet clean $mainSolutionFile --configuration $activeconfiguration --verbosity quiet
     if (-not $skipBuildSolution) {
     if (Test-Path $mainSolutionPublishBinFolder) {
         Remove-Item  -Recurse -Force $mainSolutionPublishBinFolder
@@ -60,17 +60,17 @@ function Write-Elapsed($prompt)  {
 
 function BuildAndPublishMainSolution {
     Write-Prompt "* Building main solution in $activeconfiguration mode"
-    dotnet build $mainSolutionFile --configuration $activeconfiguration /v:q *>&1
+    dotnet build $mainSolutionFile --configuration $activeconfiguration --verbosity quiet *>&1
     Write-Elapsed "Built main solution"
     if($LASTEXITCODE -ne 0) { throw "Error building main solution" }
 
     Write-Prompt "* Running unit tests"
-    dotnet test $mainSolutionFile --configuration $activeconfiguration /v:q *>&1
+    dotnet test $mainSolutionFile --configuration $activeconfiguration --verbosity quiet *>&1
     Write-Elapsed "Ran unit tests"
     if($LASTEXITCODE -ne 0) { throw "Error running unit tests" }
 
     Write-Prompt "* Publishing build artifacts"
-    dotnet publish $mainExeProjectFile --configuration $activeconfiguration --no-build /v:q --output $mainSolutionPublishBinFolder  *>&1
+    dotnet publish $mainExeProjectFile --configuration $activeconfiguration --no-build --output $mainSolutionPublishBinFolder  *>&1
     Write-Elapsed "Published build artifacts"
     if ($LASTEXITCODE -ne 0) {
          throw "Error publishing main solution" 
@@ -82,7 +82,7 @@ function BuildAndPublishMainSolution {
 
 function RegenerateInstaller {
     Write-Prompt "* Regenerating msi installer definition"
-    dotnet publish $installerGeneratorProjectFile --configuration $activeconfiguration /v:q *>&1   
+    dotnet publish $installerGeneratorProjectFile --configuration $activeconfiguration --verbosity quiet *>&1   
     Write-Elapsed "published Wix installer generator to $installerGeneratorExe"
     if($LASTEXITCODE -ne 0) { throw "Error publishing installer generator" }
 
