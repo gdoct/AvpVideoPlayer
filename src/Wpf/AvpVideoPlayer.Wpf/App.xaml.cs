@@ -27,6 +27,7 @@ public partial class App : Application
         ServiceCollection services = new ();
         ConfigureServices(services);
         _serviceProvider = services.BuildServiceProvider();
+        FFMpegCore.GlobalFFOptions.Configure(options => options.BinaryFolder = "./ffmpeg");
     }
 
     private static void ConfigureServices(ServiceCollection services)
