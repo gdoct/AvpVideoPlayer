@@ -62,49 +62,40 @@ internal class SnapshotService : IDisposable, ISnapshotService
     public void LoadVideofile(string path)
     {
         // suppress "dead code" warning
-        bool isAsync = (DateTime.Today.Year > 2000);
-        if (isAsync)
+        
+        if (_workerThread?.IsAlive == true)
         {
-            if (_workerThread?.IsAlive == true)
-            {
-                _cancellationTokenSource.Cancel();
-                _cancellationTokenSource.Dispose();
-                _cancellationTokenSource = new();
-            }
-            foreach (var f in _thumbnailData) f?.Dispose();
-            _thumbnailData.Clear();
-            var token = _cancellationTokenSource.Token;
-            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path)) return;
-            _workerThread = new Thread(() => GenerateThumbnailImpl(path, token));
-            _workerThread.Start();
-        }
-        else
-        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
             _cancellationTokenSource = new();
-            foreach (var f in _thumbnailData) f?.Dispose();
-            _thumbnailData.Clear();
-            var token = _cancellationTokenSource.Token;
-            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path)) return;
-            GenerateThumbnailImpl(path, token);
         }
+        foreach (var f in _thumbnailData) f?.Dispose();
+        _thumbnailData.Clear();
+        var token = _cancellationTokenSource.Token;
+        if (string.IsNullOrWhiteSpace(path) || !File.Exists(path)) return;
+        _workerThread = new Thread(() => GenerateThumbnailImpl(path, token));
+        _workerThread.Start();
     }
 
     private void GenerateThumbnailImpl(string path, CancellationToken token)
     {
         try
         {
-            foreach (var thumb in _snapshotGenerator.GenerateThumbnails(path, 30))
+            foreach (var thumb in _snapshotGenerator.GenerateThumbnails(path, 30, token))
             {
                 _thumbnailData.Add(thumb);
-                token.ThrowIfCancellationRequested();
             }
         }
-        catch (OperationCanceledException)
+        catch (Exception)
         {
             this.Log("************ downloading thumbnails was cancelled");
         }
     }
 
+    public void Cancel()
+    {
+        _cancellationTokenSource.Cancel();
+    }
 
     protected virtual void Dispose(bool disposing)
     {
@@ -113,6 +104,12 @@ internal class SnapshotService : IDisposable, ISnapshotService
             if (disposing)
             {
                 foreach (var f in _thumbnailData) f?.Dispose();
+                _cancellationTokenSource.Cancel();
+                if (_workerThread != null)
+                {
+                    _workerThread.Interrupt();
+                    _workerThread.Join();
+                }
             }
 
             disposedValue = true;

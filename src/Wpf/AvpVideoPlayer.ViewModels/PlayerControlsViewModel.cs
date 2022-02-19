@@ -55,6 +55,9 @@ public class PlayerControlsViewModel : EventBasedViewModel
         Subscribe<SubtitlesLoadedEvent>(OnSubtitlesLoaded);
         Subscribe<FullScreenEvent>(OnFullScreen);
         Subscribe<SelectVideoEvent>(OnSelectVideo);
+
+        if (null != Application.Current)
+            Application.Current.Exit += (_, __) => { _snapshotService.Cancel(); };
     }
 
 

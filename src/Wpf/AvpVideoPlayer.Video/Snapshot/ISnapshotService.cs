@@ -6,5 +6,7 @@ namespace AvpVideoPlayer.Video.Snapshot
     {
         ImageSource? GetBitmapForTime(TimeSpan time);
         void LoadVideofile(string path);
+
+        void Cancel();
     }
 }

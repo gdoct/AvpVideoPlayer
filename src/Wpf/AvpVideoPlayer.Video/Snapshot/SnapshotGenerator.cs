@@ -11,9 +11,10 @@ internal class SnapshotGenerator : ISnapshotGenerator
         return new SnapshotData(bitmap, time, 0);
     }
 
-    public IEnumerable<SnapshotData> GenerateThumbnails(string inputPath, int amount)
+    public IEnumerable<SnapshotData> GenerateThumbnails(string inputPath, int amount, CancellationToken cancellationToken)
     {
         var info = FFProbe.Analyse(inputPath);
+        cancellationToken.ThrowIfCancellationRequested();
         TimeSpan avg;
         if (info == null) yield break;
         else avg = info.Duration / (amount + 2);
@@ -32,15 +33,15 @@ internal class SnapshotGenerator : ISnapshotGenerator
         var set = Enumerable.Range(0, amount).OrderBy(n => n%(amount /3));
         foreach(var i in set)
         {
+            if (cancellationToken.IsCancellationRequested) yield break;
             var timestamp = i * avg;
             Bitmap? bitmap = null;
-            try
-            {
-                bitmap = FFMpeg.Snapshot(inputPath, imagesize, timestamp);
-            }
-            catch { }
-            if (bitmap != null)
-                yield return new SnapshotData(bitmap, timestamp, i);
+            bitmap = FFMpeg.Snapshot(inputPath, imagesize, timestamp);
+            System.Diagnostics.Debug.WriteLine($"[{i}/{amount}] cancellation requested = {cancellationToken.IsCancellationRequested}");
+            if (cancellationToken.IsCancellationRequested) yield break;
+            if (bitmap == null) yield break;
+
+            yield return new SnapshotData(bitmap, timestamp, i);
         }
     }
 }

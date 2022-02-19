@@ -65,6 +65,9 @@ public class VideoPlayerViewModel : EventBasedViewModel
         Subscribe<PlayPositionChangeRequestEvent>(e => OnSetPosition(TimeSpan.FromMilliseconds(e.Data)));
         Subscribe<VolumeChangeRequestEvent>(e => OnSetVolume(e.Data));
         Subscribe<FullScreenEvent>(e => OnFullscreen(e));
+
+        if (null != Application.Current)
+            Application.Current.Exit += (_, __) => { View?.Stop(); };
     }
 
 
