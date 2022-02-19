@@ -15,10 +15,15 @@ public class WixSourceParser
     private readonly Settings _settings;
 
     private readonly IDictionary<string, DirectoryInfo> _folders = new Dictionary<string, DirectoryInfo>();
+    private readonly string _existing;
 
     public WixSourceParser(Settings settings)
     {
         _settings = settings;
+        _existing = !string.IsNullOrWhiteSpace(settings.OutputFile) && File.Exists(settings.OutputFile)
+            ? File.ReadAllText(settings.OutputFile)
+            : string.Empty;
+
     }
 
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/wix/2006/wi")]
@@ -106,19 +111,22 @@ public class WixSourceParser
                 Component = new WixFragmentComponentGroupComponent[filesInFolder.Length]
             };
             var relativepath = GetRelativePath(path.FullName, _settings.SourceFolder);
+            var search = $@"<ComponentGroup Id=""{folderkey}"" ";
+            var existing_idx = _existing.IndexOf(search);
             for (int i = 0; i < filesInFolder.Length; i++)
             {
                 FileInfo file = filesInFolder[i];
-
+                var file_key = $"{filekey}{file.Name}";
+                var guid = FindFileGuid(existing_idx, file_key);
                 var component = new WixFragmentComponentGroupComponent 
                 {
-                    Id=$"{filekey}{file.Name}", 
-                    Guid = Guid.NewGuid().ToString(),
+                    Id=file_key, 
+                    Guid = guid.ToString(),
                     File = new WixFragmentComponentGroupComponentFile[1]
                     {
                         new WixFragmentComponentGroupComponentFile
                         {
-                            Id=$"{filekey}{file.Name}",
+                            Id=file_key,
                             Name = file.Name,
                             Source = $"$(var.RootDir){relativepath}{file.Name}"
                         }
@@ -130,7 +138,29 @@ public class WixSourceParser
             yield return fragment;
         }
     }
-    
+
+    private Guid FindFileGuid(int start_existing_idx, string name)
+    {
+        /*
+<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+<Component Id="app.ico" Guid="b29bf796-207a-4718-8259-6ab2bbc5e971">
+<File Id="app.ico" Name="app.ico" Source="$(var.RootDir)app.ico" />
+</Component>
+</ComponentGroup
+         */
+        if (start_existing_idx < 0) return Guid.NewGuid();
+        var until = _existing.IndexOf("</ComponentGroup", start_existing_idx);
+        if (until < 0) return Guid.NewGuid();
+
+        var sub = _existing[start_existing_idx..until];
+        var pattern = @$"<Component Id=""{name}"" Guid=""";
+        var fileidx = sub.IndexOf(pattern);
+        if (fileidx < 0) return Guid.NewGuid();
+        var guid_proto = sub.Substring(fileidx + pattern.Length, 36);
+        if (Guid.TryParse(guid_proto, out Guid guid)) return guid;
+        return Guid.NewGuid();
+
+    }
 
     string GetRelativePath(string path, string root)
     {

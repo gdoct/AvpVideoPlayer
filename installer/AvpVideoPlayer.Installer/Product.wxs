@@ -10,6 +10,7 @@
       <ComponentGroupRef Id="da_files" />
       <ComponentGroupRef Id="de_files" />
       <ComponentGroupRef Id="es_files" />
+      <ComponentGroupRef Id="ffmpeg_files" />
       <ComponentGroupRef Id="fr_files" />
       <ComponentGroupRef Id="it_files" />
       <ComponentGroupRef Id="nl_files" />
@@ -46,6 +47,7 @@
           <Directory Id="da" Name="da" />
           <Directory Id="de" Name="de" />
           <Directory Id="es" Name="es" />
+          <Directory Id="ffmpeg" Name="ffmpeg" />
           <Directory Id="fr" Name="fr" />
           <Directory Id="it" Name="it" />
           <Directory Id="nl" Name="nl" />
@@ -136,6 +138,16 @@
     <ComponentGroup Id="es_files" Directory="es">
       <Component Id="es_AvpVideoPlayer.Localization.resources.dll" Guid="753a09d9-76c9-4f3b-bc26-dc59d454e249">
         <File Id="es_AvpVideoPlayer.Localization.resources.dll" Name="AvpVideoPlayer.Localization.resources.dll" Source="$(var.RootDir)es\AvpVideoPlayer.Localization.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="ffmpeg_files" Directory="ffmpeg">
+      <Component Id="ffmpeg_ffmpeg.exe" Guid="992f4c77-bb60-4b6c-98f2-4af6e97fbce6">
+        <File Id="ffmpeg_ffmpeg.exe" Name="ffmpeg.exe" Source="$(var.RootDir)ffmpeg\ffmpeg.exe" />
+      </Component>
+      <Component Id="ffmpeg_ffprobe.exe" Guid="4b8eba79-3299-4740-8316-50bad6587b7d">
+        <File Id="ffmpeg_ffprobe.exe" Name="ffprobe.exe" Source="$(var.RootDir)ffmpeg\ffprobe.exe" />
       </Component>
     </ComponentGroup>
   </Fragment>
