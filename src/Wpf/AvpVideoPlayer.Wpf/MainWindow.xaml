@@ -21,7 +21,7 @@
         d:DataContext="{d:DesignInstance viewmodels:MainWindowViewModel, IsDesignTimeCreatable=False}">
 
     <Window.Resources>
-        <utility:HeightWithOffsetConverter Offset="-100" x:Key="HeightWithOffsetConverter" />
+            <utility:HeightWithOffsetConverter Offset="-100" x:Key="HeightWithOffsetConverter" />
     </Window.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="KeyUp">
@@ -29,11 +29,32 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid Style="{StaticResource DarkGridStyle}" VerticalAlignment="Stretch" >
-
         <GroupBox Style="{StaticResource SlideOutMenuStyle}" Panel.ZIndex="2" >
             <Border Background="DarkSlateGray" CornerRadius="5" BorderThickness="4" BorderBrush="{StaticResource LessDarkBackgroundBrush}">
                 <Border Margin="10 10 20 8">
-                    <views:Library x:Name="Library" DataContext="{Binding LibraryViewModel}" />
+                    <TabControl Background="Transparent" Foreground="WhiteSmoke" TabStripPlacement="Top">
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Width="100">
+                                    <TextBlock>Library</TextBlock>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <StackPanel>
+                                <views:Library x:Name="Library" DataContext="{Binding LibraryViewModel}" />
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Width="100">
+                                    <TextBlock>Playlist</TextBlock>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <StackPanel>
+                                <views:Playlist />
+                            </StackPanel>
+                        </TabItem>
+
+                    </TabControl>
                 </Border>
             </Border>
         </GroupBox>
