@@ -1,4 +1,4 @@
-﻿<Window x:Class="AvpVideoPlayer.Wpf.MainWindow"
+﻿<Window x:Class="AvpVideoPlayer.Wpf.MainWindowBeta"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -32,7 +32,29 @@
         <GroupBox Style="{StaticResource SlideOutMenuStyle}" Panel.ZIndex="2" >
             <Border Background="DarkSlateGray" CornerRadius="5" BorderThickness="4" BorderBrush="{StaticResource LessDarkBackgroundBrush}">
                 <Border Margin="10 10 20 8">
-                    <views:Library x:Name="Library" DataContext="{Binding LibraryViewModel}" />
+                    <TabControl Background="Transparent" Foreground="WhiteSmoke" TabStripPlacement="Top">
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Width="100">
+                                    <TextBlock>Library</TextBlock>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <StackPanel>
+                                <views:Library x:Name="Library" DataContext="{Binding LibraryViewModel}" />
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal" Width="100">
+                                    <TextBlock>Playlist</TextBlock>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <StackPanel>
+                                <views:Playlist />
+                            </StackPanel>
+                        </TabItem>
+
+                    </TabControl>
                 </Border>
             </Border>
         </GroupBox>
