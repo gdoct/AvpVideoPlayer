@@ -168,6 +168,9 @@
   <data name="Subtitles" xml:space="preserve">
     <value>Subtitles</value>
   </data>
+  <data name="TagsColumn" xml:space="preserve">
+    <value>Tags</value>
+  </data>
   <data name="TimespanFormat" xml:space="preserve">
     <value>hh\:mm\:ss</value>
   </data>

@@ -1,4 +1,5 @@
 ﻿using AvpVideoPlayer.Api;
+using AvpVideoPlayer.MetaData;
 using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.ViewModels.Events;
 using System;
@@ -15,20 +16,21 @@ namespace AvpVideoPlayer.ViewModels;
 public class FileListViewModel : EventBasedViewModel
 {
     private readonly CollectionViewSource listviewCollection;
+    private readonly IMetaDataService _metaDataService;
     private readonly FileSystemWatcher _fileSystemWatcher;
     private int _selectedIndex;
     private string? _path;
     private string? _filter;
     private FileListListViewItem? _selectedItem = null;
 
-    public FileListViewModel(IEventHub eventHub) : base(eventHub)
+    public FileListViewModel(IEventHub eventHub, IMetaDataService metaDataService) : base(eventHub)
     {
         listviewCollection = new CollectionViewSource
         {
             Source = FolderContents
         };
         listviewCollection.Filter += ListView_Filter;
-
+        _metaDataService = metaDataService;
         _fileSystemWatcher = new FileSystemWatcher() { IncludeSubdirectories = true };
         _fileSystemWatcher.Changed += FileSystemWatcher_Changed;
         _fileSystemWatcher.Renamed += FileSystemWatcher_Changed;
@@ -39,6 +41,19 @@ public class FileListViewModel : EventBasedViewModel
         Subscribe<PlaylistMoveEvent>(OnPlayListChanged);
         Subscribe<SelectVideoEvent>(OnActivateVideo);
         Subscribe<SearchTextChangedEvent>(OnSearchTextChanged);
+        Subscribe<MetaDataUpdatedEvent>(OnMetaDataUpdated);
+    }
+
+    private void OnMetaDataUpdated(MetaDataUpdatedEvent e)
+    {
+        foreach (var item in FolderContents)
+        {
+            if (item.MetaData != null && item.MetaData.FullName == e.MetaData.FullName)
+            {
+                 item.MetaData = e.MetaData;
+                break;
+            }
+        }
     }
 
     private void OnSearchTextChanged(SearchTextChangedEvent e)
@@ -226,7 +241,8 @@ public class FileListViewModel : EventBasedViewModel
         foreach (var file in newlist)
         {
             var isActive = (ActivatedFile?.Path != null && string.Compare(ActivatedFile?.Path, file.Path, StringComparison.OrdinalIgnoreCase) == 0);
-            FolderContents.Add(new FileListListViewItem(file) { IsActivated = isActive });
+            var metadata = _metaDataService.GetMetadata(file.Path ?? "");
+            FolderContents.Add(new FileListListViewItem(file, metadata) { IsActivated = isActive });
         }
     }
 
@@ -291,44 +307,6 @@ public class FileListViewModel : EventBasedViewModel
         if (!canPlay)
         {
             Publish(new PlayStateChangeRequestEvent(PlayStates.Stop));
-        }
-    }
-
-    public class FileListListViewItem : BaseViewModel
-    {
-        private bool _isSelected;
-        private bool _isActivated;
-
-        public FileListListViewItem(FileViewModel file)
-        {
-            File = file;
-        }
-
-        public FileViewModel File { get; }
-        public bool IsSelected
-        {
-            get
-            {
-                return _isSelected;
-            }
-            set
-            {
-                _isSelected = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public bool IsActivated
-        {
-            get
-            {
-                return _isActivated;
-            }
-            set
-            {
-                _isActivated = value;
-                RaisePropertyChanged();
-            }
         }
     }
 }

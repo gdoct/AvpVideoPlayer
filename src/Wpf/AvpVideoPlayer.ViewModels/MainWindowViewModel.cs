@@ -18,17 +18,18 @@ public class MainWindowViewModel : EventBasedViewModel
     private WindowStyle _windowStyle = DEFAULT_WINDOW_STYLE;
     private const WindowStyle DEFAULT_WINDOW_STYLE = WindowStyle.ThreeDBorderWindow;
     public ICommand OnKeyDownCommand { get; }
-    public KeyboardController KeyboardController { get; }
+    public KeyboardController? KeyboardController { get; }
     public LibraryViewModel LibraryViewModel { get; }
     public VideoPlayerViewModel VideoPlayerViewModel { get; }
 
     public MainWindowViewModel(IEventHub eventHub, LibraryViewModel libraryViewModel, VideoPlayerViewModel videoPlayerViewModel) : base(eventHub)
     {
+        var isActualApp = Application.Current?.Dispatcher != null;
         Subscribe<FullScreenEvent>(OnFullScreen);
         Subscribe<SelectVideoEvent>(OnSelectVideo);
         _title = Resources.ApplicationName;
         OnKeyDownCommand = new ActionCommand(OnKeyDown);
-        KeyboardController = new KeyboardController(this._eventHub);
+        KeyboardController = isActualApp ? new KeyboardController(this._eventHub) : null;
         LibraryViewModel = libraryViewModel;
         VideoPlayerViewModel = videoPlayerViewModel;
     }
@@ -85,7 +86,7 @@ public class MainWindowViewModel : EventBasedViewModel
         if (o is not KeyEventArgs e) return;
         if (e.Handled) return;
         System.Diagnostics.Debug.Print("**** HANDLING KEYPRESS *****");
-        e.Handled = KeyboardController.ProcessKeypress(e.Key);
+        e.Handled = KeyboardController?.ProcessKeypress(e.Key) ?? false;
     }
 
     public void OnRenderSizeChanged(SizeChangedInfo sizeInfo)

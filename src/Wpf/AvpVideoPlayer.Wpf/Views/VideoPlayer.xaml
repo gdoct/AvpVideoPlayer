@@ -20,11 +20,15 @@
         </Style>
     </UserControl.Resources>
     <UserControl.ContextMenu>
-        <ContextMenu>
+        <ContextMenu >
             <MenuItem Header="{x:Static localization:Resources.Subtitles}" 
                       HorizontalContentAlignment="Left"
                       VerticalContentAlignment="Center"
-                      ItemsSource="{Binding AvailableSubs}" />
+                      ItemsSource="{Binding AvailableSubs}" 
+                      IsEnabled="{Binding IsVideoVisible}" />
+            <MenuItem Header="Tags" ItemsSource="{Binding TagMenuItems}" IsEnabled="{Binding IsVideoVisible}" />
+            <MenuItem Header="Rating" IsEnabled="{Binding IsVideoVisible}" />
+            <MenuItem Header="Manage video library.." Command="{Binding ManageLibraryCommand}"/>
         </ContextMenu>
     </UserControl.ContextMenu>
     <i:Interaction.Triggers>

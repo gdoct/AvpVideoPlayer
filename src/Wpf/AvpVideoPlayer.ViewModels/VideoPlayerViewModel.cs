@@ -1,4 +1,5 @@
 ﻿using AvpVideoPlayer.Api;
+using AvpVideoPlayer.MetaData;
 using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.Video.Subtitles;
 using AvpVideoPlayer.ViewModels.Events;
@@ -32,17 +33,29 @@ public class VideoPlayerViewModel : EventBasedViewModel
     private readonly IViewRegistrationService _viewRegistrationService;
     private readonly IUserConfiguration _userConfiguration;
     private bool _repeat = false;
+    private FileMetaData _metadata = FileMetaData.Empty;
+    private readonly IMetaDataService _metaDataService;
+    private readonly ITaggingService _taggingService;
+    private readonly PlayerControlsViewModel _playerControlsViewModel;
 
     public ICommand OnMouseMoveCommand { get; }
     public ICommand OnMediaOpenedCommand { get; }
     public ICommand OnPreviewDragOver { get; }
     public ICommand OnDrop { get; }
+    public ICommand ManageLibraryCommand { get; }
 
     public IVideoPlayerView? View => (IVideoPlayerView)_viewRegistrationService.GetInstance(ViewResources.MediaElement);
 
-    public VideoPlayerViewModel(IEventHub eventHub, PlayerControlsViewModel playerControlsViewModel, IViewRegistrationService viewRegistrationService, IUserConfiguration userConfiguration) : base(eventHub)
+    public VideoPlayerViewModel(IEventHub eventHub, 
+                                PlayerControlsViewModel playerControlsViewModel, 
+                                IViewRegistrationService viewRegistrationService, 
+                                IUserConfiguration userConfiguration,
+                                IMetaDataService metaDataService,
+                                ITaggingService taggingService) : base(eventHub)
     {
         VideoPlayerDoubleClickCommand = new RelayCommand(OnDoubleClick);
+        _metaDataService = metaDataService;
+        _taggingService = taggingService;
         _playerControlsViewModel = playerControlsViewModel;
         _timer = new DispatcherTimer() { Interval = DEFAULT_INTERVAL, IsEnabled = true };
         _timer.Tick += TimerTick;
@@ -55,6 +68,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
         OnMediaOpenedCommand = new ActionCommand(OnMediaOpened);
         OnPreviewDragOver = new ActionCommand(PerformOnPreviewDragOver);
         OnDrop = new ActionCommand(PerformOnDrop);
+        ManageLibraryCommand = new ActionCommand(OnManageLibrary);
         Subscribe<SelectVideoEvent>(LoadVideo);
         Subscribe<LoadSubtitlesEvent>(OnLoadSubtitle);
         Subscribe<SetSubtitleSizeEvent>(e => SubtitleFontSize = e.Data);
@@ -62,16 +76,79 @@ public class VideoPlayerViewModel : EventBasedViewModel
         Subscribe<ToggleRepeatEvent>(ToggleRepeat);
         Subscribe<ActivateSubtitleEvent>(ActivateSubtitle);
         Subscribe<PlayStateChangeRequestEvent>(OnUpdatePlayState);
-        Subscribe<PlayPositionChangeRequestEvent>(e => OnSetPosition(TimeSpan.FromMilliseconds(e.Data)));
+        Subscribe<PlayPositionChangeRequestEvent>(e => OnSetPosition(TimeSpan.FromMilliseconds(e.Data.Item1), e.Data.Item2));
         Subscribe<VolumeChangeRequestEvent>(e => OnSetVolume(e.Data));
         Subscribe<FullScreenEvent>(e => OnFullscreen(e));
-
+        Subscribe<TagsChangedEvent>(OnTagsChanged);
+        DispatcherHelper.Invoke(LoadTags);
         if (null != Application.Current)
             Application.Current.Exit += (_, __) => { View?.Stop(); };
     }
 
+    private void OnTagsChanged(TagsChangedEvent obj)
+    {
+        DispatcherHelper.Invoke(LoadTags);
+    }
+
+    private void OnManageLibrary()
+    {
+        _eventHub.Publish(new ManageLibraryEvent());
+    }
+
+    private void OnEditTags()
+    {
+        _eventHub.Publish(new ShowTagEditorEvent());
+    }
+
+    private void OnToggleTag(string tag)
+    {
+        if (_metadata?.Tags != null)
+        {
+            if (!_metadata.Tags.Contains(tag))
+            {
+                _metadata.Tags.Add(tag);
+                Publish(new MetaDataUpdatedEvent(_metadata));
+            }
+            else
+            {
+                _metadata.Tags.Remove(tag);
+                Publish(new MetaDataUpdatedEvent(_metadata));
+            }
+            _metaDataService.SaveMetadata(_metadata);
+        }
+        LoadMetadata();
+    }
+
+    private void LoadTags()
+    {
+        TagMenuItems.Clear();
+        var tags = _taggingService.GetTags();
+        if (tags.Any())
+        {
+            foreach (var tag in tags)
+            {
+                var mi = new MenuItem()
+                {
+                    Header = tag,
+                    Command = new RelayCommand((_) => OnToggleTag(tag)),
+                    CommandParameter = tag,
+                    Tag = tag,
+                    IsChecked = _metadata?.Tags.Contains(tag) ?? false
+                };
+                TagMenuItems.Add(mi);
+            }
+            TagMenuItems.Add(new Separator());
+        }
+        TagMenuItems.Add(new MenuItem()
+        {
+            Header = "Edit tags..",
+            Command = new RelayCommand((_) => OnEditTags())
+        });
+    }
 
     public ObservableCollection<MenuItem> AvailableSubs { get; } = new ObservableCollection<MenuItem>();
+    
+    public ObservableCollection<Control> TagMenuItems { get; } = new ObservableCollection<Control>();
 
     public PlayerControlsViewModel PlayerControlsViewModel => _playerControlsViewModel;
 
@@ -115,8 +192,6 @@ public class VideoPlayerViewModel : EventBasedViewModel
     public string Url { get => _filename ?? string.Empty; set { _filename = value; RaisePropertyChanged(); } }
 
     public ICommand VideoPlayerDoubleClickCommand { get; }
-
-    private readonly PlayerControlsViewModel _playerControlsViewModel;
 
     public double Volume { get => _volume; set { _volume = value; RaisePropertyChanged(); } }
 
@@ -173,7 +248,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
                 if (PlayState != PlayStates.Stop)
                 {
                     OnStop();
-                    OnSetPosition(TimeSpan.Zero);
+                    OnSetPosition(TimeSpan.Zero, false);
                 }
             }
             else if (File.Exists(e.Data))
@@ -182,8 +257,22 @@ public class VideoPlayerViewModel : EventBasedViewModel
                 Url = e.Data;
                 SubtitleService.ClearSubtitles();
                 OnAvailableSubtitlesChanged();
+                LoadMetadata();
                 OnPlay();
             }
+        }
+    }
+
+    private void LoadMetadata()
+    {
+        _metadata = _metaDataService.GetMetadata(Url);
+        if (_metadata == null) return;
+        var tags = _metadata.Tags;
+        foreach(var menuitem in TagMenuItems)
+        {
+            if (menuitem is not MenuItem mi) break;
+            if (mi.Tag is not string tagname) continue;
+            mi.IsChecked = tags.Contains(tagname);
         }
     }
 
@@ -285,11 +374,20 @@ public class VideoPlayerViewModel : EventBasedViewModel
         PlayState = PlayStates.Play;
     }
 
-    private void OnSetPosition(TimeSpan timespan)
+    private void OnSetPosition(TimeSpan timespan, bool relative)
     {
         if (View != null)
-            View.Position = timespan;
-        Publish(new PlayPositionChangedEvent(timespan.TotalMilliseconds));
+        {
+            if (relative)
+            {
+                View.Position += timespan;
+            }
+            else
+            {
+                View.Position = timespan;
+            }
+            Publish(new PlayPositionChangedEvent(View.Position.TotalMilliseconds));
+        }
     }
 
     private void OnSetVolume(double value)

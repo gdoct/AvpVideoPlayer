@@ -20,8 +20,10 @@ public class KeyboardController : IKeyboardController
         {
             case Key.Escape: _eventHub.Publish(new FullScreenEvent(false)); break;
             case Key.Space: _eventHub.Publish(new PlayStateChangeRequestEvent(PlayStates.Toggle)); break;
-            case Key.Left: _eventHub.Publish(new PlaylistMoveEvent(PlayListMoveTypes.Back)); break;
-            case Key.Right: _eventHub.Publish(new PlaylistMoveEvent(PlayListMoveTypes.Forward)); break;
+            case Key.Up: _eventHub.Publish(new PlaylistMoveEvent(PlayListMoveTypes.Back)); break;
+            case Key.Down: _eventHub.Publish(new PlaylistMoveEvent(PlayListMoveTypes.Forward)); break;
+            case Key.Right: _eventHub.Publish(new PlayPositionChangeRequestEvent(30000, true)); break;
+            case Key.Left: _eventHub.Publish(new PlayPositionChangeRequestEvent(-30000, true)); break;
             case Key.Delete: _eventHub.Publish(new DeleteCurrentVideoEvent()); break;
             default: handled = false; break;
         }

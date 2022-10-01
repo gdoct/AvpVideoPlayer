@@ -1,0 +1,29 @@
+﻿<Window x:Class="AvpVideoPlayer.Wpf.Views.ManageLibraryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AvpVideoPlayer.Wpf.Views"
+        xmlns:viewmodels="clr-namespace:AvpVideoPlayer.ViewModels;assembly=AvpVideoPlayer.ViewModels"
+        mc:Ignorable="d"
+        Title="ManageLibraryWindow" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance Type=viewmodels:LibraryManagerViewModel, IsDesignTimeCreatable=False}">
+    <DockPanel >
+        <StackPanel Orientation="Vertical" >
+            <Button Content="Delete files marked as 'Delete'" Command="{Binding PurgeCommand}" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Move all files with tag</TextBlock>
+                <ComboBox ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedExportTag}" Margin="5 0 5 0" />
+                <TextBlock>to folder</TextBlock>
+                <TextBox Text="{Binding ExportPath}" Width="250" Margin="5 0 5 0" />
+                <Button Content=".." Command="{Binding BrowseExportPathCommand}" Width="30" />
+                <Button Content="Move" Command="{Binding ExportPathCommand}" Width="50" Margin="5 0 5 0" IsEnabled="{Binding CanMove}" />
+            </StackPanel>
+            <StatusBar DockPanel.Dock="Bottom" Height="64">
+                <StatusBarItem Width="80"  HorizontalAlignment="Stretch" />
+                <Separator />
+                <StatusBarItem Content="{Binding StatusMessage}" HorizontalAlignment="Stretch" />
+            </StatusBar>
+        </StackPanel>
+    </DockPanel>
+</Window>

@@ -1,9 +1,11 @@
 namespace AvpVideoPlayer.ViewModels.Tests;
 
 using AvpVideoPlayer.Api;
+using AvpVideoPlayer.MetaData;
 using AvpVideoPlayer.Video.Snapshot;
 using Moq;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 
@@ -14,23 +16,31 @@ public class VideoPlayerViewModelTests
     public VideoPlayerViewModelTests()
     {
         var eh = new Mock<IEventHub>();
+        var ts = new Mock<ITaggingService>();
+        ts.Setup(ts => ts.GetTags()).Returns(new List<string>());
         eh.Setup(eh => eh.Events).Returns(Mock.Of<IObservable<EventBase>>());
         _testClass = new VideoPlayerViewModel(eh.Object, new PlayerControlsViewModel(eh.Object,
                                                                                      Mock.Of<IViewRegistrationService>(),
                                            Mock.Of<ISnapshotService>()), Mock.Of<IViewRegistrationService>(),
-                                           Mock.Of<IUserConfiguration>());
+                                           Mock.Of<IUserConfiguration>(),
+                                           Mock.Of<IMetaDataService>(),
+                                           ts.Object);
     }
 
     [Fact]
     public void CanConstruct()
     {
         var eh = new Mock<IEventHub>();
+        var ts = new Mock<ITaggingService>();
+        ts.Setup(ts => ts.GetTags()).Returns(new List<string>());
         eh.Setup(eh => eh.Events).Returns(Mock.Of<IObservable<EventBase>>());
         var instance = new VideoPlayerViewModel(eh.Object,
                                                 new PlayerControlsViewModel(eh.Object, Mock.Of<IViewRegistrationService>(),
                                            Mock.Of<ISnapshotService>()),
                                                 Mock.Of<IViewRegistrationService>(),
-                                                Mock.Of<IUserConfiguration>());
+                                                Mock.Of<IUserConfiguration>(),
+                                           Mock.Of<IMetaDataService>(),
+                                           ts.Object);
         Assert.NotNull(instance);
     }
 

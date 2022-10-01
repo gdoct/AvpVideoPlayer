@@ -256,6 +256,15 @@
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
+                <GridViewColumn Header="{x:Static localization:Resources.TagsColumn}" 
+                                    Width="100" 
+                                    utility:GridViewSort.PropertyName="Tags">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=Tags, Mode=OneWay}" Foreground="{StaticResource LightForegroundBrush}" Background="Transparent" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
                 <GridViewColumn Header="{x:Static localization:Resources.SizeColumn}" 
                                     Width="100" 
                                     utility:GridViewSort.PropertyName="File.Size">

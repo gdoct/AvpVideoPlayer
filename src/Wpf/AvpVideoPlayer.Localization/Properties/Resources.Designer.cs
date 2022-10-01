@@ -214,6 +214,15 @@ namespace AvpVideoPlayer.Localization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string TagsColumn {
+            get {
+                return ResourceManager.GetString("TagsColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to hh\:mm\:ss.
         /// </summary>
         public static string TimespanFormat {
