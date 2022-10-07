@@ -21,6 +21,7 @@
 		<None Remove="Images\openfolderyellow.png" />
 		<None Remove="Images\pause.png" />
 		<None Remove="Images\play.png" />
+		<None Remove="Images\playlist.png" />
 		<None Remove="Images\previous.png" />
 		<None Remove="Images\repeat.png" />
 		<None Remove="Images\search.png" />
@@ -29,6 +30,7 @@
 		<None Remove="Images\star_off.svg" />
 		<None Remove="Images\star_on.svg" />
 		<None Remove="Images\stop.png" />
+		<None Remove="Images\stream.png" />
 		<None Remove="Images\subs.png" />
 		<None Remove="Images\video.png" />
 		<None Remove="ffmpeg\ffmpeg.exe" />
@@ -70,6 +72,7 @@
 		<Resource Include="Images\folderyellow.png" />
 		<Resource Include="Images\harddisk.png" />
 		<Resource Include="Images\openfolderyellow.png" />
+		<Resource Include="Images\playlist.png" />
 		<Resource Include="Images\previous.png" />
 		<Resource Include="Images\clear.png" />
 		<Resource Include="Images\folder.png" />
@@ -84,6 +87,7 @@
 		<Resource Include="Images\star_off.svg" />
 		<Resource Include="Images\star_on.svg" />
 		<Resource Include="Images\stop.png" />
+		<Resource Include="Images\stream.png" />
 		<Resource Include="Images\subs.png" />
 		<Resource Include="Images\video.png" />
 	</ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using static System.Net.WebRequestMethods;
 
 namespace AvpVideoPlayer.Api;
 
@@ -9,7 +10,7 @@ public static class FileExtensions
 {
     public static bool IsValidFile(FileInfo file)
     {
-        return IsVideoFile(file) || IsSubtitleFile(file);
+        return IsVideoFile(file) || IsSubtitleFile(file) || IsPlaylist(file);
     }
 
     public static bool IsValidFile(string file)
@@ -18,7 +19,7 @@ public static class FileExtensions
         return IsValidFile(fi);
     }
 
-        public static bool IsVideoFile(FileInfo file)
+    public static bool IsPlaylist(FileInfo file)
     {
         if (file is null)
         {
@@ -27,7 +28,31 @@ public static class FileExtensions
 
         return file.Extension.ToLowerInvariant() switch
         {
-            ".mkv" or ".mpg" or ".mp4" or ".mpv" or ".webm" or ".264" or ".mpeg" => true,
+            ".m3u" => true,
+            _ => false,
+        };
+    }
+
+    public static bool IsPlaylist(string filename)
+    {
+        if (string.IsNullOrEmpty(filename))
+        {
+            throw new ArgumentNullException(nameof(filename));
+        }
+
+        return IsPlaylist(new FileInfo(filename));
+    }
+
+    public static bool IsVideoFile(FileInfo file)
+    {
+        if (file is null)
+        {
+            throw new ArgumentNullException(nameof(file));
+        }
+
+        return file.Extension.ToLowerInvariant() switch
+        {
+            ".mkv" or ".mpg" or ".mp4" or ".mpv" or ".webm" or ".264" or ".mpeg" or "m3u" => true,
             _ => false,
         };
     }

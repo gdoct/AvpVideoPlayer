@@ -1,0 +1,10 @@
+#EXTM3U
+#EXTINF:-1 tvg-ID="channel1" tvg-name="channel 1" tvg-logo="http://iptvprovider.info/logo/channel1.png" group-title="main",channel 1
+http://iptv-provider.info:80/channel/123
+#EXTINF:0,|NL| VIAPLAY FORMULA 1 HD
+#EXTVLCOPT:network-caching=1000
+http://iptv-provider.info:80/channel/3443
+#EXTINF:-1 tvg-ID="channel2" tvg-name="channel 2" tvg-logo="http://iptvprovider.info/logo/channel2.png" group-title="main",channel 2
+http://iptv-provider.info:80/channel/101026
+#EXTINF:-1 tvg-ID="channel3" tvg-name="channel 3" tvg-logo="http://iptvprovider.info/logo/channel2.png" group-title="main",channel 3
+http://iptv-provider.info:80/channel/101051

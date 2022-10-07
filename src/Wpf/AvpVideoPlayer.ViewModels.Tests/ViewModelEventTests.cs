@@ -33,7 +33,7 @@ public class ViewModelEventTests
             yield return new[] { new PlayStateChangeRequestEvent(new())};
             yield return new[] { new SearchTextChangedEvent("search")};
             yield return new[] { new SelectedFileChangedEvent(new FileViewModel(FileTypes.Folder)) };
-            yield return new[] { new SelectVideoEvent("video") };
+            yield return new[] { new SelectVideoEvent(new VideoFileViewModel(new System.IO.FileInfo("test"))) };
             yield return new[] { new SetSubtitleSizeEvent(new())};
             yield return new[] { new SubtitlesLoadedEvent(new List<SubtitleInfo>())};
             yield return new[] { new SubtitlesLoadedEvent(new List<SubtitleInfo>())};
@@ -89,7 +89,7 @@ public class ViewModelEventTests
                      new PlayStateChangedEvent(new()),
                      new PlayStateChangeRequestEvent(new()),
                      new SearchTextChangedEvent("search"),
-                     new SelectVideoEvent("video"),
+                     new SelectVideoEvent(new VideoFileViewModel(new System.IO.FileInfo("video"))),
                      new SetSubtitleSizeEvent(new()),
                      new SubtitlesLoadedEvent(new List<SubtitleInfo>()),
                      new SubtitlesLoadedEvent(new List<SubtitleInfo>()),

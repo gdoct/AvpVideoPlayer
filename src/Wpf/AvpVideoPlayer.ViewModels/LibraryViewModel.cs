@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
+using System.Windows.Shapes;
+using System.Xml;
 
 namespace AvpVideoPlayer.ViewModels;
 
@@ -70,7 +72,7 @@ public class LibraryViewModel : EventBasedViewModel
     {
         if (_fullscreen) return;
         var filename = _filename;
-        if (string.IsNullOrWhiteSpace(filename) || !File.Exists(filename)) return;
+        if (string.IsNullOrWhiteSpace(filename) || !File.Exists(filename) || Uri.IsWellFormedUriString(filename, UriKind.Absolute)) return;
         if (string.Compare(FileListViewModel.ActivatedFile?.Path, filename, true) != 0) return;
         var result = _dialogService.Show($@"Are you sure you want to delete ""{filename}""?", "Confirm delete", true, IDialogService.DialogTypes.Warning);
         if (result == IDialogService.DialogResult.Ok)
@@ -124,6 +126,13 @@ public class LibraryViewModel : EventBasedViewModel
                 LoadFolderContents(new DirectoryInfo(file.Path)));
 
         }
+        else if (file is PlayListViewModel)
+        {
+            //Publish(new PathChangedEvent(file.Path));
+            //_userSettingsService.LastPath = file.Path;
+            DispatcherHelper.Invoke(() =>
+                LoadPlaylistContents(file));
+        }
         else if (file is VideoFileViewModel)
         {
             if (file.FileType == FileTypes.Subtitles)
@@ -132,15 +141,25 @@ public class LibraryViewModel : EventBasedViewModel
             }
             else
             {
-                Publish(new SelectVideoEvent(file.Path));
+                Publish(new SelectVideoEvent(file));
             }
         }
+        else if (file is VideoStreamViewModel)
+        {
+            Publish(new SelectVideoEvent(file));
+        }
+    }
+
+    private void LoadPlaylistContents(FileViewModel file)
+    {
+        FileListViewModel.Path = file.Path;
+        FolderDropDownViewModel.CurrentPath = file.Path ?? string.Empty;
     }
 
     private void OnSelectVideo(SelectVideoEvent e)
     {
-        if (string.IsNullOrWhiteSpace(e.Data)) return;
-        var fi = new FileInfo(e.Data);
+        if (string.IsNullOrWhiteSpace(e.Data.Path)) return;
+        var fi = new FileInfo(e.Data.Path);
         if (!fi.Exists || fi.Directory == null) return;
         if (string.Compare(fi.Directory.FullName, FileListViewModel.Path, true) != 0)
         {

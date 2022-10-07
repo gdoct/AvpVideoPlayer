@@ -68,7 +68,7 @@ public class FileListViewModel : EventBasedViewModel
         foreach (var cur in FolderContents)
         {
             string? path = cur.File?.FileInfo?.FullName;
-            if (path != null && string.Compare(path, newfile, StringComparison.OrdinalIgnoreCase) == 0)
+            if (path != null && string.Compare(path, newfile.Path, StringComparison.OrdinalIgnoreCase) == 0)
             {
                 cur.IsActivated = true;
                 cur.IsSelected = true;
@@ -178,7 +178,11 @@ public class FileListViewModel : EventBasedViewModel
         {
             if (string.Compare(value, _path, StringComparison.OrdinalIgnoreCase) == 0) return;
             _path = value;
-            if (!string.IsNullOrEmpty(_path) && Directory.Exists(_path))
+            if (!string.IsNullOrEmpty(_path) && File.Exists(_path) && FileExtensions.IsPlaylist(_path))
+            {
+                _fileSystemWatcher.EnableRaisingEvents = false;
+            }
+            else if (!string.IsNullOrEmpty(_path) && Directory.Exists(_path))
             {
                 _fileSystemWatcher.Path = _path;
                 _fileSystemWatcher.EnableRaisingEvents = true;
@@ -187,7 +191,7 @@ public class FileListViewModel : EventBasedViewModel
             {
                 _fileSystemWatcher.EnableRaisingEvents = false;
             }
-            DispatcherHelper.Invoke(() => LoadFolderContentsIntoListView(value, true));
+            DispatcherHelper.Invoke(() => LoadContentsIntoListView(value, true));
         }
     }
 
@@ -195,10 +199,34 @@ public class FileListViewModel : EventBasedViewModel
 
     public void Refresh(bool force)
     {
-        LoadFolderContentsIntoListView(_path, force);
+        LoadContentsIntoListView(_path, force);
     }
 
-    private void LoadFolderContentsIntoListView(string? path, bool force = true)
+    private void LoadContentsIntoListView(string? path, bool force)
+    {
+        if (string.IsNullOrWhiteSpace(path)) return;
+        if (File.Exists(path) && FileExtensions.IsPlaylist(path))
+        {
+            LoadPlaylistIntoListview(path, force);
+        }
+        else if (Directory.Exists(path))
+        {
+            LoadFolderContentsIntoListView(path, force);
+            return;
+        }
+    }
+
+    private void LoadPlaylistIntoListview(string path, bool force)
+    {
+        var streams = new M3uParser(path).ParsePlaylist();
+        FolderContents.Clear();
+        foreach (var stream in streams)
+        {
+            FolderContents.Add(new FileListListViewItem(new VideoStreamViewModel(stream.Key, stream.Value), new FileMetaData()));
+        }
+    }
+
+    private void LoadFolderContentsIntoListView(string path, bool force = true)
     {
         if (string.IsNullOrWhiteSpace(path)) return;
         var dir = new DirectoryInfo(path);
@@ -226,6 +254,11 @@ public class FileListViewModel : EventBasedViewModel
         }
         foreach (var file in files)
         {
+            if (FileExtensions.IsPlaylist(file))
+            {
+                newlist.Add(new PlayListViewModel(file.FullName));
+            }
+            else
             newlist.Add(new VideoFileViewModel(file));
         }
 
@@ -269,13 +302,23 @@ public class FileListViewModel : EventBasedViewModel
                 {
                     isActivatedItemFound = true;
                 }
-                else if (!isActivatedItemFound || item?.File?.FileInfo == null)
+                else if (!isActivatedItemFound)
+                {
+                    continue;
+                }
+                else if (item.File is VideoStreamViewModel vs)
+                {
+                    Publish(new SelectVideoEvent(vs));
+                    canPlay = true;
+                    break;
+                }
+                else if (item?.File?.FileInfo == null)
                 {
                     continue;
                 }
                 else
                 {
-                    Publish(new SelectVideoEvent(item.File.FileInfo.FullName));
+                    Publish(new SelectVideoEvent(item.File));
                     canPlay = true;
                     break;
                 }
@@ -297,7 +340,7 @@ public class FileListViewModel : EventBasedViewModel
                 }
                 else
                 {
-                    Publish(new SelectVideoEvent(item.File.FileInfo.FullName));
+                    Publish(new SelectVideoEvent(item.File));
                     canPlay = true;
                     break;
                 }

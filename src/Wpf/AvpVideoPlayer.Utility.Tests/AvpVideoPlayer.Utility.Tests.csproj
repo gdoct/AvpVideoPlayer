@@ -25,4 +25,10 @@
     <ProjectReference Include="..\AvpVideoPlayer.Utility\AvpVideoPlayer.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="sample.m3u">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

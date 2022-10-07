@@ -29,6 +29,7 @@ public class PlayerControlsViewModel : EventBasedViewModel
     private bool _isRepeatVisible;
     private string _positionTooltip = "";
     private ImageSource? _positionImage;
+    private bool _isProgressVisible = true;
 
     public PlayerControlsViewModel(IEventHub eventHub, IViewRegistrationService viewRegistrationService, ISnapshotService snapshotService) : base(eventHub)
     {
@@ -63,11 +64,13 @@ public class PlayerControlsViewModel : EventBasedViewModel
 
     private void OnSelectVideo(SelectVideoEvent e)
     {
-        if (string.Compare(e.Data, _currentVideoFile, StringComparison.OrdinalIgnoreCase) != 0)
+        if (string.Compare(e.Data.Path, _currentVideoFile, StringComparison.OrdinalIgnoreCase) != 0)
         {
-            _currentVideoFile = e.Data;
+            _currentVideoFile = e.Data.Path ?? string.Empty;
             IsSubtitlesVisible = false;
-            _snapshotService.LoadVideofile(e.Data);
+            IsProgressVisible = !e.IsStream;
+            if (!e.IsStream)
+                _snapshotService.LoadVideofile(e.Data.Path ?? string.Empty);
         }
     }
 
@@ -107,6 +110,12 @@ public class PlayerControlsViewModel : EventBasedViewModel
     {
         get => _isPlayButtonVisible;
         set { _isPlayButtonVisible = value; RaisePropertyChanged(); }
+    }
+
+    public bool IsProgressVisible
+    {
+        get => _isProgressVisible;
+        set { _isProgressVisible = value; RaisePropertyChanged(); }
     }
 
     public bool IsPlaying

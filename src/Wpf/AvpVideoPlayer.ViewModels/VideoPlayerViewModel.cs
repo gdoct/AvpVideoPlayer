@@ -37,6 +37,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
     private readonly IMetaDataService _metaDataService;
     private readonly ITaggingService _taggingService;
     private readonly PlayerControlsViewModel _playerControlsViewModel;
+    private bool IsStream = false;
 
     public ICommand OnMouseMoveCommand { get; }
     public ICommand OnMediaOpenedCommand { get; }
@@ -242,23 +243,37 @@ public class VideoPlayerViewModel : EventBasedViewModel
     {
         if (e?.Data != null)
         {
-            if (string.Compare(Url, e.Data, StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Compare(Url, e.Data.Path, StringComparison.OrdinalIgnoreCase) == 0)
             {
                 //move to 00:00:00
-                if (PlayState != PlayStates.Stop)
+                if (PlayState != PlayStates.Stop && !IsStream)
                 {
                     OnStop();
                     OnSetPosition(TimeSpan.Zero, false);
                 }
             }
-            else if (File.Exists(e.Data))
+            else if (e.IsStream && Uri.IsWellFormedUriString(e.Data.Path, UriKind.Absolute))
             {
                 OnStop();
-                Url = e.Data;
+                Url = e.Data.Path ?? string.Empty;
+                SubtitleService.ClearSubtitles();
+                IsStream = true;
+                IsVideoVisible = true;
+                OnPlay();
+            }
+            else if (File.Exists(e.Data.Path))
+            {
+                OnStop();
+                Url = e.Data.Path ?? string.Empty;
                 SubtitleService.ClearSubtitles();
                 OnAvailableSubtitlesChanged();
                 LoadMetadata();
+                IsStream = false;
                 OnPlay();
+            }
+            else
+            {
+                // ..?
             }
         }
     }
@@ -439,7 +454,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
 
     private void TimerTick(object? sender, EventArgs e)
     {
-        if (View is null) return;
+        if (View is null || IsStream) return;
         if (PlayState == PlayStates.Play)
         {
             var position = View.Position;
@@ -508,6 +523,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
     private void OnMediaOpened(object data)
     {
         if (View?.NaturalDuration == null) return;
+        if (IsStream) { IsVideoVisible = true; return; }
         var duration = View.NaturalDuration;
         if (duration.TotalMilliseconds > 0)
         {
@@ -558,7 +574,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
                 {
                     if (FileExtensions.IsVideoFile(fi))
                     {
-                        Task.Run(() => Publish(new SelectVideoEvent(filename)));
+                        Task.Run(() => Publish(new SelectVideoEvent(new VideoFileViewModel(fi))));
                         break;
                     }
                     else if (FileExtensions.IsSubtitleFile(fi))

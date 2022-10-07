@@ -82,7 +82,7 @@ public partial class App : Application
         {
             var fi = new FileInfo(args[1]);
             if (!fi.Exists) return;
-            eventhub?.Publish(new SelectVideoEvent(fi.FullName));
+            eventhub?.Publish(new SelectVideoEvent(new VideoFileViewModel(fi)));
             eventhub?.Publish(new PlayStateChangeRequestEvent(PlayStates.Play));
             mainwindow.WindowState = WindowState.Maximized;
             System.Threading.Thread.Sleep(10);

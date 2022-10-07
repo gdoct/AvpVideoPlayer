@@ -16,7 +16,7 @@
                          Opacity="0.2"/>
         <utils:BoolToStringConverter ValueWhenFalse="/Images/speaker.png" ValueWhenTrue="/Images/speakermuted.png" x:Key="SpeakerMuteStateConverter" />
     </UserControl.Resources>
-    
+
     <Grid HorizontalAlignment="Stretch" Height="100" VerticalAlignment="Bottom" Background="Transparent" Name="OuterGrid">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseEnter">
@@ -37,7 +37,7 @@
               VerticalAlignment="Center" 
               Margin="0 0 0 0" 
               Background="{StaticResource TransparentDarkBackgroundBrush}">
-           
+
             <StackPanel Name="OuterPanel"
                     Orientation="Vertical" >
                 <StackPanel Name="PlayControlsPanel"
@@ -83,19 +83,21 @@
                                Source="{StaticResource StopImage}"  />
                     </Button>
                     <ToggleButton Command="{Binding ToggleSubtitlesCommand}" 
-                            ToolTip="{x:Static localization:Resources.ToggleSubtitlesCommand}"
-                            Width="34" 
-                            Focusable="False"
-                            IsChecked="{Binding IsSubtitlesVisible, Mode=OneWay}"
-                            Style="{StaticResource InvisibleToggleButtonStyle}" >
+                                  Visibility="{Binding IsProgressVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  ToolTip="{x:Static localization:Resources.ToggleSubtitlesCommand}"
+                                  Width="34" 
+                                  Focusable="False"
+                                  IsChecked="{Binding IsSubtitlesVisible, Mode=OneWay}"
+                                  Style="{StaticResource InvisibleToggleButtonStyle}" >
                         <Image Width="24" 
                                Source="{StaticResource SubtitlesImage}"  />
                     </ToggleButton>
                     <ToggleButton Command="{Binding ToggleRepeatCommand}" 
-                            Width="34" 
-                            Focusable="False"
-                            IsChecked="{Binding IsRepeatEnabled, Mode=OneWay}"
-                            Style="{StaticResource InvisibleToggleButtonStyle}" >
+                                  Visibility="{Binding IsProgressVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  Width="34" 
+                                  Focusable="False"
+                                  IsChecked="{Binding IsRepeatEnabled, Mode=OneWay}"
+                                  Style="{StaticResource InvisibleToggleButtonStyle}" >
                         <Image Width="24" 
                                Source="{StaticResource RepeatImage}"  />
                     </ToggleButton>
@@ -140,12 +142,14 @@
                         <ColumnDefinition Width="3*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
+                               Visibility="{Binding IsProgressVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                            Text="{Binding PositionLabelText}"
                            Focusable="False"
                            Foreground="{StaticResource LightForegroundBrush}"
                            HorizontalAlignment="Right" 
                            Margin="0,0,5,0" />
                     <Slider Name="PositionSlider"   
+                            Visibility="{Binding IsProgressVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                            Grid.Column="1"
                            IsMoveToPointEnabled="True"
                            Focusable="False"
@@ -176,6 +180,7 @@
                         </i:Interaction.Triggers>
                     </Slider>
                     <TextBlock Grid.Column="2"
+                               Visibility="{Binding IsProgressVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                            Focusable="False"
                            Text="{Binding PlayDurationLabelText}" 
                            Foreground="{StaticResource LightForegroundBrush}"

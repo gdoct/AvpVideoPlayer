@@ -16,7 +16,14 @@ public class FileViewModel : BaseViewModel
 
     public FileInfo? FileInfo { get; private set; }
 
-    public DateTime? LastWriteTime => FileInfo?.LastWriteTime;
+    public DateTime? LastWriteTime
+    {
+        get
+        {
+            if (FileInfo?.Exists == true) { return FileInfo?.LastWriteTime; }
+            return DateTime.Today;
+        }
+    }
 
     public string? Name { get; set; }
 
@@ -37,8 +44,11 @@ public class FileViewModel : BaseViewModel
         get
         {
             if (FileInfo == null) return 0;
-            if (FileInfo.Attributes.HasFlag(FileAttributes.Directory)) return 0;
-            return FileInfo.Length;
+            if (FileInfo.Exists)
+            {
+                return FileInfo.Length;
+            }
+            return 0;
         }
     }
 }

@@ -17,6 +17,8 @@ public class FiletypeToIconConverter : IValueConverter
         {
             FileTypes.Video => "/Images/video.png",
             FileTypes.Subtitles => "/Images/subs.png",
+            FileTypes.VideoStream => "/Images/stream.png",
+            FileTypes.Playlist => "/Images/playlist.png",
             _ => "/Images/folderyellow.png",
         };
     }

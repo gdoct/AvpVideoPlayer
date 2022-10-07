@@ -6,15 +6,16 @@ namespace AvpVideoPlayer.ViewModels;
 
 public class VideoFileViewModel : FileViewModel
 {
-    public VideoFileViewModel(FileInfo file) : base(GextFileType(file))
+    public VideoFileViewModel(FileInfo file) : base(GetFileType(file))
     {
         Path = file.FullName;
         Name = file.Name;
     }
 
-    private static FileTypes GextFileType(FileInfo file)
+    private static FileTypes GetFileType(FileInfo file)
     {
         if (FileExtensions.IsSubtitleFile(file)) return FileTypes.Subtitles;
-        return FileTypes.Video;
+        else if (FileExtensions.IsPlaylist(file)) return FileTypes.Playlist;
+        else return FileTypes.Video;
     }
 }

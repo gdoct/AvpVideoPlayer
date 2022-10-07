@@ -101,7 +101,7 @@ public class MainWindowViewModel : EventBasedViewModel
 
     private void OnSelectVideo(SelectVideoEvent e)
     {
-        var name = new FileInfo(e.Data).Name;
+        var name = e.Data.Name;
         Title = $"{Resources.ApplicationName} - {name}";
     }
 }

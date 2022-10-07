@@ -8,4 +8,6 @@ public enum FileTypes
     Folder,
     Subtitles,
     Video,
+    Playlist,
+    VideoStream,
 }
