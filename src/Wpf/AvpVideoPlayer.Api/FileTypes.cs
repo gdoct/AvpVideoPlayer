@@ -10,4 +10,5 @@ public enum FileTypes
     Video,
     Playlist,
     VideoStream,
+    Category,
 }

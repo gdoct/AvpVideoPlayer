@@ -22,6 +22,8 @@ public class FileListViewModel : EventBasedViewModel
     private string? _path;
     private string? _filter;
     private FileListListViewItem? _selectedItem = null;
+    private List<M3uParser.ChannelInfo> _channels = new();
+    private string _playlist = string.Empty;
 
     public FileListViewModel(IEventHub eventHub, IMetaDataService metaDataService) : base(eventHub)
     {
@@ -38,7 +40,7 @@ public class FileListViewModel : EventBasedViewModel
         _fileSystemWatcher.Deleted += FileSystemWatcher_Changed;
         ActivateFileCommand = new RelayCommand(OnActivateFile);
         SelectFileCommand = new RelayCommand(OnSelectFile);
-        Subscribe<PlaylistMoveEvent>(OnPlayListChanged);
+        Subscribe<PlaylistMoveEvent>(OnPlayListPositionChanged);
         Subscribe<SelectVideoEvent>(OnActivateVideo);
         Subscribe<SearchTextChangedEvent>(OnSearchTextChanged);
         Subscribe<MetaDataUpdatedEvent>(OnMetaDataUpdated);
@@ -214,20 +216,45 @@ public class FileListViewModel : EventBasedViewModel
             LoadFolderContentsIntoListView(path, force);
             return;
         }
+        else if (!string.IsNullOrWhiteSpace(_playlist) && path.StartsWith(_playlist, StringComparison.OrdinalIgnoreCase))
+        {
+            TryLoadPlayListIntoListview(path, force);
+        }
+    }
+
+    private void TryLoadPlayListIntoListview(string path, bool force)
+    {
+        var location = path[(_playlist.Length + 1)..];
+        var parts = location.Split(@"\");
+        var category = parts.FirstOrDefault();
+        if (string.IsNullOrEmpty(category)) return;
+        var channels = _channels.Where(s => s.Group.Equals(category));
+        FolderContents.Clear();
+        foreach(var channel in channels)
+        {
+            if (string.IsNullOrWhiteSpace(channel.Name) || channel.Uri  == null || !channel.Uri.IsWellFormedOriginalString()) continue;
+            FolderContents.Add(new FileListListViewItem(new VideoStreamViewModel(channel.Name, channel.Uri), new FileMetaData()));
+        }
     }
 
     private void LoadPlaylistIntoListview(string path, bool force)
     {
-        var streams = new M3uParser(path).ParsePlaylist();
+        // a new play list is opened - display the categories
+        _channels = new M3uParser(path).ParsePlaylist();
+        _playlist = path;
         FolderContents.Clear();
-        foreach (var stream in streams)
+        var categories = _channels.Select(s => s.Group).Distinct().ToList();
+        foreach (var category in categories)
         {
-            FolderContents.Add(new FileListListViewItem(new VideoStreamViewModel(stream.Key, stream.Value), new FileMetaData()));
+            if (string.IsNullOrWhiteSpace(category)) continue;
+            FolderContents.Add(new FileListListViewItem(new VideoStreamCategoryViewModel(category, System.IO.Path.Combine(_playlist, category)), new FileMetaData()));
         }
     }
 
     private void LoadFolderContentsIntoListView(string path, bool force = true)
     {
+        _playlist = string.Empty;
+        _channels = new();
         if (string.IsNullOrWhiteSpace(path)) return;
         var dir = new DirectoryInfo(path);
         if (!dir.Exists) return;
@@ -288,7 +315,7 @@ public class FileListViewModel : EventBasedViewModel
         base.Dispose(disposing);
     }
 
-    private void OnPlayListChanged(PlaylistMoveEvent e)
+    private void OnPlayListPositionChanged(PlaylistMoveEvent e)
     {
         FileListListViewItem[] itemsInView = listviewCollection.View.Cast<FileListListViewItem>().ToArray();
         bool canPlay = false;

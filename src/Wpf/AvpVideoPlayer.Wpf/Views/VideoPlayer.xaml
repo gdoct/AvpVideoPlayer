@@ -26,9 +26,9 @@
                       VerticalContentAlignment="Center"
                       ItemsSource="{Binding AvailableSubs}" 
                       IsEnabled="{Binding IsVideoVisible}" />
-            <MenuItem Header="Tags" ItemsSource="{Binding TagMenuItems}" IsEnabled="{Binding IsVideoVisible}" />
-            <MenuItem Header="Rating" IsEnabled="{Binding IsVideoVisible}" />
-            <MenuItem Header="Manage video library.." Command="{Binding ManageLibraryCommand}"/>
+            <!--<MenuItem Header="Tags" ItemsSource="{Binding TagMenuItems}" IsEnabled="{Binding IsVideoVisible}" />
+            <MenuItem Header="Rating" IsEnabled="{Binding IsVideoVisible}" />-->
+            <!--<MenuItem Header="Manage video library.." Command="{Binding ManageLibraryCommand}"/>-->
         </ContextMenu>
     </UserControl.ContextMenu>
     <i:Interaction.Triggers>

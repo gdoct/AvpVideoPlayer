@@ -29,7 +29,7 @@ public class FiletypeViewModelTests
     public void CanConstructNull()
     {
         var instance = new FileViewModel(FileTypes.Video) { Path = null };
-        Assert.Null(instance.LastWriteTime);
+        Assert.Equal(System.DateTime.Today, instance.LastWriteTime);
         Assert.Null(instance.FileInfo);
         Assert.Equal(0, instance.Size);
     }

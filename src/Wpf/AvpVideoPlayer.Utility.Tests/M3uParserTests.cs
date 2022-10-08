@@ -16,7 +16,7 @@ namespace AvpVideoPlayer.Utility.Tests
             var result = m3uParser.ParsePlaylist();
 
             // Assert
-            Assert.Equal(4, result.Keys.Count);
+            Assert.Equal(4, result.Count);
         }
     }
 }

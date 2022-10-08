@@ -10,9 +10,12 @@ public class SelectVideoEvent : EventBase<FileViewModel>
         if (data is null) throw new ArgumentNullException(nameof(data));
         Name = data.Name ?? string.Empty;
         IsStream = data is VideoStreamViewModel;
+        IsCategory = data is VideoStreamCategoryViewModel;
     }
 
     public bool IsStream { get; }
+    
+    public bool IsCategory { get; }
 
     public string Name { get;  }
 }

@@ -122,29 +122,33 @@ public class VideoPlayerViewModel : EventBasedViewModel
 
     private void LoadTags()
     {
-        TagMenuItems.Clear();
-        var tags = _taggingService.GetTags();
-        if (tags.Any())
+        try
         {
-            foreach (var tag in tags)
+            TagMenuItems.Clear();
+            var tags = _taggingService.GetTags();
+            if (tags.Any())
             {
-                var mi = new MenuItem()
+                foreach (var tag in tags)
                 {
-                    Header = tag,
-                    Command = new RelayCommand((_) => OnToggleTag(tag)),
-                    CommandParameter = tag,
-                    Tag = tag,
-                    IsChecked = _metadata?.Tags.Contains(tag) ?? false
-                };
-                TagMenuItems.Add(mi);
+                    var mi = new MenuItem()
+                    {
+                        Header = tag,
+                        Command = new RelayCommand((_) => OnToggleTag(tag)),
+                        CommandParameter = tag,
+                        Tag = tag,
+                        IsChecked = _metadata?.Tags.Contains(tag) ?? false
+                    };
+                    TagMenuItems.Add(mi);
+                }
+                TagMenuItems.Add(new Separator());
             }
-            TagMenuItems.Add(new Separator());
+            TagMenuItems.Add(new MenuItem()
+            {
+                Header = "Edit tags..",
+                Command = new RelayCommand((_) => OnEditTags())
+            });
         }
-        TagMenuItems.Add(new MenuItem()
-        {
-            Header = "Edit tags..",
-            Command = new RelayCommand((_) => OnEditTags())
-        });
+        catch (InvalidOperationException) { }
     }
 
     public ObservableCollection<MenuItem> AvailableSubs { get; } = new ObservableCollection<MenuItem>();

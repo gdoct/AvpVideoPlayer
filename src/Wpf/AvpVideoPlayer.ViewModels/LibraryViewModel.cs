@@ -100,6 +100,7 @@ public class LibraryViewModel : EventBasedViewModel
 
     private void FolderDropDownViewModel_PathChanged(object? _, string? e)
     {
+        // this will update the list of files in view
         FileListViewModel.Path = e;
     }
 
@@ -126,7 +127,7 @@ public class LibraryViewModel : EventBasedViewModel
                 LoadFolderContents(new DirectoryInfo(file.Path)));
 
         }
-        else if (file is PlayListViewModel)
+        else if (file is PlayListViewModel || file is VideoStreamCategoryViewModel)
         {
             //Publish(new PathChangedEvent(file.Path));
             //_userSettingsService.LastPath = file.Path;
