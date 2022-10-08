@@ -9,7 +9,8 @@ Subtitles and thumbnails require the [ffmpeg](https://ffmpeg.org) library which 
 `choco install ffmpeg`
 
 ## Features: 
-* supports most video formats
+* supports most video file formats
+* supports iptv channel playlists (beta)
 * supports external subtitles
 * supports embedded subtitles
 * supports full screen
