@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 using System.Reactive.Linq;
-using System.Reflection;
 using System.Windows;
 
 namespace AvpVideoPlayer.Wpf;
@@ -66,7 +65,8 @@ public partial class App : Application
         if (mainwindow is null) throw new TypeLoadException("type MainWindow not registered");
         mainwindow.Show();
         var eventhub = _serviceProvider.GetService<IEventHub>();
-        if (eventhub != null && System.Threading.SynchronizationContext.Current != null)
+        if (eventhub is null) throw new InvalidOperationException("eventhub not initialized");
+        if (System.Threading.SynchronizationContext.Current != null)
         {
             _showtageditorsub = eventhub.Events
                                 .OfType<ShowTagEditorEvent>()
@@ -82,11 +82,10 @@ public partial class App : Application
         {
             var fi = new FileInfo(args[1]);
             if (!fi.Exists) return;
-            eventhub?.Publish(new SelectVideoEvent(new VideoFileViewModel(fi)));
-            eventhub?.Publish(new PlayStateChangeRequestEvent(PlayStates.Play));
-            mainwindow.WindowState = WindowState.Maximized;
+            eventhub.Publish(new SelectVideoEvent(new VideoFileViewModel(fi)));
+            eventhub.Publish(new PlayStateChangeRequestEvent(PlayStates.Play));
             System.Threading.Thread.Sleep(10);
-            eventhub?.Publish(new FullScreenEvent(true));
+            eventhub.Publish(new FullScreenEvent(true));
         }
     }
 

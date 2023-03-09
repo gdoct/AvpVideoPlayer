@@ -1,14 +1,27 @@
 ﻿using LiteDB;
+using System.Globalization;
 
 namespace AvpVideoPlayer.MetaData
 {
     internal class MetaDataLiteDbContext : IDisposable, IMetaDataContext
     {
         private readonly LiteDatabase _db;
+        private readonly string _tempdbfile;
+        private bool disposedValue;
 
         internal MetaDataLiteDbContext(string databasefilename)
         {
-            _db = new LiteDatabase(databasefilename);
+            try
+            {
+                _db = new LiteDatabase(databasefilename);
+                _tempdbfile = string.Empty;
+            }
+            catch(IOException)
+            {
+                _tempdbfile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.db");
+                File.Copy(databasefilename, _tempdbfile);
+                _db = new LiteDatabase(_tempdbfile);
+            }
             var col = _db.GetCollection<FileMetaData>("FileMetaData");
             col.EnsureIndex(x => new { x.Name, x.Length });
             col.EnsureIndex(x => x.Path);
@@ -100,9 +113,26 @@ namespace AvpVideoPlayer.MetaData
             col.Delete(existing["_id"]);
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _db?.Dispose();
+                    if (!string.IsNullOrWhiteSpace(_tempdbfile))
+                    {
+                        File.Delete(_tempdbfile);
+                    }
+                }
+                disposedValue = true;
+            }
+        }
+
         public void Dispose()
         {
-            _db?.Dispose();
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

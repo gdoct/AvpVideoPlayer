@@ -55,8 +55,9 @@
 						<uap:SupportedFileTypes>
 							<uap:FileType>.mp4</uap:FileType>
 							<uap:FileType>.webm</uap:FileType>
-							<uap:FileType>.mkv</uap:FileType>
-						</uap:SupportedFileTypes>
+              <uap:FileType>.mkv</uap:FileType>
+              <uap:FileType>.m3u</uap:FileType>
+            </uap:SupportedFileTypes>
 					</uap3:FileTypeAssociation>
 				</uap:Extension>
 			</Extensions>
