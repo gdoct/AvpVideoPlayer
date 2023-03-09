@@ -2,6 +2,7 @@
 using SubtitlesParser.Classes;
 using SubtitlesParser.Classes.Parsers;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace AvpVideoPlayer.Video.Subtitles;
 
@@ -25,16 +26,10 @@ internal class FileSubtitleContext : ISubtitleContext
     public SubtitleInfo SubtitleInfo { get; }
 
     /// <inheritdoc cref="ISubtitleContext.GetSubtitleForTime(TimeSpan)"/>
-    public SubtitleData? GetSubtitleForTime(TimeSpan time)
-    {
-        return _subtitles.FirstOrDefault(c => c.StartTime <= time.TotalMilliseconds && c.EndTime >= time.TotalMilliseconds);
-    }
+    public SubtitleData? GetSubtitleForTime(TimeSpan time) => _subtitles.FirstOrDefault(c => c.StartTime <= time.TotalMilliseconds && c.EndTime >= time.TotalMilliseconds);
 
     /// <inheritdoc cref="ISubtitleContext.GetNextSubtitleForTime(TimeSpan)"/>
-    public SubtitleData? GetNextSubtitleForTime(TimeSpan time)
-    {
-        return _subtitles.FirstOrDefault(c => c.StartTime >= time.TotalMilliseconds);
-    }
+    public SubtitleData? GetNextSubtitleForTime(TimeSpan time) => _subtitles.FirstOrDefault(c => c.StartTime >= time.TotalMilliseconds);
 
     private static IList<SubtitleData> LoadSubtitlesFromFile(string filename)
     {
@@ -42,16 +37,11 @@ internal class FileSubtitleContext : ISubtitleContext
         {
             return new List<SubtitleData>();
         }
-        IList<SubtitleData> result;
-        using (var stream = File.OpenRead(filename))
-        {
-            result = new SubParser().ParseStream(stream)
-                                    .OrderBy(s => s.StartTime)
-                                    .Select(ConvertToSubtitleData)
-                                    .ToList();
-        }
-
-        return result;
+        using var stream = File.OpenRead(filename);
+        return new SubParser().ParseStream(stream)
+                              .OrderBy(s => s.StartTime)
+                              .Select(ConvertToSubtitleData)
+                              .ToList();
     }
 
     private static SubtitleData ConvertToSubtitleData(SubtitleItem subtitle)
@@ -60,39 +50,26 @@ internal class FileSubtitleContext : ISubtitleContext
         (
             subtitle.StartTime,
             subtitle.EndTime,
-            ConvertLines(subtitle.Lines)
+            ConvertLines(subtitle.Lines).ToList()
         );
     }
 
-    private static List<SubtitleData.SubtitleLine> ConvertLines(List<string> lines)
-    {
-        List<SubtitleData.SubtitleLine> result = new();
-        foreach (string line in lines)
+    private static IEnumerable<SubtitleData.SubtitleLine> ConvertLines(List<string> lines) =>
+        lines.Select(line => new SubtitleData.SubtitleLine
         {
-            SubtitleData.SubtitleLine newline = new();
-            string subline = line.Trim()
-                .Replace(@"<font face=""Monospace"">", "")
-                .Replace(@"{\an7}", "")
-                .Replace(@"\h", "")
-                .Replace(@"</font>", "");
-            if (!string.IsNullOrWhiteSpace(subline))
-            {
-                newline.Italic = TryReplaceTag(ref subline, "<i>");
-                newline.Bold = TryReplaceTag(ref subline, "<b>");
-                newline.Underline = TryReplaceTag(ref subline, "<u>");
-            }
-            newline.Text = subline;
-            result.Add(newline);
-        }
-        return result;
-    }
+            Italic = HasTag(line, "<i>"),
+            Bold = HasTag(line, "<b>"),
+            Underline = HasTag(line, "<u>"),
+            Text = Regex.Replace(line.Trim(), "<.*?>", string.Empty)
+                                  .Replace(@"{\an7}", "")
+                                  .Replace(@"\h", "")
+        });
 
-    private static bool TryReplaceTag(ref string line, string tag)
+    private static bool HasTag(string line, string tag)
     {
         var closetag = "</" + tag[1..];
         if (line.Contains(tag) || line.Contains(closetag))
         {
-            line = line.Replace(tag, "").Replace(closetag, "");
             return true;
         }
         return false;
