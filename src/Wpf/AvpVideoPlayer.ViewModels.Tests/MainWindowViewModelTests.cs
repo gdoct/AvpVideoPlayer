@@ -25,7 +25,7 @@ public class MainWindowViewModelTests
                                       Mock.Of<IDialogService>(),
                                       new SearchBoxViewModel(eh.Object),
                                       new FolderDropDownViewModel(),
-                                      new FileListViewModel(eh.Object, md.Object));
+                                      new FileListViewModel(eh.Object, md.Object, new M3uService()));
         var vpv = new VideoPlayerViewModel(eh.Object,
                                            new PlayerControlsViewModel(eh.Object, Mock.Of<IViewRegistrationService>(),
                                            Mock.Of<ISnapshotService>()),
@@ -49,7 +49,7 @@ public class MainWindowViewModelTests
                                       Mock.Of<IDialogService>(),
                                       new SearchBoxViewModel(eh.Object),
                                       new FolderDropDownViewModel(),
-                                      new FileListViewModel(eh.Object, md.Object));
+                                      new FileListViewModel(eh.Object, md.Object, new M3uService()));
         var vpv = new VideoPlayerViewModel(eh.Object,
                                            new PlayerControlsViewModel(eh.Object, Mock.Of<IViewRegistrationService>(),
                                            Mock.Of<ISnapshotService>()),

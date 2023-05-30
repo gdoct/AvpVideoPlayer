@@ -16,7 +16,13 @@ public static class DependencyInjection
             .AddTransient<MainWindowViewModel>()
             .AddTransient<PlayerControlsViewModel>()
             .AddTransient<SearchBoxViewModel>()
-            .AddTransient<VideoPlayerViewModel>()
-            .AddSingleton<IKeyboardController, KeyboardController>();
+            .AddTransient<VideoPlayerViewModel>();
+    }
+
+    public static IServiceCollection RegisterServices(this IServiceCollection services)
+    {
+        return services
+            .AddSingleton<IKeyboardController, KeyboardController>()
+            .AddTransient<IM3uService, M3uService>();
     }
 }

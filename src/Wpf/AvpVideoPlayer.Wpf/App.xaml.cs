@@ -45,7 +45,8 @@ public partial class App : Application
             .RegisterEventHub()
             .RegisterSubtitles()
             .RegisterMetadataServices()
-            .RegisterViewModels();
+            .RegisterViewModels()
+            .RegisterServices();
     }
 
     protected override void OnExit(ExitEventArgs e)

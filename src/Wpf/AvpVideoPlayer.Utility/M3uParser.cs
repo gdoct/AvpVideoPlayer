@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 namespace AvpVideoPlayer.Utility
 {

@@ -17,6 +17,7 @@ public class FileListViewModel : EventBasedViewModel
 {
     private readonly CollectionViewSource listviewCollection;
     private readonly IMetaDataService _metaDataService;
+    private readonly IM3uService _m3uservice;
     private readonly FileSystemWatcher _fileSystemWatcher;
     private int _selectedIndex;
     private string? _path;
@@ -25,14 +26,15 @@ public class FileListViewModel : EventBasedViewModel
     private List<M3uParser.ChannelInfo> _channels = new();
     private string _playlist = string.Empty;
 
-    public FileListViewModel(IEventHub eventHub, IMetaDataService metaDataService) : base(eventHub)
+    public FileListViewModel(IEventHub eventHub, IMetaDataService metaDataService, IM3uService m3uservice) : base(eventHub)
     {
         listviewCollection = new CollectionViewSource
         {
             Source = FolderContents
         };
         listviewCollection.Filter += ListView_Filter;
-        _metaDataService = metaDataService;
+        _metaDataService = metaDataService ?? throw new ArgumentNullException(nameof(metaDataService));
+        _m3uservice = m3uservice ?? throw new ArgumentNullException(nameof(m3uservice));
         _fileSystemWatcher = new FileSystemWatcher() { IncludeSubdirectories = true };
         _fileSystemWatcher.Changed += FileSystemWatcher_Changed;
         _fileSystemWatcher.Renamed += FileSystemWatcher_Changed;
@@ -218,11 +220,11 @@ public class FileListViewModel : EventBasedViewModel
         }
         else if (!string.IsNullOrWhiteSpace(_playlist) && path.StartsWith(_playlist, StringComparison.OrdinalIgnoreCase))
         {
-            TryLoadPlayListIntoListview(path, force);
+            LoadM3uCategoryIntoView(path, force);
         }
     }
 
-    private void TryLoadPlayListIntoListview(string path, bool force)
+    private void LoadM3uCategoryIntoView(string path, bool force)
     {
         var location = path[(_playlist.Length + 1)..];
         var parts = location.Split(@"\");
@@ -240,7 +242,8 @@ public class FileListViewModel : EventBasedViewModel
     private void LoadPlaylistIntoListview(string path, bool force)
     {
         // a new play list is opened - display the categories
-        _channels = new M3uParser(path).ParsePlaylist();
+
+        _channels = _m3uservice.ParsePlaylist(path);
         _playlist = path;
         FolderContents.Clear();
         var categories = _channels.Select(s => s.Group).Distinct().ToList();
