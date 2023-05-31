@@ -66,7 +66,7 @@
 		<NoWarn>$(NoWarn);NU1701;NU1702</NoWarn>
 		<AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
 		<EntryPointProjectUniqueName>..\..\src\Wpf\AvpVideoPlayer.Wpf\AvpVideoPlayer.Wpf.csproj</EntryPointProjectUniqueName>
-		<PackageCertificateThumbprint>BE15D7EB031CCADA166438D003C490D7BE7AFFD7</PackageCertificateThumbprint>
+		<PackageCertificateThumbprint>a35968d4d8510fa0e15ba479d5b74769ed54b7d2</PackageCertificateThumbprint>
 	</PropertyGroup>
 	<ItemGroup>
 		<AppxManifest Include="Package.appxmanifest">
