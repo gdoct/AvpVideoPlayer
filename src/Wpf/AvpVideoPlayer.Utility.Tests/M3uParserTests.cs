@@ -1,6 +1,4 @@
-﻿using AvpVideoPlayer.Utility;
-using System;
-using Xunit;
+﻿using Xunit;
 
 namespace AvpVideoPlayer.Utility.Tests
 {

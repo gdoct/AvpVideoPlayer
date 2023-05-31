@@ -88,8 +88,33 @@ namespace AvpVideoPlayer.Utility
             // Otherwise, return null
             else
             {
-                return string.Empty;
+                return ParseChannelAttribute(line, attribute, true);
             }
+        }
+
+        private static string ParseChannelAttribute(string line, string attribute, bool useLineEndWhenEmpty = false)
+        {
+            string pattern = attribute + "=\"([^\"]+)\"";
+            if (Regex.IsMatch(line, pattern))
+            {
+                var match = Regex.Match(line, pattern);
+                return match.Value[10..^1];
+            }
+            if (useLineEndWhenEmpty && line.IndexOf(',') > 0)
+            {
+                var idx = line.LastIndexOf(',') + 1;
+                if (idx < line.Length)
+                {
+                    var sub = line[idx..];
+                    if (sub.IndexOf(" #") > 0)
+                    {
+                        sub = sub[..sub.IndexOf(" #")];
+                    }
+                    return sub;
+                }
+            }
+
+            return string.Empty;
         }
 
         public class ChannelInfo
