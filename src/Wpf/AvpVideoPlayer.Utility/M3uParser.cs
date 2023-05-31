@@ -31,10 +31,10 @@ namespace AvpVideoPlayer.Utility
                 }
                 if (line.StartsWith("#EXTINF:", StringComparison.OrdinalIgnoreCase))
                 {
-                    id = ParseChannelAttribute(line, "tvg-ID", true);
-                    name = ParseChannelAttribute(line, "tvg-name", true);
-                    logo = ParseChannelAttribute(line, "tvg-logo");
-                    var grpname = ParseChannelAttribute(line, "group-title");
+                    id = ExtractAttributeValue(line, "tvg-ID");
+                    name = ExtractAttributeValue(line, "tvg-name");
+                    logo = ExtractAttributeValue(line, "tvg-logo");
+                    var grpname = ExtractAttributeValue(line, "group-title");
                     if (!string.IsNullOrWhiteSpace(grpname))
                     {
                         group = grpname;
@@ -66,29 +66,30 @@ namespace AvpVideoPlayer.Utility
             return true;
         }
 
-        private static string ParseChannelAttribute(string line, string attribute, bool useLineEndWhenEmpty = false)
+        static string ExtractAttributeValue(string line, string attribute)
         {
-            string pattern = attribute + "=\"([^\"]+)\"";
-            if (Regex.IsMatch(line, pattern))
+            // Create a regex pattern that matches the attribute value
+            // The pattern uses positive lookbehind to find the position where the attribute value starts
+            // It then matches everything up to the ending double quote
+            string pattern = @"(?<=\b" + attribute + @"="")[^""]*";
+
+            // Create a regex object with the pattern
+            Regex regex = new Regex(pattern);
+
+            // Find the first match in the XML string
+            Match match = regex.Match(line);
+
+            // If there is a match, return its value
+            if (match.Success)
             {
-                var match = Regex.Match(line, pattern);
-                return match.Value[10..^1];
-            }
-            if (useLineEndWhenEmpty && line.IndexOf(',') > 0)
-            {
-                var idx = line.LastIndexOf(',') + 1;
-                if (idx < line.Length)
-                {
-                    var sub = line[idx..];
-                    if (sub.IndexOf(" #") > 0)
-                    {
-                        sub = sub[..sub.IndexOf(" #")];
-                    }
-                    return sub;
-                }
+                return match.Value;
             }
 
-            return string.Empty;
+            // Otherwise, return null
+            else
+            {
+                return string.Empty;
+            }
         }
 
         public class ChannelInfo
