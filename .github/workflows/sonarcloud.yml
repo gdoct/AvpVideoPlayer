@@ -60,7 +60,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"gdoct_AvpVideoPlayer" /o:"guido-docter" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-        dotnet build .\AVPVideoPlayer.Wpf.sln
-        dotnet test .\AVPVideoPlayer.Wpf.sln /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --no-build --results-directory TestResults/
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"gdoct_AvpVideoPlayer" /o:"guido-docter" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        dotnet build .\AVPVideoPlayer.Wpf.sln --no-incremental
+        dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
