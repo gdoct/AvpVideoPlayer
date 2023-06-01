@@ -1,7 +1,5 @@
 ### Avp Videoplayer
-[![Build](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/dotnet.yml/badge.svg)](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/dotnet.yml)
-[![.NET Core Desktop](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/dotnet-desktop.yml)
-[![CodeQL](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/codeql-analysis.yml)
+[![CI/CD build](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/cicd.yml/badge.svg)](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/cicd.yml)
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=gdoct_AvpVideoPlayer)](https://sonarcloud.io/summary/new_code?id=gdoct_AvpVideoPlayer)
 
