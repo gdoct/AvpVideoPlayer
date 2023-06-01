@@ -61,6 +61,6 @@ jobs:
       shell: powershell
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ secrets.SONAR_PROJECT_KEY }}" /o:"${{ secrets.SONAR_ORGANIZATION }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-        dotnet build .\AVPVideoPlayer.Wpf.sln --configuration Release -p:Platform=x64
+        dotnet build .\AVPVideoPlayer.Wpf.sln
         dotnet test .\AVPVideoPlayer.Wpf.sln /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --no-build --results-directory TestResults/
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
