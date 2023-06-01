@@ -45,5 +45,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"gdoct_AvpVideoPlayer" /o:"guido-docter" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build .\AVPVideoPlayer.Wpf.sln --configuration Release -p:Platform=x64
-          dotnet test .\AVPVideoPlayer.Wpf.sln --collect "Code Coverage"
+          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --no-build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
