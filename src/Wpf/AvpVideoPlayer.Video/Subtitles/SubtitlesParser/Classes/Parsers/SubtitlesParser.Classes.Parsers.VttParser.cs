@@ -1,15 +1,13 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Parsers.VttParser
-using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using SubtitlesParser.Classes;
 
 namespace SubtitlesParser.Classes.Parsers;
 
+[ExcludeFromCodeCoverage]
 public class VttParser : ISubtitlesParser
 {
 	private readonly string[] _delimiters = new string[3] { "-->", "- >", "->" };

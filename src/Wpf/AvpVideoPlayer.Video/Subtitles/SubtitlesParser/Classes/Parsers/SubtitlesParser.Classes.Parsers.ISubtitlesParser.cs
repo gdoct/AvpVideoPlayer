@@ -1,5 +1,6 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Parsers.ISubtitlesParser
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 

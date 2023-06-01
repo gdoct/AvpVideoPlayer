@@ -1,5 +1,6 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Parsers.TtmlParser
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -7,6 +8,7 @@ using System.Xml.Linq;
 
 namespace SubtitlesParser.Classes.Parsers;
 
+[ExcludeFromCodeCoverage]
 public class TtmlParser : ISubtitlesParser
 {
 	public List<SubtitleItem> ParseStream(Stream xmlStream, Encoding encoding)

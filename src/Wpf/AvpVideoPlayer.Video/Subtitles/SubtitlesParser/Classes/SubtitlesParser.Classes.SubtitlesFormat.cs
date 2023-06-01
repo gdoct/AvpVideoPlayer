@@ -1,7 +1,10 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.SubtitlesFormat
+using System.Diagnostics.CodeAnalysis;
+
 namespace SubtitlesParser.Classes;
 
+[ExcludeFromCodeCoverage]
 public class SubtitlesFormat
 {
     public static readonly SubtitlesFormat SubRipFormat = new()

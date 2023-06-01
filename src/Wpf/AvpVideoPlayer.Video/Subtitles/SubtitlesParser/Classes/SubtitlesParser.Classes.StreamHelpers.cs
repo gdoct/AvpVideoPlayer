@@ -1,9 +1,11 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.StreamHelpers
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace SubtitlesParser.Classes;
 
+[ExcludeFromCodeCoverage]
 internal static class StreamHelpers
 {
 	public static Stream CopyStream(Stream inputStream)

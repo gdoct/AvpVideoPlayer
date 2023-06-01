@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace AvpVideoPlayer.Utility;
@@ -19,6 +20,7 @@ public struct BROWSEINFO
     public uint ulFlags;
 }
 
+[ExcludeFromCodeCoverage]
 public class FolderBrowserDialog
 {
 

@@ -1,11 +1,13 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Parsers.SubParser
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace SubtitlesParser.Classes.Parsers;
 
+[ExcludeFromCodeCoverage]
 public class SubParser
 {
 	private readonly Dictionary<SubtitlesFormat, ISubtitlesParser> _subFormatToParser = new Dictionary<SubtitlesFormat, ISubtitlesParser>

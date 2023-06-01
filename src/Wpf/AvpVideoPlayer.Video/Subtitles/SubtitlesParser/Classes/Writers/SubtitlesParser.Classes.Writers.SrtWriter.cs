@@ -1,8 +1,11 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Writers.SrtWriter
 namespace SubtitlesParser.Classes;
+
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
+[ExcludeFromCodeCoverage]
 public class SrtWriter : ISubtitlesWriter
 {
 	private static IEnumerable<string> SubtitleItemToSubtitleEntry(SubtitleItem subtitleItem, int subtitleEntryNumber, bool includeFormatting)

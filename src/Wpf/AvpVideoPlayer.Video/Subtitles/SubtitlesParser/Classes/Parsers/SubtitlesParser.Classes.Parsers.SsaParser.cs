@@ -1,12 +1,14 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Parsers.SsaParser
 using SubtitlesParser.Classes.Utils;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace SubtitlesParser.Classes.Parsers;
 
+[ExcludeFromCodeCoverage]
 public class SsaParser : ISubtitlesParser
 {
 	public List<SubtitleItem> ParseStream(Stream ssaStream, Encoding encoding)

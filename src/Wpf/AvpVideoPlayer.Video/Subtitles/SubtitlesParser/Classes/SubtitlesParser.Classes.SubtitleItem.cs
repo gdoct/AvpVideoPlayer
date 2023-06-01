@@ -1,8 +1,11 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.SubtitleItem
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace SubtitlesParser.Classes;
 
+[ExcludeFromCodeCoverage]
 public class SubtitleItem
 {
 	public int StartTime { get; set; }

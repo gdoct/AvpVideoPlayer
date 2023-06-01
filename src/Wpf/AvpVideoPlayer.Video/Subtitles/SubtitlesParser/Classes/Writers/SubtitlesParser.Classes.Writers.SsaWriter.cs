@@ -1,11 +1,13 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Writers.SsaWriter
 using SubtitlesParser.Classes.Utils;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
 namespace SubtitlesParser.Classes;
 
+[ExcludeFromCodeCoverage]
 public class SsaWriter : ISubtitlesWriter
 {
 	private void WriteHeader(TextWriter writer, SsaWrapStyle wrapStyle = SsaWrapStyle.None)

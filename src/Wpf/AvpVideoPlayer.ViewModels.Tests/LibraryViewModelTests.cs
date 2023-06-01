@@ -24,4 +24,14 @@ public class LibraryViewModelTests
         var instance = new LibraryViewModel(_userSettingsService, eh.Object, Mock.Of<IDialogService>(), new SearchBoxViewModel(eh.Object), new FolderDropDownViewModel(), new FileListViewModel(eh.Object, md.Object, new M3UService()));
         Assert.NotNull(instance);
     }
+
+    [Fact]
+    public void GTestBla()
+    {
+        var eh = new Mock<IEventHub>();
+        var md = new Mock<IMetaDataService>();
+        eh.Setup(eh => eh.Events).Returns(Mock.Of<IObservable<EventBase>>());
+        var instance = new LibraryViewModel(_userSettingsService, eh.Object, Mock.Of<IDialogService>(), new SearchBoxViewModel(eh.Object), new FolderDropDownViewModel(), new FileListViewModel(eh.Object, md.Object, new M3UService()));
+        instance.OnSelectFile(new Events.SelectedFileChangedEvent(new FileViewModel(FileTypes.Folder)));
+    }
 }

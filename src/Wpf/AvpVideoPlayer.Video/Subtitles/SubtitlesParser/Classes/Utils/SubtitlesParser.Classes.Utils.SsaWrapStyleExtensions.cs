@@ -1,7 +1,10 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Utils.SsaWrapStyleExtensions
+using System.Diagnostics.CodeAnalysis;
+
 namespace SubtitlesParser.Classes.Utils;
 
+[ExcludeFromCodeCoverage]
 public static class SsaWrapStyleExtensions
 {
 	public static SsaWrapStyle FromString(this string rawString)

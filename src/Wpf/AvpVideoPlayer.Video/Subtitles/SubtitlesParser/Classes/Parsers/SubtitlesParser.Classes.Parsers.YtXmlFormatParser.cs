@@ -1,5 +1,6 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Parsers.YtXmlFormatParser
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Xml;
 
 namespace SubtitlesParser.Classes.Parsers;
 
+[ExcludeFromCodeCoverage]
 public class YtXmlFormatParser : ISubtitlesParser
 {
 	public List<SubtitleItem> ParseStream(Stream xmlStream, Encoding encoding)
