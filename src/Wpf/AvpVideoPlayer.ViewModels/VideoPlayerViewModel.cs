@@ -26,9 +26,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
     private Cursor _mouseCursor = Cursors.Arrow;
     private PlayStates _playState = PlayStates.Stop;
     private double _subtitleFontSize = 40;
-    private readonly DispatcherTimer _timer;
     private double _volume = 100;
-    private readonly TimeSpan DEFAULT_INTERVAL = TimeSpan.FromSeconds(1);
     private readonly TimeSpan MOUSE_TIMEOUT = TimeSpan.FromSeconds(3);
     private readonly IViewRegistrationService _viewRegistrationService;
     private readonly IUserConfiguration _userConfiguration;
@@ -58,8 +56,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
         _metaDataService = metaDataService;
         _taggingService = taggingService;
         _playerControlsViewModel = playerControlsViewModel;
-        _timer = new DispatcherTimer() { Interval = DEFAULT_INTERVAL, IsEnabled = true };
-        _timer.Tick += TimerTick;
+        
         _viewRegistrationService = viewRegistrationService;
         _userConfiguration = userConfiguration;
         _repeat = _userConfiguration.Repeat;
@@ -555,8 +552,8 @@ public class VideoPlayerViewModel : EventBasedViewModel
         if (e is not DragEventArgs args) return;
         var argdata = args.Data;
         if (argdata == null || !argdata.GetDataPresent("FileDrop")) return;
-        var droppedfiles = (string[])argdata.GetData("FileDrop");
-        if (droppedfiles.Any(FileExtensions.IsValidFile))
+        var droppedfiles = ((string[])argdata.GetData("FileDrop")).ToList();
+        if (droppedfiles.Exists(FileExtensions.IsValidFile))
         {
             args.Effects = DragDropEffects.All;
         }

@@ -12,6 +12,5 @@ public static class DependencyInjection
         return services.AddSingleton<MainWindow>()
                        .AddSingleton<DialogBox>()
                        .AddSingleton<IViewRegistrationService>(ViewRegistrationService.Instance);
-        ;
     }
 }

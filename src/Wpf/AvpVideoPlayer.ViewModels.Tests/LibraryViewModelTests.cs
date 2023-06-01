@@ -21,7 +21,7 @@ public class LibraryViewModelTests
         var eh = new Mock<IEventHub>();
         var md = new Mock<IMetaDataService>();
         eh.Setup(eh => eh.Events).Returns(Mock.Of<IObservable<EventBase>>());
-        var instance = new LibraryViewModel(_userSettingsService, eh.Object, Mock.Of<IDialogService>(), new SearchBoxViewModel(eh.Object), new FolderDropDownViewModel(), new FileListViewModel(eh.Object, md.Object, new M3uService()));
+        var instance = new LibraryViewModel(_userSettingsService, eh.Object, Mock.Of<IDialogService>(), new SearchBoxViewModel(eh.Object), new FolderDropDownViewModel(), new FileListViewModel(eh.Object, md.Object, new M3UService()));
         Assert.NotNull(instance);
     }
 }

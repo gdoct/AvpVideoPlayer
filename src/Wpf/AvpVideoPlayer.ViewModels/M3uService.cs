@@ -5,13 +5,13 @@ using System.IO;
 
 namespace AvpVideoPlayer.ViewModels;
 
-public class M3uService : IM3uService 
+public class M3UService : IM3UService 
 {
     private string _path = string.Empty;
 
     private List<ChannelInfo> _channels { get; set; } = new List<ChannelInfo>();
 
-    public M3uService()
+    public M3UService()
     {
     }
 

@@ -17,7 +17,7 @@ public class FileListViewModel : EventBasedViewModel
 {
     private readonly CollectionViewSource listviewCollection;
     private readonly IMetaDataService _metaDataService;
-    private readonly IM3uService _m3uservice;
+    private readonly IM3UService _m3uservice;
     private readonly FileSystemWatcher _fileSystemWatcher;
     private int _selectedIndex;
     private string? _path;
@@ -26,7 +26,7 @@ public class FileListViewModel : EventBasedViewModel
     private List<M3UParser.ChannelInfo> _channels = new();
     private string _playlist = string.Empty;
 
-    public FileListViewModel(IEventHub eventHub, IMetaDataService metaDataService, IM3uService m3uservice) : base(eventHub)
+    public FileListViewModel(IEventHub eventHub, IMetaDataService metaDataService, IM3UService m3uservice) : base(eventHub)
     {
         listviewCollection = new CollectionViewSource
         {

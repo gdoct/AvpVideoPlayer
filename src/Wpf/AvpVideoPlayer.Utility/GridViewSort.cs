@@ -68,20 +68,17 @@ public static class GridViewSort
                 false,
                 (o, e) =>
                 {
-                    if (o is ListView listView)
+                    if (o is ListView listView && GetCommand(listView) == null) // Don't change click handler if a command is set
                     {
-                        if (GetCommand(listView) == null) // Don't change click handler if a command is set
+                        bool oldValue = (bool)e.OldValue;
+                        bool newValue = (bool)e.NewValue;
+                        if (oldValue && !newValue)
                         {
-                            bool oldValue = (bool)e.OldValue;
-                            bool newValue = (bool)e.NewValue;
-                            if (oldValue && !newValue)
-                            {
-                                listView.RemoveHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
-                            }
-                            if (!oldValue && newValue)
-                            {
-                                listView.AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
-                            }
+                            listView.RemoveHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                        }
+                        if (!oldValue && newValue)
+                        {
+                            listView.AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
                         }
                     }
                 }

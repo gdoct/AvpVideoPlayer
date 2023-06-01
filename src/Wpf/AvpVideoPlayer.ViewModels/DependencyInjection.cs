@@ -23,6 +23,6 @@ public static class DependencyInjection
     {
         return services
             .AddSingleton<IKeyboardController, KeyboardController>()
-            .AddTransient<IM3uService, M3uService>();
+            .AddTransient<IM3UService, M3UService>();
     }
 }
