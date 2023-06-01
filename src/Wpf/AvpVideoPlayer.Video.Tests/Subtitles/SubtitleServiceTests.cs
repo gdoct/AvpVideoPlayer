@@ -15,7 +15,7 @@ namespace AvpVideoPlayer.Video.Tests.Subtitles
             var context = new Mock<ISubtitleContext>();
             context.Setup(c=> c.SubtitleInfo).Returns(new SubtitleInfo { Filename=",z", Index=0, StreamInfo="x", SubtitleName="a" });
             factory.Setup(c => c.Empty()).Returns(() => context.Object);
-            factory.Setup(c => c.FromFile(It.IsAny<string>())).Returns(() => new[] { context.Object });
+            factory.Setup(c => c.FromFile(It.IsAny<string>())).Returns(() => context.Object );
             var service = new SubtitleService(factory.Object);
             var filename = "test.srt";
             // Act
