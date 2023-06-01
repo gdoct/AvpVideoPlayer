@@ -1,0 +1,179 @@
+name: 'FullCD'
+on:
+    workflow_dispatch:
+  
+    push:
+      branches:
+        - master
+  
+    pull_request:
+      types: [opened, reopened, edited, synchronize]
+      branches:
+        - master
+
+env:
+    SDK_VERSION: '6.0.400'
+          
+jobs:
+    build:
+        name: 'Build and test .NET assemblies'
+        runs-on: self-hosted
+        steps:
+        - uses: actions/checkout@v2
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: 6.0.x
+        - name: Restore dependencies
+          run: dotnet restore ./AVPVideoPlayer.Wpf.sln
+        - name: Build
+          run: dotnet build --no-restore ./AVPVideoPlayer.Wpf.sln
+        - name: Test
+          run: dotnet test --no-build --verbosity normal ./AVPVideoPlayer.Wpf.sln
+
+    analyze:
+        name: 'Run CodeQL'
+        runs-on: self-hosted
+        permissions:
+            actions: read
+            contents: read
+            security-events: write
+
+        strategy:
+            fail-fast: false
+            matrix:
+                language: [ 'csharp' ]
+            # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
+            # Learn more about CodeQL language support at https://git.io/codeql-language-support
+
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+        
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: 6.0.x
+    
+    # Initializes the CodeQL tools for scanning.
+        - name: Initialize CodeQL
+          uses: github/codeql-action/init@v2
+          with:
+            languages: ${{ matrix.language }}
+        - run: dotnet build ./AVPVideoPlayer.Wpf.sln
+        - name: 'Perform CodeQL Analysis'
+          uses: github/codeql-action/analyze@v2
+    
+    sonar-scanner:
+        name: "Run Sonarcloud scanner"
+        runs-on: self-hosted
+        steps:
+        - name: "Setup .NET"
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: ${{ env.SDK_VERSION }}
+        - name: "Set up JDK 11"
+          uses: actions/setup-java@v3.11.0
+          with:
+            distribution: 'adopt'
+            java-version: '11'
+        - name: "Checkout"
+          uses: actions/checkout@v3
+          with:
+            fetch-depth: 0  
+        - name: "Cache SonarCloud packages"
+          uses: actions/cache@v3
+          with:
+            path: ~\sonar\cache
+            key: ${{ runner.os }}-sonar
+            restore-keys: ${{ runner.os }}-sonar
+        - name: "Cache SonarCloud scanner"
+          id: cache-sonar-scanner
+          uses: actions/cache@v3
+          with:
+            path: .\.sonar\scanner
+            key: ${{ runner.os }}-sonar-scanner
+            restore-keys: ${{ runner.os }}-sonar-scanner
+        - name: "Install SonarCloud scanner"
+          if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+          shell: powershell
+          run: |
+            New-Item -Path .\.sonar\scanner -ItemType Directory
+            dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+    
+        - name: "Build and analyze"
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          shell: powershell
+          run: |
+            .\.sonar\scanner\dotnet-sonarscanner begin /k:"gdoct_AvpVideoPlayer" /o:"guido-docter" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+            dotnet build .\AVPVideoPlayer.Wpf.sln --no-incremental
+            dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+            .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
+    build-desktop:
+        name: 'Build .NET Desktop application package'
+        strategy:
+            matrix:
+              configuration: [Release]
+        runs-on: self-hosted 
+        env:
+            Solution_Name: .\AVPVideoPlayer.Wpf.sln 
+            Test_Project_Path: .\src\Wpf\AvpVideoPlayer.ViewModels.Tests\AvpVideoPlayer.ViewModels.Tests.csproj
+            Wap_Project_Directory: .\installer\AvpVideoPlayer.Installer-Msix
+            Wap_Project_Path: .\installer\AvpVideoPlayer.Installer-Msix\AvpVideoPlayer.Installer-Msix.wapproj
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v2
+            with:
+              fetch-depth: 0
+      
+          # Install the .NET Core workload
+          - name: Install .NET Core
+            uses: actions/setup-dotnet@v1
+            with:
+              dotnet-version: 6.0.x
+      
+          # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+          - name: Setup MSBuild.exe
+            uses: microsoft/setup-msbuild@v1.1
+      
+          # Execute all unit tests in the solution
+          - name: Execute unit tests
+            run: dotnet test $env:Solution_Name
+      
+          # Restore the application to populate the obj folder with RuntimeIdentifiers
+          - name: Restore the application
+            run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+            env:
+              Configuration: ${{ matrix.configuration }}
+      
+          # Decode the base 64 encoded pfx and save the Signing_Certificate
+          - name: Decode the pfx
+            run: |
+              $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+              $certificatePath = Join-Path -Path $env:Wap_Project_Directory -ChildPath GitHubActionsWorkflow.pfx
+              [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+      
+          # Create the app package by building and packaging the Windows Application Packaging project
+          - name: Create the app package
+            run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
+            env:
+              Appx_Bundle: Always
+              Appx_Bundle_Platforms: x86|x64
+              Appx_Package_Build_Mode: StoreUpload
+              Configuration: ${{ matrix.configuration }}
+      
+          # Remove the pfx
+          - name: Remove the pfx
+            run: |
+              $certificatePath = Join-Path -Path $env:Wap_Project_Directory -ChildPath GitHubActionsWorkflow.pfx
+              Remove-Item -path $certificatePath
+      
+          # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+          - name: Upload build artifacts
+            uses: actions/upload-artifact@v2
+            with:
+              name: MSIX Package
+              path: ${{ env.Wap_Project_Directory }}\AppPackages
