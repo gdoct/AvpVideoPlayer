@@ -1,6 +1,6 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Writers.SrtWriter
-using SubtitlesParser.Classes;
+namespace SubtitlesParser.Classes;
 using System.IO;
 
 public class SrtWriter : ISubtitlesWriter

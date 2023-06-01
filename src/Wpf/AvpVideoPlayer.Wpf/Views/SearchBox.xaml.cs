@@ -11,6 +11,5 @@ public partial class SearchBox : UserControl
     public SearchBox()
     {
         InitializeComponent();
-        //DataContext = ServiceLocator.GetService<SearchBoxViewModel>();
     }
 }

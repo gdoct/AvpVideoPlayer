@@ -134,8 +134,6 @@ public class LibraryViewModel : EventBasedViewModel
         }
         else if (file is PlayListViewModel || file is VideoStreamCategoryViewModel)
         {
-            //Publish(new PathChangedEvent(file.Path));
-            //_userSettingsService.LastPath = file.Path;
             DispatcherHelper.Invoke(() =>
                 LoadPlaylistContents(file));
         }

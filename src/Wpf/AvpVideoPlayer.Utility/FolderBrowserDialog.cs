@@ -25,12 +25,6 @@ public class FolderBrowserDialog
     private string? _initialPath;
     private const int BFFM_INITIALIZED = 1;
     private const int BFFM_SELCHANGED = 2;
-    //private const int BFFM_VALIDATEFAILEDA = 3;
-    //private const int BFFM_VALIDATEFAILEDW = 4;
-    //private const int BFFM_IUNKNOWN = 5; // provides IUnknown to client. lParam: IUnknown*
-    //private const int BFFM_SETSTATUSTEXTA = WM_USER + 100;
-    //private const int BFFM_ENABLEOK = WM_USER + 101;
-    //private const int BFFM_SETSELECTIONA = WM_USER + 102;
     private const int BFFM_SETSELECTIONW = WM_USER + 103;
     private const int BFFM_SETSTATUSTEXTW = WM_USER + 104;
 
@@ -38,8 +32,6 @@ public class FolderBrowserDialog
     private const int WM_USER = 0x400;
 
     private FolderBrowserDialog() { }
-    //private const int BFFM_SETOKTEXT = WM_USER + 105; // Unicode only
-    //private const int BFFM_SETEXPANDED = WM_USER + 106; // Unicode only
 
     private int OnBrowseEvent(IntPtr hWnd, int msg, IntPtr lp, IntPtr lpData)
     {
@@ -47,7 +39,6 @@ public class FolderBrowserDialog
         {
             case BFFM_INITIALIZED: // Required to set initialPath
                 {
-                    //Win32.SendMessage(new HandleRef(null, hWnd), BFFM_SETSELECTIONA, 1, lpData);
                     // Use BFFM_SETSELECTIONW if passing a Unicode string, i.e. native CLR Strings.
                     SendMessage(new HandleRef(null, hWnd), BFFM_SETSELECTIONW, 1, _initialPath);
                     break;

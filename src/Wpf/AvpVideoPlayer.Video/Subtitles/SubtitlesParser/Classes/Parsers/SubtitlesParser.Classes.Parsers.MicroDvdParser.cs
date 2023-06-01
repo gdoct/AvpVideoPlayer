@@ -13,8 +13,6 @@ public class MicroDvdParser : ISubtitlesParser
 
 	private readonly char[] _lineSeparators = new char[1] { '|' };
 
-	private const string LineRegex = "^[{\\[](-?\\d+)[}\\]][{\\[](-?\\d+)[}\\]](.*)";
-
 	public MicroDvdParser()
 	{
 	}

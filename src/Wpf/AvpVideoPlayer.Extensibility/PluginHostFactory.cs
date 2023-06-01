@@ -17,11 +17,15 @@ public class PluginHostBuilder<T> : IPluginHostBuilder<T>
 
     public IPluginHostBuilder<T> IncludePath(string path)
     {
-        if (!Directory.Exists(path)) throw new DirectoryNotFoundException(path);
+        if (!Directory.Exists(path))
+        {
+            throw new DirectoryNotFoundException(path);
+        }
+
         _paths.Add(path);
         return this;
     }
-    public IPluginHost<T> Build()
+    public IPluginHost Build()
     {
         var pluginmetas = ScanPluginFolders().ToList();
         IEventHub shadoweventhub = new EventHub.EventHub();

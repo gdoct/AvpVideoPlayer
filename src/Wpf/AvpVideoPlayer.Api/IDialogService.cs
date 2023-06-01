@@ -20,10 +20,10 @@
         [Flags]
         public enum DialogResult
         {
-            None,
-            Ok,
-            Cancel,
-            DoNotShowAgain,
+            None = 0,
+            Ok = 1,
+            Cancel = 2,
+            DoNotShowAgain = 4,
         }
 
         DialogResult Show(string dialogtext,

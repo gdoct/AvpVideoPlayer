@@ -234,7 +234,7 @@ public class PlayerControlsViewModel : EventBasedViewModel
         get => _volume;
         set
         {
-            if (WasVolumeChangedByUser(value))
+            if (WasVolumeChangedByUser())
             {
                 Publish(new VolumeChangeRequestEvent(value));
             }
@@ -361,12 +361,6 @@ public class PlayerControlsViewModel : EventBasedViewModel
         _isUpdatingFromEvent = false;
     }
 
-    private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-    {
-        if (_isUpdatingFromEvent) return;
-        Publish(new PlayPositionChangeRequestEvent(e.NewValue));
-    }
-
     private bool WasPositionChangedByUser(double newvalue)
     {
         // no need to run code when it is changed by the timer
@@ -378,7 +372,7 @@ public class PlayerControlsViewModel : EventBasedViewModel
         return false;
     }
 
-    private bool WasVolumeChangedByUser(double _)
+    private bool WasVolumeChangedByUser()
     {
         if (_isUpdatingFromEvent) return false;
         return true;

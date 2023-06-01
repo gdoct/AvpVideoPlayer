@@ -148,7 +148,10 @@ public class VideoPlayerViewModel : EventBasedViewModel
                 Command = new RelayCommand((_) => OnEditTags())
             });
         }
-        catch (InvalidOperationException) { }
+        catch (InvalidOperationException) 
+        {
+            // swallow the exception
+        }
     }
 
     public ObservableCollection<MenuItem> AvailableSubs { get; } = new ObservableCollection<MenuItem>();

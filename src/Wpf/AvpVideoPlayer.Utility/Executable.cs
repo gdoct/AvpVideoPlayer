@@ -20,7 +20,6 @@ public static class Executable
         if (!Path.IsPathFullyQualified(executableName))
         {
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            if (assembly == null) throw new NullReferenceException(nameof(assembly));
             workingfolder = new FileInfo(assembly.Location).DirectoryName ?? string.Empty;
             executable = Path.Combine(workingfolder, executableName);
         }
@@ -29,7 +28,11 @@ public static class Executable
             workingfolder = new FileInfo(executableName).DirectoryName ?? string.Empty;
             executable = executableName;
         }
-        if (!File.Exists(executable)) throw new FileNotFoundException(nameof(executable));
+        if (!File.Exists(executable))
+        {
+            throw new FileNotFoundException(nameof(executable));
+        }
+
         Process? process = null;
         var outputStringBuilder = new StringBuilder();
 
@@ -63,7 +66,7 @@ public static class Executable
             else // we timed out...
             {
                 process.Kill();
-                throw new Exception("ERROR: Process took too long to finish");
+                throw new InvalidOperationException("ERROR: Process took too long to finish");
             }
         }
         finally

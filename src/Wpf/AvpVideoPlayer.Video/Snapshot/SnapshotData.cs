@@ -4,6 +4,8 @@ namespace AvpVideoPlayer.Video.Snapshot;
 
 public class SnapshotData : IDisposable
 {
+    private bool disposedValue;
+
     public SnapshotData(Bitmap bmp, TimeSpan time, int index)
     {
         Bitmap = bmp;
@@ -17,10 +19,23 @@ public class SnapshotData : IDisposable
 
 
     public int Index { get; }
-    
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposedValue)
+        {
+            if (disposing)
+            {
+                Bitmap?.Dispose();
+            }
+
+            disposedValue = true;
+        }
+    }
+
     public void Dispose()
     {
-        Bitmap?.Dispose();
+        Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
 }

@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace AvpVideoPlayer.Extensibility;
 
-public class PluginHost<T> : IPluginHost<T>, IDisposable
+public class PluginHost<T> : IPluginHost, IDisposable
 {
     private readonly IEventHub _hostEventHub;
     private readonly IDisposable _hostEventSub;

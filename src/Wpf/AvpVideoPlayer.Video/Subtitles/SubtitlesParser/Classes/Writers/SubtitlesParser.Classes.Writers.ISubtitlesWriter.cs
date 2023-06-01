@@ -1,9 +1,8 @@
 // SubtitlesParser, Version=1.5.1.0, Culture=neutral, PublicKeyToken=null
 // SubtitlesParser.Classes.Writers.ISubtitlesWriter
-using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
-using SubtitlesParser.Classes;
+
+namespace SubtitlesParser.Classes;
 
 public interface ISubtitlesWriter
 {

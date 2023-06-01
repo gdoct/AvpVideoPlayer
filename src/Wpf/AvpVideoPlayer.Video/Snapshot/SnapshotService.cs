@@ -32,12 +32,9 @@ internal class SnapshotService : IDisposable, ISnapshotService
 
     public ImageSource? GetBitmapForTime(TimeSpan time)
     {
-        if (_cachetime != null)
+        if (_cachetime != null && (_cachetime.Value - time).Duration().TotalMilliseconds < 10000)
         {
-            if ((_cachetime.Value - time).Duration().TotalMilliseconds < 10000)
-            {
-                return _cache;
-            }
+            return _cache;
         }
         var data = _thumbnailData
             .Where(s => s.Timestamp < time)

@@ -215,7 +215,7 @@ public class FileListViewModel : EventBasedViewModel
         if (string.IsNullOrWhiteSpace(path)) return;
         if (File.Exists(path) && FileExtensions.IsPlaylist(path))
         {
-            LoadPlaylistIntoListview(path, force);
+            LoadPlaylistIntoListview(path);
         }
         else if (Directory.Exists(path))
         {
@@ -224,11 +224,11 @@ public class FileListViewModel : EventBasedViewModel
         }
         else if (!string.IsNullOrWhiteSpace(_playlist) && path.StartsWith(_playlist, StringComparison.OrdinalIgnoreCase))
         {
-            LoadM3uCategoryIntoView(path, force);
+            LoadM3uCategoryIntoView(path);
         }
     }
 
-    private void LoadM3uCategoryIntoView(string path, bool force)
+    private void LoadM3uCategoryIntoView(string path)
     {
         var location = path[(_playlist.Length + 1)..];
         var parts = location.Split(@"\");
@@ -249,7 +249,7 @@ public class FileListViewModel : EventBasedViewModel
         }
     }
 
-    private void LoadPlaylistIntoListview(string path, bool force)
+    private void LoadPlaylistIntoListview(string path)
     {
         // a new play list is opened - display the categories
 

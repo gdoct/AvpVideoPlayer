@@ -9,7 +9,7 @@ namespace AvpVideoPlayer.Utility;
 /// <summary>
 /// class to add sorting to the listview control
 /// </summary>
-public class GridViewSort
+public static class GridViewSort
 {
     #region Attached properties
 
@@ -33,18 +33,15 @@ public class GridViewSort
                 null,
                 (o, e) =>
                 {
-                    if (o is ItemsControl listView)
+                    if (o is ItemsControl listView && !GetAutoSort(listView)) // Don't change click handler if AutoSort enabled
                     {
-                        if (!GetAutoSort(listView)) // Don't change click handler if AutoSort enabled
+                        if (e.OldValue != null && e.NewValue == null)
                         {
-                            if (e.OldValue != null && e.NewValue == null)
-                            {
-                                listView.RemoveHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
-                            }
-                            if (e.OldValue == null && e.NewValue != null)
-                            {
-                                listView.AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
-                            }
+                            listView.RemoveHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                        }
+                        if (e.OldValue == null && e.NewValue != null)
+                        {
+                            listView.AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
                         }
                     }
                 }

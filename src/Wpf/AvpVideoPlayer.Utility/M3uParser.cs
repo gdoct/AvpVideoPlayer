@@ -5,7 +5,7 @@ namespace AvpVideoPlayer.Utility
 {
     public class M3uParser
     {
-        private string _path;
+        private readonly string _path;
 
         public M3uParser(string path)
         {

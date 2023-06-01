@@ -16,10 +16,6 @@ public partial class MainWindow : Window
 
     protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
     {
-        //var aspect = this.MediaPlayer.ViewBox.ActualWidth / this.MediaPlayer.ViewBox.ActualHeight;
-        //if (sizeInfo.WidthChanged) this.Width = sizeInfo.NewSize.Height * aspect;
-        //else this.Height = sizeInfo.NewSize.Width / aspect;
-
         ((MainWindowViewModel)DataContext).OnRenderSizeChanged(sizeInfo);
         if (WindowStyle == WindowStyle.None)
         {

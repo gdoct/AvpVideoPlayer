@@ -28,13 +28,6 @@ public static class VisualChildExtensions
     }
 
     public static childItem? FindVisualChild<childItem>(this DependencyObject obj)
-        where childItem : DependencyObject
-    {
-        foreach (childItem child in obj.FindVisualChildren<childItem>())
-        {
-            return child;
-        }
-
-        return null;
-    }
+        where childItem : DependencyObject => 
+        obj.FindVisualChildren<childItem>().FirstOrDefault();
 }
