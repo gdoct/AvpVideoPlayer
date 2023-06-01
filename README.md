@@ -1,5 +1,5 @@
 ### Avp Videoplayer
-[![CI/CD build](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/cicd.yml/badge.svg)](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/cicd.yml)
+[![CI/CD build](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/cicd.yml/badge.svg?branch=master)](https://github.com/gdoct/AvpVideoPlayer/actions/workflows/cicd.yml)
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=gdoct_AvpVideoPlayer)](https://sonarcloud.io/summary/new_code?id=gdoct_AvpVideoPlayer)
 
