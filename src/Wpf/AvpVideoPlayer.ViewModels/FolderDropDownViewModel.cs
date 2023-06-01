@@ -60,24 +60,36 @@ public class FolderDropDownViewModel : INotifyPropertyChanged
         {
             Folders.Add(new FolderViewModel(drive.RootDirectory.FullName ));
 
-            if (drive.RootDirectory.FullName.Equals(folder.FullName)) continue;
+            if (drive.RootDirectory.FullName.Equals(folder.FullName))
+            {
+                continue;
+            }
+
             if (drive.RootDirectory.FullName.Equals(folder.Root.FullName))
             {
-                var folderlist = new List<FolderViewModel?> { new FolderViewModel(folder.FullName )};
-                while (parent?.Parent != null)
-                {
-                    folderlist.Add(new FolderViewModel(parent.FullName ));
-                    parent = parent.Parent;
-                }
-                folderlist.Reverse();
-                foreach (var f in folderlist)
-                {
-                    if (f != null)
-                        Folders.Add(f);
-                }
+                parent = ScanDrives(folder, parent);
             }
         }
     }
+
+    private DirectoryInfo? ScanDrives(DirectoryInfo folder, DirectoryInfo? parent)
+    {
+        var folderlist = new List<FolderViewModel?> { new FolderViewModel(folder.FullName) };
+        while (parent?.Parent != null)
+        {
+            folderlist.Add(new FolderViewModel(parent.FullName));
+            parent = parent.Parent;
+        }
+        folderlist.Reverse();
+        foreach (var f in folderlist)
+        {
+            if (f != null)
+                Folders.Add(f);
+        }
+
+        return parent;
+    }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string? propertyName = null)

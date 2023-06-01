@@ -22,7 +22,15 @@ public class HeightWithOffsetConverterTests
         var targetType = Type.GetType("TestValue262727588");
         var parameter = new object();
         var culture = CultureInfo.InvariantCulture;
-        _ = _testClass.Convert(value, targetType, parameter, culture);
+        try
+        {
+            _ = _testClass.Convert(value, targetType, parameter, culture);
+        }
+        catch(Exception ex) 
+        {
+            Assert.Fail(ex.ToString());
+            throw;
+        }
     }
 
     [Fact]

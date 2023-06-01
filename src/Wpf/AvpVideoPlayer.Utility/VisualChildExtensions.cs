@@ -17,9 +17,11 @@ public static class VisualChildExtensions
                     yield return t;
                 }
                 if (child != null)
-                foreach (T childOfChild in child.FindVisualChildren<T>())
                 {
-                    yield return childOfChild;
+                    foreach (T childOfChild in child.FindVisualChildren<T>())
+                    {
+                        yield return childOfChild;
+                    }
                 }
             }
         }

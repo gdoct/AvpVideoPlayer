@@ -276,7 +276,7 @@ public class PlayerControlsViewModel : EventBasedViewModel
 
     private void OnSubtitlesLoaded(SubtitlesLoadedEvent e)
     {
-
+        // do nothing for now
     }
     
     private void OnUpdateRepeatState(ToggleRepeatEvent e)

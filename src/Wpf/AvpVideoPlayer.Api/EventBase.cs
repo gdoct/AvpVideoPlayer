@@ -22,7 +22,7 @@ public abstract class EventBase {
 /// </summary>
 public abstract class EventBase<T> : EventBase
 {
-    public EventBase(T eventdata)
+    protected EventBase(T eventdata)
     {
         if (eventdata is null) throw new ArgumentNullException(nameof(eventdata));
         Data = eventdata;

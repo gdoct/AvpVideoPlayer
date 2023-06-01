@@ -1,5 +1,6 @@
 namespace AvpVideoPlayer.Utility.Tests
 {
+    using Newtonsoft.Json.Linq;
     using System;
     using Xunit;
 
@@ -33,8 +34,16 @@ namespace AvpVideoPlayer.Utility.Tests
         [Fact]
         public void CanCallExecute()
         {
-            var parameter = new object();
-            _testClass.Execute(parameter);
+            try
+            {
+                var parameter = new object();
+                _testClass.Execute(parameter);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.ToString());
+                throw;
+            }
         }
     }
 }

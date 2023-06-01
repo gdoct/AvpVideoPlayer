@@ -180,7 +180,11 @@ public class FileListViewModel : EventBasedViewModel
         get => _path;
         set
         {
-            if (string.Compare(value, _path, StringComparison.OrdinalIgnoreCase) == 0) return;
+            if (string.Equals(value, _path, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             _path = value;
             if (!string.IsNullOrEmpty(_path) && File.Exists(_path) && FileExtensions.IsPlaylist(_path))
             {
@@ -234,8 +238,14 @@ public class FileListViewModel : EventBasedViewModel
         FolderContents.Clear();
         foreach(var channel in channels)
         {
-            if (string.IsNullOrWhiteSpace(channel.Name) || channel.Uri  == null || !channel.Uri.IsWellFormedOriginalString()) continue;
-            FolderContents.Add(new FileListListViewItem(new VideoStreamViewModel(channel.Name, channel.Uri), new FileMetaData()));
+            if (string.IsNullOrWhiteSpace(channel.Name) 
+                || channel.Uri == null 
+                || !channel.Uri.IsWellFormedOriginalString())
+            {
+                continue;
+            }
+            FolderContents.Add(new FileListListViewItem(
+                new VideoStreamViewModel(channel.Name, channel.Uri), new FileMetaData()));
         }
     }
 
@@ -289,10 +299,12 @@ public class FileListViewModel : EventBasedViewModel
                 newlist.Add(new PlayListViewModel(file.FullName));
             }
             else
-            newlist.Add(new VideoFileViewModel(file));
-        }
+            {
+                newlist.Add(new VideoFileViewModel(file));
+            }
+            }
 
-        if (!force
+            if (!force
             && newlist.All(f => FolderContents.Any(fc => fc.File.Path == f.Path))
             && FolderContents.All(f => newlist.Any(fc => fc.Path == f.File.Path))
             )

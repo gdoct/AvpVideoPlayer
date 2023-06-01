@@ -116,28 +116,30 @@ public class GridViewSort
 
     private static void ColumnHeader_Click(object sender, RoutedEventArgs e)
     {
-        var headerClicked = e.OriginalSource as GridViewColumnHeader;
+        var headerClicked = e.OriginalSource as GridViewColumnHeader ?? throw new ArgumentException("");
         if (headerClicked?.Column != null)
         {
             string propertyName = GetPropertyName(headerClicked.Column);
             if (!string.IsNullOrEmpty(propertyName))
             {
-                var listView = GetAncestor<ListView>(headerClicked);
-                if (listView != null)
-                {
-                    ICommand command = GetCommand(listView);
-                    if (command != null)
-                    {
-                        if (command.CanExecute(propertyName))
-                        {
-                            command.Execute(propertyName);
-                        }
-                    }
-                    else if (GetAutoSort(listView))
-                    {
-                        ApplySort(listView.Items, propertyName);
-                    }
-                }
+                SortGridColumn(headerClicked, propertyName);
+            }
+        }
+    }
+
+    private static void SortGridColumn(GridViewColumnHeader headerClicked, string propertyName)
+    {
+        var listView = GetAncestor<ListView>(headerClicked);
+        if (listView != null)
+        {
+            ICommand command = GetCommand(listView);
+            if (command != null && command.CanExecute(propertyName))
+            {
+                command.Execute(propertyName);
+            }
+            else if (GetAutoSort(listView))
+            {
+                ApplySort(listView.Items, propertyName);
             }
         }
     }

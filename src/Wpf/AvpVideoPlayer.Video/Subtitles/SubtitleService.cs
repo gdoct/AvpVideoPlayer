@@ -1,5 +1,6 @@
 ﻿using AvpVideoPlayer.Api;
 using System.IO;
+using System.Windows;
 
 namespace AvpVideoPlayer.Video.Subtitles;
 
@@ -33,47 +34,52 @@ public class SubtitleService
     /// <param name="filename"></param>
     public SubtitleInfo? AddSubtitlesFromFile(string? filename)
     {
-        SubtitleInfo? ret = null;
-        if (string.IsNullOrWhiteSpace(filename) || LoadedSubtitles.Keys.Any(k => k.Filename == filename && k.Index == 0))
+        if (string.IsNullOrWhiteSpace(filename) 
+            || LoadedSubtitles.Keys.Any(k => k.Filename == filename && k.Index == 0)
+            || !File.Exists(filename))
         {
             return null;
         }
         var fi = new FileInfo(filename);
-        if (!fi.Exists) return null;
-        try
-        {
-            if (FileExtensions.IsVideoFile(fi))
-            {
-                var subs = _subtitleContextFactory.FromVideofile(filename);
-                if (!subs.Any()) return null;
-                foreach (var sub in subs)
-                {
-                    if (ret == null) ret = sub.SubtitleInfo;
-                    if (!LoadedSubtitles.ContainsKey(sub.SubtitleInfo))
-                    {
-                        LoadedSubtitles.Add(sub.SubtitleInfo, sub);
-                    }
-                }
-            }
-            else
-            {
-                var subtitleContext = _subtitleContextFactory.FromFile(filename);
-                var info = new SubtitleInfo
-                {
-                    Filename = filename,
-                    SubtitleName = fi.Name,
-                    Index = 0,
-                    StreamInfo = string.Empty
-                };
-                LoadedSubtitles.Add(info, subtitleContext);
-                ret = info;
-            }
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Trace.TraceError($"Unhandled exception while parsing subs: {ex}");
-        }
         CurrentSubtitle = new SubtitleData(0, 0);
+        if (FileExtensions.IsVideoFile(fi))
+        {
+            return ExtractSubtitleInfoFromVideo(filename);
+        }
+        else
+        {
+            var subtitleContext = _subtitleContextFactory.FromFile(filename);
+            var info = new SubtitleInfo
+            {
+                Filename = filename,
+                SubtitleName = fi.Name,
+                Index = 0,
+                StreamInfo = string.Empty
+            };
+            LoadedSubtitles.Add(info, subtitleContext);
+            return info;
+        }
+    }
+
+    private SubtitleInfo? ExtractSubtitleInfoFromVideo(string filename)
+    {
+        SubtitleInfo? ret = null;
+        var subs = _subtitleContextFactory.FromVideofile(filename);
+        if (!subs.Any())
+        {
+            return null;
+        }
+        foreach (var sub in subs)
+        {
+            if (ret == null)
+            {
+                ret = sub.SubtitleInfo;
+            }
+            if (!LoadedSubtitles.ContainsKey(sub.SubtitleInfo))
+            {
+                LoadedSubtitles.Add(sub.SubtitleInfo, sub);
+            }
+        }
         return ret;
     }
 

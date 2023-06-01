@@ -70,11 +70,16 @@ public class LibraryViewModel : EventBasedViewModel
 
     private void OnDeleteCurrentVideo(DeleteCurrentVideoEvent obj)
     {
-        if (_fullscreen) return;
-        var filename = _filename;
-        if (string.IsNullOrWhiteSpace(filename) || !File.Exists(filename) || Uri.IsWellFormedUriString(filename, UriKind.Absolute)) return;
-        if (string.Compare(FileListViewModel.ActivatedFile?.Path, filename, true) != 0) return;
-        var result = _dialogService.Show($@"Are you sure you want to delete ""{filename}""?", "Confirm delete", true, IDialogService.DialogTypes.Warning);
+        if (_fullscreen)
+        {
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(_filename) || !File.Exists(_filename) || Uri.IsWellFormedUriString(_filename, UriKind.Absolute) || string.Compare(FileListViewModel.ActivatedFile?.Path, _filename, true) != 0)
+        {
+            return;
+        }
+
+        var result = _dialogService.Show($@"Are you sure you want to delete ""{_filename}""?", "Confirm delete", true, IDialogService.DialogTypes.Warning);
         if (result == IDialogService.DialogResult.Ok)
         {
             if (_playstate != PlayStates.Stop)
@@ -84,7 +89,7 @@ public class LibraryViewModel : EventBasedViewModel
             //nuke the file
             try
             {
-                File.Delete(filename);
+                File.Delete(_filename);
             }
             catch (Exception ex)
             {

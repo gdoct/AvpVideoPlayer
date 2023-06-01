@@ -4,6 +4,7 @@
     {
         public enum DialogTypes
         {
+            None,
             Information,
             Error,
             Application,
@@ -19,6 +20,7 @@
         [Flags]
         public enum DialogResult
         {
+            None,
             Ok,
             Cancel,
             DoNotShowAgain,

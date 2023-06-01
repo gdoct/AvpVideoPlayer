@@ -1,6 +1,7 @@
 namespace AvpVideoPlayer.EventHub.Tests;
 
 using AvpVideoPlayer.Api;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using System;
 using System.Reactive.Linq;
 using Xunit;
@@ -91,9 +92,17 @@ public partial class EventHubTests : IDisposable
         {
             throw new ArgumentException("bah");
         };
-        using (_eventHub.Events.OfType<UnitTestEvent>().Subscribe(callback))
+        try
         {
-            _eventHub.Publish(unitTestEvent);
+            using (_eventHub.Events.OfType<UnitTestEvent>().Subscribe(callback))
+            {
+                _eventHub.Publish(unitTestEvent);
+            }
+        }
+        catch(Exception ex) 
+        {
+            Assert.Fail(ex.ToString());
+            throw;
         }
     }
 

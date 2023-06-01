@@ -29,5 +29,6 @@ public partial class DetailedFileThumbnail : UserControl
 
     private static void OnFileChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
+        // currently not handled
     }
 }

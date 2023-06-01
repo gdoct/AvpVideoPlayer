@@ -1,6 +1,6 @@
 ﻿namespace AvpVideoPlayer.Api;
 
-public class Constants
+public static class Constants
 {
     public const string FfMpegExe = @"FFMpeg\ffmpeg.exe";
 
