@@ -76,7 +76,7 @@ public class SsaParser : ISubtitlesParser
 												  .ToList();
 									break;
 								default:
-									throw new ArgumentOutOfRangeException("invalid ssaWrapStyle");
+									throw new ArgumentException("invalid ssaWrapStyle in the ssaStream");
 								}
 								source = source.Select((string line) => line.TrimStart()).ToList();
 								SubtitleItem item = new SubtitleItem

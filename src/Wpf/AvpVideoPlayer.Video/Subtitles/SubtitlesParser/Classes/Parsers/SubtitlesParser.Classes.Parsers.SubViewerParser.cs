@@ -94,7 +94,7 @@ public class SubViewerParser : ISubtitlesParser
 		throw new ArgumentException("Stream is not in a valid SubViewer format");
 	}
 
-	private Tuple<int, int> ParseTimecodeLine(string line)
+	private static Tuple<int, int> ParseTimecodeLine(string line)
 	{
 		string[] array = line.Split(',');
 		if (array.Length == 2)

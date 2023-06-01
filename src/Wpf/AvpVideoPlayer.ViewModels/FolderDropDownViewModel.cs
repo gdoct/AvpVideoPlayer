@@ -56,16 +56,16 @@ public class FolderDropDownViewModel : INotifyPropertyChanged
         var folder = new DirectoryInfo(_currentPath);
         var parent = folder.Parent;
 
-        foreach (var root in DriveInfo.GetDrives().Select(d => d.RootDirectory))
+        foreach (var root in DriveInfo.GetDrives().Select(d => d.RootDirectory.FullName))
         {
-            Folders.Add(new FolderViewModel(root.FullName ));
+            Folders.Add(new FolderViewModel(root ));
 
-            if (root.FullName.Equals(folder.FullName))
+            if (root.Equals(folder.FullName))
             {
                 continue;
             }
 
-            if (root.FullName.Equals(folder.Root.FullName))
+            if (root.Equals(folder.Root.FullName))
             {
                 parent = ScanDrives(folder, parent);
             }
