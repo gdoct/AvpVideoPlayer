@@ -1,6 +1,5 @@
 ﻿using AvpVideoPlayer.Api;
 using System.IO;
-using System.Windows;
 
 namespace AvpVideoPlayer.Video.Subtitles;
 
