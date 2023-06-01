@@ -46,9 +46,9 @@ public class PluginHost<T> : IPluginHost, IDisposable
         try
         {
             _hostEventHub.Publish(copy);
-        }catch (Exception ex) // plugins may crash
+        }
+        catch (Exception ex) // plugins may crash
         {
-            //
             MessageBox.Show($"Error executing plugin: {ex}");
         }
     }

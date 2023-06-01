@@ -12,7 +12,7 @@ public static class VisualChildExtensions
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                if (child != null && child is T t)
+                if (child is T t)
                 {
                     yield return t;
                 }

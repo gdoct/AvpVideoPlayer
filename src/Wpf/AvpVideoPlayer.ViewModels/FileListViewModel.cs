@@ -23,7 +23,7 @@ public class FileListViewModel : EventBasedViewModel
     private string? _path;
     private string? _filter;
     private FileListListViewItem? _selectedItem = null;
-    private List<M3uParser.ChannelInfo> _channels = new();
+    private List<M3UParser.ChannelInfo> _channels = new();
     private string _playlist = string.Empty;
 
     public FileListViewModel(IEventHub eventHub, IMetaDataService metaDataService, IM3uService m3uservice) : base(eventHub)
@@ -220,7 +220,6 @@ public class FileListViewModel : EventBasedViewModel
         else if (Directory.Exists(path))
         {
             LoadFolderContentsIntoListView(path, force);
-            return;
         }
         else if (!string.IsNullOrWhiteSpace(_playlist) && path.StartsWith(_playlist, StringComparison.OrdinalIgnoreCase))
         {
@@ -305,8 +304,8 @@ public class FileListViewModel : EventBasedViewModel
             }
 
             if (!force
-            && newlist.All(f => FolderContents.Any(fc => fc.File.Path == f.Path))
-            && FolderContents.All(f => newlist.Any(fc => fc.Path == f.File.Path))
+            && newlist.TrueForAll(f => FolderContents.Any(fc => fc.File.Path == f.Path))
+            && FolderContents.All(f => newlist.Exists(fc => fc.Path == f.File.Path))
             )
         {
             return;
@@ -337,61 +336,70 @@ public class FileListViewModel : EventBasedViewModel
         bool isActivatedItemFound = false;
         if (e.Data == PlayListMoveTypes.Forward)
         {
-            for (int i = 0; i < itemsInView.Length; i++)
-            {
-                var item = itemsInView[i];
-                if (item.IsActivated)
-                {
-                    isActivatedItemFound = true;
-                }
-                else if (!isActivatedItemFound)
-                {
-                    continue;
-                }
-                else if (item.File is VideoStreamViewModel vs)
-                {
-                    Publish(new SelectVideoEvent(vs));
-                    canPlay = true;
-                    break;
-                }
-                else if (item?.File?.FileInfo == null)
-                {
-                    continue;
-                }
-                else
-                {
-                    Publish(new SelectVideoEvent(item.File));
-                    canPlay = true;
-                    break;
-                }
-
-            }
+            PlayNextItem(itemsInView, ref canPlay, ref isActivatedItemFound);
         }
         else // backwards is implied here
         {
-            for (int i = itemsInView.Length - 1; i >= 0 ; i--)
-            {
-                var item = itemsInView[i];
-                if (item.IsActivated)
-                {
-                    isActivatedItemFound = true;
-                }
-                else if (!isActivatedItemFound || item?.File?.FileInfo == null)
-                {
-                    continue;
-                }
-                else
-                {
-                    Publish(new SelectVideoEvent(item.File));
-                    canPlay = true;
-                    break;
-                }
-
-            }
+            PlayPreviousItem(itemsInView, ref canPlay, ref isActivatedItemFound);
         }
         if (!canPlay)
         {
             Publish(new PlayStateChangeRequestEvent(PlayStates.Stop));
+        }
+    }
+
+    private void PlayPreviousItem(FileListListViewItem[] itemsInView, ref bool canPlay, ref bool isActivatedItemFound)
+    {
+        for (int i = itemsInView.Length - 1; i >= 0; i--)
+        {
+            var item = itemsInView[i];
+            if (item.IsActivated)
+            {
+                isActivatedItemFound = true;
+            }
+            else if (!isActivatedItemFound || item?.File?.FileInfo == null)
+            {
+                continue;
+            }
+            else
+            {
+                Publish(new SelectVideoEvent(item.File));
+                canPlay = true;
+                break;
+            }
+
+        }
+    }
+
+    private void PlayNextItem(FileListListViewItem[] itemsInView, ref bool canPlay, ref bool isActivatedItemFound)
+    {
+        for (int i = 0; i < itemsInView.Length; i++)
+        {
+            var item = itemsInView[i];
+            if (item.IsActivated)
+            {
+                isActivatedItemFound = true;
+            }
+            else if (!isActivatedItemFound)
+            {
+                continue;
+            }
+            else if (item.File is VideoStreamViewModel vs)
+            {
+                Publish(new SelectVideoEvent(vs));
+                canPlay = true;
+                break;
+            }
+            else if (item?.File?.FileInfo == null)
+            {
+                continue;
+            }
+            else
+            {
+                Publish(new SelectVideoEvent(item.File));
+                canPlay = true;
+                break;
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace AvpVideoPlayer.Video.Subtitles;
 /// <inheritdoc cref="ISubtitleContext"/>
 internal class FileSubtitleContext : ISubtitleContext
 {
-    private readonly IList<SubtitleData> _subtitles = new List<SubtitleData>();
+    private readonly IList<SubtitleData> _subtitles;
 
     public FileSubtitleContext(string filename)
     {

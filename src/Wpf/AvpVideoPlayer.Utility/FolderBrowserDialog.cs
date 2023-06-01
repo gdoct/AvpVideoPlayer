@@ -74,7 +74,7 @@ public class FolderBrowserDialog
     {
         _initialPath = initialPath;
         StringBuilder sb = new(256);
-        IntPtr bufferAddress = Marshal.AllocHGlobal(256); ;
+        IntPtr bufferAddress = Marshal.AllocHGlobal(256);
         IntPtr pidl = IntPtr.Zero;
         BROWSEINFO bi = new();
         bi.hwndOwner = parentHandle;
@@ -88,7 +88,7 @@ public class FolderBrowserDialog
         try
         {
             pidl = SHBrowseForFolder(ref bi);
-            if (true != SHGetPathFromIDList(pidl, bufferAddress))
+            if (!SHGetPathFromIDList(pidl, bufferAddress))
             {
                 return null;
             }

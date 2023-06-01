@@ -27,15 +27,6 @@ namespace AvpVideoPlayer.MetaData
             col.EnsureIndex(x => x.Path);
         }
 
-        public FileMetaData? GetMetadata(FileInfo file)
-        {
-            var col = _db.GetCollection<FileMetaData>("FileMetaData");
-            var data = new { file.Name, Length = file.Exists ? file.Length : 0 };
-            return col.Query()
-                .Where(f => new { f.Name, f.Length } == new { data.Name, data.Length })
-            .FirstOrDefault();
-        }
-
         public void DeleteMetadata(FileMetaData metaData)
         {
             var col = _db.GetCollection<FileMetaData>("FileMetaData");
@@ -49,6 +40,15 @@ namespace AvpVideoPlayer.MetaData
             {
                 col.Delete(existing["_id"]);
             }
+        }
+
+        public FileMetaData? GetMetadata(FileInfo file)
+        {
+            var col = _db.GetCollection<FileMetaData>("FileMetaData");
+            var data = new { file.Name, Length = file.Exists ? file.Length : 0 };
+            return col.Query()
+                .Where(f => new { f.Name, f.Length } == new { data.Name, data.Length })
+            .FirstOrDefault();
         }
 
         public IEnumerable<FileMetaData> GetMetadata()

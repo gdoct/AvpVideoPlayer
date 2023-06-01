@@ -84,7 +84,7 @@ public class PluginHostBuilder<T> : IPluginHostBuilder<T>
         return result;
     }
 
-    private class PluginMeta
+    private sealed class PluginMeta
     {
         public PluginMeta(string path, Type t)
         {

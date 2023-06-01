@@ -114,7 +114,9 @@ public class LibraryViewModel : EventBasedViewModel
     {
         // this call is throttled and continued in OnSelectFile
         if (e != null)
-        Publish(new SelectedFileChangedEvent(e));
+        {
+            Publish(new SelectedFileChangedEvent(e));
+        }
     }
 
     public void OnSelectFile(SelectedFileChangedEvent e)

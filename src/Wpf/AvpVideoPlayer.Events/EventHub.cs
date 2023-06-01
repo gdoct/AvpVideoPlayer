@@ -4,7 +4,7 @@ using System.Reactive.Subjects;
 namespace AvpVideoPlayer.EventHub;
 
 /// <inheritdoc cref="IEventHub"/>
-public class EventHub : IDisposable, IEventHub
+public class EventHub : IEventHub
 {
     private bool _disposedValue;
     private readonly Subject<EventBase> _eventSource;

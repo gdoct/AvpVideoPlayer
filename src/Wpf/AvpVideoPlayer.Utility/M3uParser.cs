@@ -3,11 +3,11 @@ using System.Text.RegularExpressions;
 
 namespace AvpVideoPlayer.Utility
 {
-    public class M3uParser
+    public class M3UParser
     {
         private readonly string _path;
 
-        public M3uParser(string path)
+        public M3UParser(string path)
         {
             _path = path;
         }
@@ -60,7 +60,7 @@ namespace AvpVideoPlayer.Utility
             {
                 name = string.Empty;
                 return false;
-            };
+            }
             var group = match.Groups[0].Value;
             name = group[6..^6];
             return true;
