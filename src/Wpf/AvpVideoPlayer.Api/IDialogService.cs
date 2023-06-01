@@ -18,7 +18,7 @@
         }
 
         [Flags]
-        public enum DialogResult
+        public enum DialogResults
         {
             None = 0,
             Ok = 1,
@@ -26,7 +26,7 @@
             DoNotShowAgain = 4,
         }
 
-        DialogResult Show(string dialogtext,
+        DialogResults Show(string dialogtext,
                           string dialogtitle,
                           bool allowSuppress = true,
                           DialogTypes dialogtype = DialogTypes.Information);

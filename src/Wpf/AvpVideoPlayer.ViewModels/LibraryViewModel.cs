@@ -80,7 +80,7 @@ public class LibraryViewModel : EventBasedViewModel
         }
 
         var result = _dialogService.Show($@"Are you sure you want to delete ""{_filename}""?", "Confirm delete", true, IDialogService.DialogTypes.Warning);
-        if (result == IDialogService.DialogResult.Ok)
+        if (result == IDialogService.DialogResults.Ok)
         {
             if (_playstate != PlayStates.Stop)
             {

@@ -61,17 +61,17 @@ public class DialogBoxViewModel : BaseViewModel
             BitmapSizeOptions.FromEmptyOptions());
     }
 
-    public IDialogService.DialogResult DialogResult { get; private set; } = IDialogService.DialogResult.Ok;
+    public IDialogService.DialogResults DialogResult { get; private set; } = IDialogService.DialogResults.Ok;
 
     private void Ok(object? commandParameter)
     {
         if (SuppressDialog)
         {
-            DialogResult = IDialogService.DialogResult.Ok & IDialogService.DialogResult.DoNotShowAgain;
+            DialogResult = IDialogService.DialogResults.Ok & IDialogService.DialogResults.DoNotShowAgain;
         }
         else
         {
-            DialogResult = IDialogService.DialogResult.Ok;
+            DialogResult = IDialogService.DialogResults.Ok;
         }
         ((Window)_viewRegistrationService.GetInstance(ViewResources.DialogBox))?.Close();
     }
@@ -80,11 +80,11 @@ public class DialogBoxViewModel : BaseViewModel
     {
         if (SuppressDialog)
         {
-            DialogResult = IDialogService.DialogResult.Cancel & IDialogService.DialogResult.DoNotShowAgain;
+            DialogResult = IDialogService.DialogResults.Cancel & IDialogService.DialogResults.DoNotShowAgain;
         }
         else
         {
-            DialogResult = IDialogService.DialogResult.Cancel;
+            DialogResult = IDialogService.DialogResults.Cancel;
         }
         ((Window)_viewRegistrationService.GetInstance(ViewResources.DialogBox))?.Close();
     }

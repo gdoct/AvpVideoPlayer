@@ -14,7 +14,7 @@ public class DialogService : IDialogService
         _viewRegistrationService = viewRegistrationService;
     }
 
-    public DialogResult Show(string dialogtext,
+    public DialogResults Show(string dialogtext,
                              string dialogtitle,
                              bool allowSuppress = true,
                              DialogTypes dialogtype = DialogTypes.Information)
