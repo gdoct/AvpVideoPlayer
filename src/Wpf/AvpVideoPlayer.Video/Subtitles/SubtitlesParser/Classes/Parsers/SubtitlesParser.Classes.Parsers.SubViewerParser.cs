@@ -12,7 +12,7 @@ public class SubViewerParser : ISubtitlesParser
 
 	private const short MaxLineNumberForItems = 20;
 
-	private readonly Regex _timestampRegex = new Regex("\\d{2}:\\d{2}:\\d{2}\\.\\d{2},\\d{2}:\\d{2}:\\d{2}\\.\\d{2}", RegexOptions.Compiled);
+	private readonly Regex _timestampRegex = new Regex("\\d{2}:\\d{2}:\\d{2}\\.\\d{2},\\d{2}:\\d{2}:\\d{2}\\.\\d{2}", RegexOptions.Compiled, TimeSpan.FromMilliseconds(250));
 
 	private const char TimecodeSeparator = ',';
 
@@ -107,7 +107,7 @@ public class SubViewerParser : ISubtitlesParser
 		throw new ArgumentException(message);
 	}
 
-	private int ParseTimecode(string s)
+	private static int ParseTimecode(string s)
 	{
 		if (TimeSpan.TryParse(s, out var result))
 		{

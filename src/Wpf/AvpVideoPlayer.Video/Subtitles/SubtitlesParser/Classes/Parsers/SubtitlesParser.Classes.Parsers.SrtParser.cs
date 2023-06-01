@@ -43,7 +43,7 @@ public class SrtParser : ISubtitlesParser
 					else
 					{
 						subtitleItem.Lines.Add(item2);
-						subtitleItem.PlaintextLines.Add(Regex.Replace(item2, "\\{.*?\\}|<.*?>", string.Empty));
+						subtitleItem.PlaintextLines.Add(Regex.Replace(item2, "\\{.*?\\}|<.*?>", string.Empty, RegexOptions.None, TimeSpan.FromMilliseconds(250)));
 					}
 				}
 				if ((subtitleItem.StartTime != 0 || subtitleItem.EndTime != 0) && subtitleItem.Lines.Any())
@@ -108,7 +108,7 @@ public class SrtParser : ISubtitlesParser
 
 	private static int ParseSrtTimecode(string s)
 	{
-		Match match = Regex.Match(s, "[0-9]+:[0-9]+:[0-9]+([,\\.][0-9]+)?");
+		Match match = Regex.Match(s, "[0-9]+:[0-9]+:[0-9]+([,\\.][0-9]+)?", RegexOptions.None, TimeSpan.FromMilliseconds(250));
 		if (match.Success)
 		{
 			s = match.Value;

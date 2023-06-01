@@ -72,10 +72,11 @@ public class SsaParser : ISubtitlesParser
 									source = text3.Split("\\N").ToList();
 									break;
 								case SsaWrapStyle.None:
-									source = Regex.Split(text3, "(?:\\\\n)|(?:\\\\N)").ToList();
+									source = Regex.Split(text3, "(?:\\\\n)|(?:\\\\N)", RegexOptions.None, TimeSpan.FromMilliseconds(250))
+												  .ToList();
 									break;
 								default:
-									throw new ArgumentOutOfRangeException();
+									throw new ArgumentOutOfRangeException("invalid ssaWrapStyle");
 								}
 								source = source.Select((string line) => line.TrimStart()).ToList();
 								SubtitleItem item = new SubtitleItem
@@ -83,7 +84,8 @@ public class SsaParser : ISubtitlesParser
 									StartTime = num5,
 									EndTime = num6,
 									Lines = source,
-									PlaintextLines = source.Select((string subtitleLine) => Regex.Replace(subtitleLine, "\\{.*?\\}", string.Empty)).ToList()
+									PlaintextLines = source.Select((string subtitleLine) => 
+									Regex.Replace(subtitleLine, "\\{.*?\\}", string.Empty, RegexOptions.None, TimeSpan.FromMilliseconds(250))).ToList()
 								};
 								list2.Add(item);
 							}
@@ -107,7 +109,7 @@ public class SsaParser : ISubtitlesParser
 		throw new ArgumentException(message4);
 	}
 
-	private int ParseSsaTimecode(string s)
+	private static int ParseSsaTimecode(string s)
 	{
 		if (TimeSpan.TryParse(s, out var result))
 		{

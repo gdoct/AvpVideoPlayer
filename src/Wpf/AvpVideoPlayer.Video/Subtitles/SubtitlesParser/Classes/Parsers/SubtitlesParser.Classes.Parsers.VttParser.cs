@@ -59,7 +59,7 @@ public class VttParser : ISubtitlesParser
 		throw new FormatException("Parsing as VTT returned no VTT part.");
 	}
 
-	private IEnumerable<string> GetVttSubTitleParts(TextReader reader)
+	private static IEnumerable<string> GetVttSubTitleParts(TextReader reader)
 	{
 		StringBuilder sb = new StringBuilder();
 		while (true)
@@ -110,13 +110,13 @@ public class VttParser : ISubtitlesParser
 		return true;
 	}
 
-	private int ParseVttTimecode(string s)
+	private static int ParseVttTimecode(string s)
 	{
 		int hours = 0;
 		int minutes = 0;
 		int seconds = 0;
 		int num = -1;
-		Match match = Regex.Match(s, "([0-9]+):([0-9]+):([0-9]+)[,\\.]([0-9]+)");
+		Match match = Regex.Match(s, "([0-9]+):([0-9]+):([0-9]+)[,\\.]([0-9]+)", RegexOptions.None, TimeSpan.FromMilliseconds(250));
 		if (match.Success)
 		{
 			hours = int.Parse(match.Groups[1].Value);
@@ -126,7 +126,7 @@ public class VttParser : ISubtitlesParser
 		}
 		else
 		{
-			match = Regex.Match(s, "([0-9]+):([0-9]+)[,\\.]([0-9]+)");
+			match = Regex.Match(s, "([0-9]+):([0-9]+)[,\\.]([0-9]+)", RegexOptions.None, TimeSpan.FromMilliseconds(250));
 			if (match.Success)
 			{
 				minutes = int.Parse(match.Groups[1].Value);

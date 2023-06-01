@@ -60,7 +60,7 @@ internal class FileSubtitleContext : ISubtitleContext
             Italic = HasTag(line, "<i>"),
             Bold = HasTag(line, "<b>"),
             Underline = HasTag(line, "<u>"),
-            Text = Regex.Replace(line.Trim(), "<.*?>", string.Empty)
+            Text = Regex.Replace(line.Trim(), "<.*?>", string.Empty, RegexOptions.None, TimeSpan.FromMilliseconds(250))
                                   .Replace(@"{\an7}", "")
                                   .Replace(@"\h", "")
         });

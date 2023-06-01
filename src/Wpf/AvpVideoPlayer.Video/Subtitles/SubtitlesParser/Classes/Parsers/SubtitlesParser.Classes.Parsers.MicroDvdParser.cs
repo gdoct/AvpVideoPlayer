@@ -78,14 +78,14 @@ public class MicroDvdParser : ISubtitlesParser
 		throw new ArgumentException("Stream is not in a valid MicroDVD format");
 	}
 
-	private bool IsMicroDvdLine(string line)
+	private static bool IsMicroDvdLine(string line)
 	{
-		return Regex.IsMatch(line, "^[{\\[](-?\\d+)[}\\]][{\\[](-?\\d+)[}\\]](.*)");
+		return Regex.IsMatch(line, "^[{\\[](-?\\d+)[}\\]][{\\[](-?\\d+)[}\\]](.*)", RegexOptions.None, TimeSpan.FromMilliseconds(250));
 	}
 
 	private SubtitleItem ParseLine(string line, float frameRate)
 	{
-		Match match = Regex.Match(line, "^[{\\[](-?\\d+)[}\\]][{\\[](-?\\d+)[}\\]](.*)");
+		Match match = Regex.Match(line, "^[{\\[](-?\\d+)[}\\]][{\\[](-?\\d+)[}\\]](.*)", RegexOptions.None, TimeSpan.FromMilliseconds(250));
 		if (match.Success && match.Groups.Count > 2)
 		{
 			string value = match.Groups[1].Value;

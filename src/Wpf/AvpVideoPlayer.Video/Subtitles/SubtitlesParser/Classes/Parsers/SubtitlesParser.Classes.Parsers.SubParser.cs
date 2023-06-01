@@ -40,14 +40,14 @@ public class SubParser
 		}
 	};
 
-	public SubtitlesFormat GetMostLikelyFormat(string fileName)
+	public static SubtitlesFormat GetMostLikelyFormat(string fileName)
 	{
 		string extension = Path.GetExtension(fileName);
 		if (!string.IsNullOrEmpty(extension))
 		{
 			foreach (SubtitlesFormat supportedSubtitlesFormat in SubtitlesFormat.SupportedSubtitlesFormats)
 			{
-				if (supportedSubtitlesFormat.Extension != null && Regex.IsMatch(extension, supportedSubtitlesFormat.Extension, RegexOptions.IgnoreCase))
+				if (supportedSubtitlesFormat.Extension != null && Regex.IsMatch(extension, supportedSubtitlesFormat.Extension, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)))
 				{
 					return supportedSubtitlesFormat;
 				}
@@ -98,7 +98,7 @@ public class SubParser
 		throw new ArgumentException(message);
 	}
 
-	private string LogFirstCharactersOfStream(Stream stream, int nbOfCharactersToPrint, Encoding encoding)
+	private static string LogFirstCharactersOfStream(Stream stream, int nbOfCharactersToPrint, Encoding encoding)
 	{
 #pragma warning disable CS0219 // Variable is assigned but its value is never used
 		string text = "";

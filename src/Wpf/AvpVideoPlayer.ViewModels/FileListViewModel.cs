@@ -357,11 +357,7 @@ public class FileListViewModel : EventBasedViewModel
             {
                 isActivatedItemFound = true;
             }
-            else if (!isActivatedItemFound || item?.File?.FileInfo == null)
-            {
-                continue;
-            }
-            else
+            else if (isActivatedItemFound && item?.File?.FileInfo != null)
             {
                 Publish(new SelectVideoEvent(item.File));
                 canPlay = true;
@@ -380,21 +376,13 @@ public class FileListViewModel : EventBasedViewModel
             {
                 isActivatedItemFound = true;
             }
-            else if (!isActivatedItemFound)
-            {
-                continue;
-            }
-            else if (item.File is VideoStreamViewModel vs)
+            else if (isActivatedItemFound && item.File is VideoStreamViewModel vs)
             {
                 Publish(new SelectVideoEvent(vs));
                 canPlay = true;
                 break;
             }
-            else if (item?.File?.FileInfo == null)
-            {
-                continue;
-            }
-            else
+            else if (item?.File?.FileInfo != null)
             {
                 Publish(new SelectVideoEvent(item.File));
                 canPlay = true;

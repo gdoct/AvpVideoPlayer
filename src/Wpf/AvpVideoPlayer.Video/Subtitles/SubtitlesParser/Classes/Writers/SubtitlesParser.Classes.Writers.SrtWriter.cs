@@ -5,7 +5,7 @@ using System.IO;
 
 public class SrtWriter : ISubtitlesWriter
 {
-	private IEnumerable<string> SubtitleItemToSubtitleEntry(SubtitleItem subtitleItem, int subtitleEntryNumber, bool includeFormatting)
+	private static IEnumerable<string> SubtitleItemToSubtitleEntry(SubtitleItem subtitleItem, int subtitleEntryNumber, bool includeFormatting)
 	{
 		List<string> list = new List<string>();
 		list.Add(subtitleEntryNumber.ToString());

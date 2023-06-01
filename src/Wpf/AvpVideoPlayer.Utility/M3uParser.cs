@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace AvpVideoPlayer.Utility
@@ -55,7 +56,7 @@ namespace AvpVideoPlayer.Utility
         private static bool TryParseGroup(string line, out string name)
         {
             const string pattern = "##### .* #####";
-            var match = Regex.Match(line, pattern);
+            var match = Regex.Match(line, pattern, RegexOptions.None, TimeSpan.FromMilliseconds(250));
             if (!match.Success)
             {
                 name = string.Empty;
@@ -74,10 +75,10 @@ namespace AvpVideoPlayer.Utility
             string pattern = @"(?<=\b" + attribute + @"="")[^""]*";
 
             // Create a regex object with the pattern
-            Regex regex = new Regex(pattern);
+            var regex = new Regex(pattern, RegexOptions.None, TimeSpan.FromMilliseconds(250));
 
             // Find the first match in the XML string
-            Match match = regex.Match(line);
+            var match = regex.Match(line);
 
             // If there is a match, return its value
             if (match.Success)
@@ -95,9 +96,9 @@ namespace AvpVideoPlayer.Utility
         private static string ParseChannelAttribute(string line, string attribute, bool useLineEndWhenEmpty = false)
         {
             string pattern = attribute + "=\"([^\"]+)\"";
-            if (Regex.IsMatch(line, pattern))
+            if (Regex.IsMatch(line, pattern, RegexOptions.None, TimeSpan.FromMilliseconds(250)))
             {
-                var match = Regex.Match(line, pattern);
+                var match = Regex.Match(line, pattern, RegexOptions.None, TimeSpan.FromMilliseconds(250));
                 return match.Value[10..^1];
             }
             if (useLineEndWhenEmpty && line.Contains(','))

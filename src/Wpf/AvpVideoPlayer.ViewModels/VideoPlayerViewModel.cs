@@ -81,6 +81,8 @@ public class VideoPlayerViewModel : EventBasedViewModel
         DispatcherHelper.Invoke(LoadTags);
         if (null != Application.Current)
             Application.Current.Exit += (_, __) => { View?.Stop(); };
+
+        new DispatcherTimer().Tick += TimerTick;
     }
 
     private void OnTagsChanged(TagsChangedEvent obj)

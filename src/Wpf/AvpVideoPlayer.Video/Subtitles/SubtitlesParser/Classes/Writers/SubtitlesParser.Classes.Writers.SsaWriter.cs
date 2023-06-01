@@ -30,7 +30,7 @@ public class SsaWriter : ISubtitlesWriter
 		await writer.FlushAsync();
 	}
 
-	private string SubtitleItemToDialogueLine(SubtitleItem subtitleItem, bool includeFormatting)
+	private static string SubtitleItemToDialogueLine(SubtitleItem subtitleItem, bool includeFormatting)
 	{
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
 		string[] array = new string[10]
