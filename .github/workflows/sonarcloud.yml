@@ -58,7 +58,6 @@ jobs:
             # mandatory
             -Dsonar.projectKey=gdoct_AvpVideoPlayer
             -Dsonar.organization=guido-docter
-            -Dsonar.projectBaseDir=./src
             -Dsonar.verbose=true
             # Comma-separated paths to directories containing main source files.
             #-Dsonar.sources= # optional, default is project base directory
