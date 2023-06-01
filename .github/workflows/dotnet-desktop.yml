@@ -20,7 +20,7 @@ jobs:
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     env:
-      Solution_Name: .\src\AVPVideoPlayer.Wpf.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
+      Solution_Name: .\AVPVideoPlayer.Wpf.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
       Test_Project_Path: .\src\Wpf\AvpVideoPlayer.ViewModels.Tests\AvpVideoPlayer.ViewModels.Tests.csproj                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
       Wap_Project_Directory: .\installer\AvpVideoPlayer.Installer-Msix    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
       Wap_Project_Path: .\installer\AvpVideoPlayer.Installer-Msix\AvpVideoPlayer.Installer-Msix.wapproj                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.

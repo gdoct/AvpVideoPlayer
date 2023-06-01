@@ -19,8 +19,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore ./src/AVPVideoPlayer.Wpf.sln
+      run: dotnet restore ./AVPVideoPlayer.Wpf.sln
     - name: Build
-      run: dotnet build --no-restore ./src/AVPVideoPlayer.Wpf.sln
+      run: dotnet build --no-restore ./AVPVideoPlayer.Wpf.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal ./src/AVPVideoPlayer.Wpf.sln
+      run: dotnet test --no-build --verbosity normal ./AVPVideoPlayer.Wpf.sln
