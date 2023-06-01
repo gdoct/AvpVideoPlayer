@@ -10,8 +10,8 @@ public static class DependencyInjection
     public static IServiceCollection RegisterViews(this IServiceCollection services)
     {
         return services.AddSingleton<MainWindow>()
-            .AddSingleton<DialogBox>()
-            .AddSingleton<IViewRegistrationService>(ViewRegistrationService.Instance);
+                       .AddSingleton<DialogBox>()
+                       .AddSingleton<IViewRegistrationService>(ViewRegistrationService.Instance);
         ;
     }
 }
