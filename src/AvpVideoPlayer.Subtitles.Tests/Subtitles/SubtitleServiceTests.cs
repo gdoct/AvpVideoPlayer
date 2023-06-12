@@ -1,10 +1,7 @@
 ﻿using AvpVideoPlayer.Api;
+using AvpVideoPlayer.Subtitles;
 using AvpVideoPlayer.Subtitles.Tests;
-using AvpVideoPlayer.Video.Subtitles;
 using Moq;
-using System.Linq;
-using System;
-using Xunit;
 
 namespace AvpVideoPlayer.Video.Tests.Subtitles
 {

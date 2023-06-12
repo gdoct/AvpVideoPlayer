@@ -33,39 +33,21 @@ public class PluginHostBuilder<T> : IPluginHostBuilder<T>
         return new PluginHost<T>(_eventhub, shadoweventhub, plugins);
     }
 
-    private static IEnumerable<T> InitializePlugins(IEnumerable<PluginMeta> pluginmetas, IEventHub eh)
-    {
+    private static IEnumerable<T> InitializePlugins(IEnumerable<PluginMeta> pluginmetas, IEventHub eh) =>
         // create instances and inject the event hub
-        foreach (var plugin in pluginmetas)
-        {
-            var ctor = plugin.Type.GetConstructor(new[] { typeof(IEventHub) });
-            if (ctor!=null)
-            {
-                yield return (T) ctor.Invoke(new[] { eh });
-            } 
-        }
-    }
+        pluginmetas.Select(plugin => plugin.Type.GetConstructor(new[] { typeof(IEventHub) }))
+                   .Where(ctor => ctor != null)
+                   .Select(ctor => (T)ctor!.Invoke(new[] { eh }));
 
-    private IEnumerable<PluginMeta> ScanPluginFolders()
-    {
+    private IEnumerable<PluginMeta> ScanPluginFolders() =>
         // scan all dlls for public implementations of IPlugin
-        foreach (var folder in _paths)
-        {
-            foreach(var implementation in ScanAssemblies(LoadAssembliesInFolder(folder)))
-            {
-                yield return implementation;
-            }
-        }
-    }
+        _paths.SelectMany(path => ScanAssemblies(LoadAssembliesInFolder(path)));
 
-    private static IEnumerable<PluginMeta> ScanAssemblies(IEnumerable<Assembly> assembly)
-    {
-        var many = assembly.SelectMany(a => a.DefinedTypes);
-        var nontypes = many.Where(x => x != typeof(T));
-        var assignables = nontypes.Where(x => typeof(T).IsAssignableFrom(x));
-        var metas = assignables.Select(x => new PluginMeta(x.Assembly.Location, x));
-        return metas;
-    }
+    private static IEnumerable<PluginMeta> ScanAssemblies(IEnumerable<Assembly> assembly) => 
+        assembly.SelectMany(a => a.DefinedTypes)
+                .Where(x => x != typeof(T))
+                .Where(x => typeof(T).IsAssignableFrom(x))
+                .Select(x => new PluginMeta(x.Assembly.Location, x));
 
     private static IEnumerable<Assembly> LoadAssembliesInFolder(string folder)
     {

@@ -41,12 +41,12 @@ namespace AvpVideoPlayer.Utility
                         group = grpname;
                     }
                 }
-                else if (!string.IsNullOrWhiteSpace(id) &&
+                else if (!string.IsNullOrWhiteSpace(name) &&
                     Uri.IsWellFormedUriString(line, UriKind.Absolute))
                 {
                     var channel = new ChannelInfo(id, name, logo, new Uri(line), group);
                     result.Add(channel);
-                    id = string.Empty;
+                    name = string.Empty;
                 }
             }
 
