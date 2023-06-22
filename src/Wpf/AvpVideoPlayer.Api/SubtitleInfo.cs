@@ -20,5 +20,5 @@ public class SubtitleInfo
     /// </summary>
     public int Index { get; set; }
 
-    public string Filename { get; set; } = "";
+    public string VideoFilename { get; set; } = "";
 }

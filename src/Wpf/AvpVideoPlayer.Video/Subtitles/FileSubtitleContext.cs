@@ -16,7 +16,7 @@ internal class FileSubtitleContext : ISubtitleContext
         _subtitles = LoadSubtitlesFromFile(filename);
         SubtitleInfo = new SubtitleInfo
         {
-            Filename = filename,
+            VideoFilename = filename,
             SubtitleName = "default",
             Index = 0,
             StreamInfo = string.Empty

@@ -39,7 +39,7 @@ public class SubtitleInfoTests
     public void CanSetAndGetFilename()
     {
         var testValue = "TestValue1600362892";
-        _testClass.Filename = testValue;
-        Assert.Equal(testValue, _testClass.Filename);
+        _testClass.VideoFilename = testValue;
+        Assert.Equal(testValue, _testClass.VideoFilename);
     }
 }

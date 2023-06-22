@@ -22,7 +22,7 @@ namespace AvpVideoPlayer.Video.Tests.Subtitles
             // Arrange
             var factory = new Mock<ISubtitleContextFactory>();
             var context = new Mock<ISubtitleContext>();
-            context.Setup(c=> c.SubtitleInfo).Returns(new SubtitleInfo { Filename=",z", Index=0, StreamInfo="x", SubtitleName="a" });
+            context.Setup(c=> c.SubtitleInfo).Returns(new SubtitleInfo { VideoFilename=",z", Index=0, StreamInfo="x", SubtitleName="a" });
             factory.Setup(c => c.Empty()).Returns(() => context.Object);
             factory.Setup(c => c.FromFile(It.IsAny<string>())).Returns(() => context.Object );
             var service = new SubtitleService(factory.Object);
@@ -40,7 +40,7 @@ namespace AvpVideoPlayer.Video.Tests.Subtitles
             // Arrange
             var factory = new Mock<ISubtitleContextFactory>();
             var context = new Mock<ISubtitleContext>();
-            context.Setup(c => c.SubtitleInfo).Returns(new SubtitleInfo { Filename = ",z", Index = 0, StreamInfo = "x", SubtitleName = "a" });
+            context.Setup(c => c.SubtitleInfo).Returns(new SubtitleInfo { VideoFilename = ",z", Index = 0, StreamInfo = "x", SubtitleName = "a" });
             factory.Setup(c => c.Empty()).Returns(() => context.Object);
             factory.Setup(c => c.FromVideofile(It.IsAny<string>())).Returns(() => new[] { context.Object });
             var service = new SubtitleService(factory.Object);
@@ -57,7 +57,7 @@ namespace AvpVideoPlayer.Video.Tests.Subtitles
         {
             var factory = new Mock<ISubtitleContextFactory>();
             var context = new Mock<ISubtitleContext>();
-            context.Setup(c => c.SubtitleInfo).Returns(new SubtitleInfo { Filename = ",z", Index = 0, StreamInfo = "x", SubtitleName = "a" });
+            context.Setup(c => c.SubtitleInfo).Returns(new SubtitleInfo { VideoFilename = ",z", Index = 0, StreamInfo = "x", SubtitleName = "a" });
             factory.Setup(c => c.Empty()).Returns(() => context.Object);
             factory.Setup(c => c.FromVideofile(It.IsAny<string>())).Returns(() => new[] { context.Object });
             var service = new SubtitleService(factory.Object);

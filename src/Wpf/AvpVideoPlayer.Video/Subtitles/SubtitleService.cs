@@ -34,7 +34,7 @@ public class SubtitleService
     public SubtitleInfo? AddSubtitlesFromFile(string? filename)
     {
         if (string.IsNullOrWhiteSpace(filename) 
-            || LoadedSubtitles.Keys.Any(k => k.Filename == filename && k.Index == 0)
+            || LoadedSubtitles.Keys.Any(k => k.VideoFilename == filename && k.Index == 0)
             || !File.Exists(filename))
         {
             return null;
@@ -50,7 +50,7 @@ public class SubtitleService
             var subtitleContext = _subtitleContextFactory.FromFile(filename);
             var info = new SubtitleInfo
             {
-                Filename = filename,
+                VideoFilename = filename,
                 SubtitleName = fi.Name,
                 Index = 0,
                 StreamInfo = string.Empty

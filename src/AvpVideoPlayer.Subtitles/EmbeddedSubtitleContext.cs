@@ -1,57 +1,40 @@
 ﻿using AvpVideoPlayer.Api;
-using System.Xml.Xsl;
+using AvpVideoPlayer.Subtitles.SubtitlesParser.Classes.Parsers;
 
 namespace AvpVideoPlayer.Subtitles;
 
 /// <inheritdoc cref="ISubtitleContext"/>
-internal class EmbeddedSubtitleContext : FileSubtitleContext
+internal class EmbeddedSubtitleContext
 {
-    private EmbeddedSubtitleContext(string filename) : base(filename)
-    {
-    }
-
     public static ISubtitleContext? ExtractEmbeddedSubtitle(SubtitleInfo subtitleInfo)
     {
-        // call ffmpeg to extract specified subtitle to temp file
-        // run ffmpeg -i inputfile -map 0:3 out.srt
-        var tempfile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.srt");
-
-// .. extract subtitles to tempfile
-
-        var file = TagLib.File.Create(tempfile);
-        if (file.Tag is not TagLib.Matroska.Tag mkvtag)
+        var parser = new SubParser();
+        using var fileStream = File.OpenRead(subtitleInfo.VideoFilename);
+        var items = parser.ParseStream(fileStream); // parse the subtitles from the mkv stream
+        if (items.Count > subtitleInfo.Index)
         {
-            return null;
+            return new StringSubtitleContext(subtitleInfo.SubtitleName, string.Join(Environment.NewLine, items[subtitleInfo.Index].Lines));
         }
-
-        if (!File.Exists(tempfile)) return null;
-        var subs = new EmbeddedSubtitleContext(tempfile);
-        File.Delete(tempfile);
-        return subs;
+        return null;
     }
 
 
     public static IEnumerable<SubtitleInfo> ListEmbeddedSubtitles(string videofile)
     {
-        if (!File.Exists(videofile)) yield break;
-        throw new NotImplementedException();
-        dynamic FFProbe = new System.Dynamic.ExpandoObject();
-        var contents = FFProbe.Analyse(videofile);
-        if (!contents.SubtitleStreams.Any())
-            yield break;
-        foreach (var stream in contents.SubtitleStreams)
+        var parser = new SubParser();
+        using var fileStream = File.OpenRead(videofile);
+        var items = parser.ParseStream(fileStream); // parse the subtitles from the mkv stream
+        var id = 0;
+        foreach (var item in items)
         {
             yield return new SubtitleInfo
             {
-                Filename = videofile,
-                Index = stream.Index,
-                SubtitleName = $"{stream.CodecName} ({stream.Language})",
-                StreamInfo = $"0:{stream.Index}"
+                VideoFilename = videofile,
+                Index = id,
+                SubtitleName = $"subtitle {++id}",
+                StreamInfo = $"0:0"
             };
         }
+
     }
-
-
-
 }
-

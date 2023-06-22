@@ -52,13 +52,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.MetaData", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.MetaData.Tests", "src\Wpf\AvpVideoPlayer.MetaData.Tests\AvpVideoPlayer.MetaData.Tests.csproj", "{900536E9-DAAC-4FB3-A906-FB7B38EE4468}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvpVideoPlayer.Subtitles", "Src\AvpVideoPlayer.Subtitles\AvpVideoPlayer.Subtitles.csproj", "{2BB1C0B9-B3A7-4A25-B184-F20BBA0E2122}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.Subtitles", "Src\AvpVideoPlayer.Subtitles\AvpVideoPlayer.Subtitles.csproj", "{2BB1C0B9-B3A7-4A25-B184-F20BBA0E2122}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvpVideoPlayer.Subtitles.Tests", "Src\AvpVideoPlayer.Subtitles.Tests\AvpVideoPlayer.Subtitles.Tests.csproj", "{EC44BD0F-E5C0-47AB-AFF8-532295C620C2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "taglib-sharp", "taglib-sharp", "{8C24043C-CA43-444F-B412-7B4C8A244E14}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaglibSharp", "third-party\src\TaglibSharp\TaglibSharp.csproj", "{443C42CA-0D38-4F11-900A-C9A3449B57B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.Subtitles.Tests", "Src\AvpVideoPlayer.Subtitles.Tests\AvpVideoPlayer.Subtitles.Tests.csproj", "{EC44BD0F-E5C0-47AB-AFF8-532295C620C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -498,26 +494,6 @@ Global
 		{EC44BD0F-E5C0-47AB-AFF8-532295C620C2}.Release|x64.Build.0 = Release|Any CPU
 		{EC44BD0F-E5C0-47AB-AFF8-532295C620C2}.Release|x86.ActiveCfg = Release|Any CPU
 		{EC44BD0F-E5C0-47AB-AFF8-532295C620C2}.Release|x86.Build.0 = Release|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Debug|ARM.Build.0 = Debug|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Debug|x64.Build.0 = Debug|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Debug|x86.Build.0 = Debug|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Release|ARM.ActiveCfg = Release|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Release|ARM.Build.0 = Release|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Release|ARM64.Build.0 = Release|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Release|x64.ActiveCfg = Release|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Release|x64.Build.0 = Release|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Release|x86.ActiveCfg = Release|Any CPU
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -544,8 +520,6 @@ Global
 		{900536E9-DAAC-4FB3-A906-FB7B38EE4468} = {4D00D655-C83E-4181-A23F-8B9AB4E5B98A}
 		{2BB1C0B9-B3A7-4A25-B184-F20BBA0E2122} = {2E225BDF-9201-4BD1-B538-EB6B7B639CAA}
 		{EC44BD0F-E5C0-47AB-AFF8-532295C620C2} = {4D00D655-C83E-4181-A23F-8B9AB4E5B98A}
-		{8C24043C-CA43-444F-B412-7B4C8A244E14} = {2E225BDF-9201-4BD1-B538-EB6B7B639CAA}
-		{443C42CA-0D38-4F11-900A-C9A3449B57B5} = {8C24043C-CA43-444F-B412-7B4C8A244E14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D175D60-66BC-4BBB-92EB-00F95F64F798}

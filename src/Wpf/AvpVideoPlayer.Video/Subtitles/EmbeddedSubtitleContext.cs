@@ -18,7 +18,7 @@ internal class EmbeddedSubtitleContext : FileSubtitleContext
         var tempfile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.srt");
 
         FFMpegArguments
-                  .FromFileInput(subtitleInfo.Filename)
+                  .FromFileInput(subtitleInfo.VideoFilename)
                   .OutputToFile(tempfile, true, options =>
                       options.WithCustomArgument($"-map {subtitleInfo.StreamInfo}"))
                   .ProcessSynchronously();
@@ -41,7 +41,7 @@ internal class EmbeddedSubtitleContext : FileSubtitleContext
         {
             yield return new SubtitleInfo
             {
-                Filename = videofile,
+                VideoFilename = videofile,
                 Index = stream.Index,
                 SubtitleName = $"{stream.CodecName} ({stream.Language})",
                 StreamInfo = $"0:{stream.Index}"
