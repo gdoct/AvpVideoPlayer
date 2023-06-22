@@ -7,7 +7,7 @@ using AvpVideoPlayer.Api;
 using AvpVideoPlayer.ViewModels.Events;
 using System.Windows;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Controls;
 
 public class TagEditorViewModel : EventBasedViewModel
 {

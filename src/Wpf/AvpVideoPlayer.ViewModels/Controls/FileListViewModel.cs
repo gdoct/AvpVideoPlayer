@@ -2,6 +2,7 @@
 using AvpVideoPlayer.MetaData;
 using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.ViewModels.Events;
+using AvpVideoPlayer.ViewModels.IO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +12,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Controls;
 
 public class FileListViewModel : EventBasedViewModel
 {
@@ -54,7 +55,7 @@ public class FileListViewModel : EventBasedViewModel
         {
             if (item.MetaData != null && item.MetaData.FullName == e.MetaData.FullName)
             {
-                 item.MetaData = e.MetaData;
+                item.MetaData = e.MetaData;
                 break;
             }
         }
@@ -81,7 +82,7 @@ public class FileListViewModel : EventBasedViewModel
             else
             {
                 if (cur.IsActivated) cur.IsActivated = false;
-                if (cur.IsSelected) cur.IsSelected= false;
+                if (cur.IsSelected) cur.IsSelected = false;
             }
         }
     }
@@ -151,7 +152,7 @@ public class FileListViewModel : EventBasedViewModel
             e.Accepted = false;
             return;
         }
-        var name = thumb.File?.Name?.ToUpperInvariant() ?? String.Empty;
+        var name = thumb.File?.Name?.ToUpperInvariant() ?? string.Empty;
         if (name.Equals("..") || name.Contains(Filter.ToUpperInvariant()))
         {
             e.Accepted = true;
@@ -235,10 +236,10 @@ public class FileListViewModel : EventBasedViewModel
         if (string.IsNullOrEmpty(category)) return;
         var channels = _channels.Where(s => s.Group.Equals(category));
         FolderContents.Clear();
-        foreach(var channel in channels)
+        foreach (var channel in channels)
         {
-            if (string.IsNullOrWhiteSpace(channel.Name) 
-                || channel.Uri == null 
+            if (string.IsNullOrWhiteSpace(channel.Name)
+                || channel.Uri == null
                 || !channel.Uri.IsWellFormedOriginalString())
             {
                 continue;
@@ -301,12 +302,12 @@ public class FileListViewModel : EventBasedViewModel
             {
                 newlist.Add(new VideoFileViewModel(file));
             }
-            }
+        }
 
-            if (!force
-            && newlist.TrueForAll(f => FolderContents.Any(fc => fc.File.Path == f.Path))
-            && FolderContents.All(f => newlist.Exists(fc => fc.Path == f.File.Path))
-            )
+        if (!force
+        && newlist.TrueForAll(f => FolderContents.Any(fc => fc.File.Path == f.Path))
+        && FolderContents.All(f => newlist.Exists(fc => fc.Path == f.File.Path))
+        )
         {
             return;
         }
@@ -314,7 +315,7 @@ public class FileListViewModel : EventBasedViewModel
         FolderContents.Clear();
         foreach (var file in newlist)
         {
-            var isActive = (ActivatedFile?.Path != null && string.Compare(ActivatedFile?.Path, file.Path, StringComparison.OrdinalIgnoreCase) == 0);
+            var isActive = ActivatedFile?.Path != null && string.Compare(ActivatedFile?.Path, file.Path, StringComparison.OrdinalIgnoreCase) == 0;
             var metadata = _metaDataService.GetMetadata(file.Path ?? "");
             FolderContents.Add(new FileListListViewItem(file, metadata) { IsActivated = isActive });
         }

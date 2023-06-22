@@ -2,7 +2,7 @@
 using AvpVideoPlayer.ViewModels.Events;
 using System.Windows.Input;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Views;
 
 public class KeyboardController : IKeyboardController
 {

@@ -1,4 +1,5 @@
 ﻿using AvpVideoPlayer.Utility;
+using AvpVideoPlayer.ViewModels.IO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Controls;
 
 public class FolderDropDownViewModel : INotifyPropertyChanged
 {
@@ -49,7 +50,7 @@ public class FolderDropDownViewModel : INotifyPropertyChanged
         if (_currentPath is null)
         {
             foreach (var drive in DriveInfo.GetDrives())
-                Folders.Add(new FolderViewModel( drive.RootDirectory.FullName ));
+                Folders.Add(new FolderViewModel(drive.RootDirectory.FullName));
             return;
         }
 
@@ -58,7 +59,7 @@ public class FolderDropDownViewModel : INotifyPropertyChanged
 
         foreach (var root in DriveInfo.GetDrives().Select(d => d.RootDirectory.FullName))
         {
-            Folders.Add(new FolderViewModel(root ));
+            Folders.Add(new FolderViewModel(root));
 
             if (root.Equals(folder.FullName))
             {

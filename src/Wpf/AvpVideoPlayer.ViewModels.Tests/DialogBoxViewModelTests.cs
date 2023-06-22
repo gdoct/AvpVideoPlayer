@@ -1,9 +1,6 @@
 ﻿using AvpVideoPlayer.Api;
-using AvpVideoPlayer.ViewModels;
+using AvpVideoPlayer.ViewModels.Views;
 using Moq;
-using System;
-using System.Windows;
-using Xunit;
 
 namespace AvpVideoPlayer.ViewModels.Tests
 {

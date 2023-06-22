@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Controls;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Views;
 public class VideoPlayerView : IVideoPlayerView
 {
     public MediaElement MediaPlayer { get; }

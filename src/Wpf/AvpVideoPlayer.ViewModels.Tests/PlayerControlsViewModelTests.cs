@@ -5,6 +5,7 @@ using Moq;
 using Xunit;
 using System;
 using AvpVideoPlayer.Video.Snapshot;
+using AvpVideoPlayer.ViewModels.Controls;
 
 public class PlayerControlsViewModelTests
 {

@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Controls;
 
 public class PlayerControlsViewModel : EventBasedViewModel
 {
@@ -177,7 +177,7 @@ public class PlayerControlsViewModel : EventBasedViewModel
     private void OnPositionMouseOver(object? obj)
     {
         if (obj is not MouseEventArgs e) return;
-        var positionslider = (Slider) _viewRegistrationService.GetInstance(ViewResources.PositionSlider);
+        var positionslider = (Slider)_viewRegistrationService.GetInstance(ViewResources.PositionSlider);
         if (positionslider == null) return;
         if (!_isPlaying)
         {
@@ -200,8 +200,8 @@ public class PlayerControlsViewModel : EventBasedViewModel
                 From="1" To="0" Duration="0:0:5" AutoReverse="True"  />  
          */
 
-        var animation = new DoubleAnimation() {  From = from, To = to, Duration = duration };
-        AnimationTarget?.BeginAnimation(FrameworkElement.OpacityProperty, animation);
+        var animation = new DoubleAnimation() { From = from, To = to, Duration = duration };
+        AnimationTarget?.BeginAnimation(UIElement.OpacityProperty, animation);
     }
 
     public double Position
@@ -265,7 +265,7 @@ public class PlayerControlsViewModel : EventBasedViewModel
         else
         {
             _previousvolume = Volume;
-            Publish(new VolumeChangeRequestEvent((double)0));
+            Publish(new VolumeChangeRequestEvent(0));
         }
     }
 
@@ -278,7 +278,7 @@ public class PlayerControlsViewModel : EventBasedViewModel
     {
         // do nothing for now
     }
-    
+
     private void OnUpdateRepeatState(ToggleRepeatEvent e)
     {
         if (e?.IsHandled == true)

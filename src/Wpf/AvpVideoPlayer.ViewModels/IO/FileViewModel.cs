@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.IO;
 
 public class FileViewModel : BaseViewModel
 {
@@ -33,7 +33,7 @@ public class FileViewModel : BaseViewModel
         set
         {
             _path = value;
-            FileInfo = (value != null) ? new FileInfo(value) : null;
+            FileInfo = value != null ? new FileInfo(value) : null;
         }
     }
 

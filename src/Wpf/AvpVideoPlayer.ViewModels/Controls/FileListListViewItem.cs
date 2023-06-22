@@ -1,7 +1,8 @@
 ﻿using AvpVideoPlayer.MetaData;
+using AvpVideoPlayer.ViewModels.IO;
 using System.Linq;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Controls;
 
 
 public class FileListListViewItem : BaseViewModel
@@ -20,10 +21,10 @@ public class FileListListViewItem : BaseViewModel
 
     public FileMetaData? MetaData
     {
-        get => _metadata; 
+        get => _metadata;
         set
-        { 
-            SetProperty(ref _metadata, value); 
+        {
+            SetProperty(ref _metadata, value);
             RaisePropertyChanged(nameof(Tags));
         }
     }

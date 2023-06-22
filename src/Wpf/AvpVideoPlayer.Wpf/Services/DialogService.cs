@@ -1,5 +1,5 @@
 ﻿using AvpVideoPlayer.Api;
-using AvpVideoPlayer.ViewModels;
+using AvpVideoPlayer.ViewModels.Views;
 using AvpVideoPlayer.Wpf.Views;
 using static AvpVideoPlayer.Api.IDialogService;
 

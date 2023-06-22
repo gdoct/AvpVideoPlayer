@@ -1,4 +1,4 @@
-﻿namespace AvpVideoPlayer.ViewModels
+﻿namespace AvpVideoPlayer.ViewModels.IO
 {
     public class VideoStreamCategoryViewModel : FileViewModel
     {

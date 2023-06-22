@@ -3,6 +3,8 @@ namespace AvpVideoPlayer.ViewModels.Tests;
 using AvpVideoPlayer.Api;
 using AvpVideoPlayer.MetaData;
 using AvpVideoPlayer.Video.Snapshot;
+using AvpVideoPlayer.ViewModels.Controls;
+using AvpVideoPlayer.ViewModels.Views;
 using Moq;
 using System;
 using System.Collections.Generic;

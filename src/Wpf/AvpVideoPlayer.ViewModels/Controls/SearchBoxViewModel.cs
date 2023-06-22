@@ -4,7 +4,7 @@ using AvpVideoPlayer.Utility;
 using System.Windows.Input;
 using System;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Controls;
 
 public class SearchBoxViewModel : EventBasedViewModel
 {
@@ -12,14 +12,16 @@ public class SearchBoxViewModel : EventBasedViewModel
 
     public ICommand? ClearCommand { get; }
 
-    public string SearchText { 
-        get => _searchText; 
-        set { 
-            _searchText = value; 
-            RaisePropertyChanged(); 
-            OnTextChanged(); 
-            RaisePropertyChanged(nameof(HasText)); 
-        } 
+    public string SearchText
+    {
+        get => _searchText;
+        set
+        {
+            _searchText = value;
+            RaisePropertyChanged();
+            OnTextChanged();
+            RaisePropertyChanged(nameof(HasText));
+        }
     }
 
     public SearchBoxViewModel(IEventHub eventHub) : base(eventHub)

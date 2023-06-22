@@ -2,7 +2,7 @@
 using AvpVideoPlayer.Utility;
 using System.IO;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.IO;
 
 public class VideoFileViewModel : FileViewModel
 {

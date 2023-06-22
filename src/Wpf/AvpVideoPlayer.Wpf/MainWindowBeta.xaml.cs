@@ -1,4 +1,4 @@
-﻿using AvpVideoPlayer.ViewModels;
+﻿using AvpVideoPlayer.ViewModels.Views;
 using System.Windows;
 
 namespace AvpVideoPlayer.Wpf;

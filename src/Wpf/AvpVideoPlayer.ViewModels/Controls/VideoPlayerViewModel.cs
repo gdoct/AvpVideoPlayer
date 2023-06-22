@@ -3,6 +3,7 @@ using AvpVideoPlayer.MetaData;
 using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.Video.Subtitles;
 using AvpVideoPlayer.ViewModels.Events;
+using AvpVideoPlayer.ViewModels.IO;
 using Microsoft.Win32;
 using Microsoft.Xaml.Behaviors.Core;
 using System;
@@ -15,7 +16,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Controls;
 
 public class VideoPlayerViewModel : EventBasedViewModel
 {
@@ -45,9 +46,9 @@ public class VideoPlayerViewModel : EventBasedViewModel
 
     public IVideoPlayerView? View => (IVideoPlayerView)_viewRegistrationService.GetInstance(ViewResources.MediaElement);
 
-    public VideoPlayerViewModel(IEventHub eventHub, 
-                                PlayerControlsViewModel playerControlsViewModel, 
-                                IViewRegistrationService viewRegistrationService, 
+    public VideoPlayerViewModel(IEventHub eventHub,
+                                PlayerControlsViewModel playerControlsViewModel,
+                                IViewRegistrationService viewRegistrationService,
                                 IUserConfiguration userConfiguration,
                                 IMetaDataService metaDataService,
                                 ITaggingService taggingService) : base(eventHub)
@@ -56,7 +57,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
         _metaDataService = metaDataService;
         _taggingService = taggingService;
         _playerControlsViewModel = playerControlsViewModel;
-        
+
         _viewRegistrationService = viewRegistrationService;
         _userConfiguration = userConfiguration;
         _repeat = _userConfiguration.Repeat;
@@ -147,14 +148,14 @@ public class VideoPlayerViewModel : EventBasedViewModel
                 Command = new RelayCommand((_) => OnEditTags())
             });
         }
-        catch (InvalidOperationException) 
+        catch (InvalidOperationException)
         {
             // swallow the exception
         }
     }
 
     public ObservableCollection<MenuItem> AvailableSubs { get; } = new ObservableCollection<MenuItem>();
-    
+
     public ObservableCollection<Control> TagMenuItems { get; } = new ObservableCollection<Control>();
 
     public PlayerControlsViewModel PlayerControlsViewModel => _playerControlsViewModel;
@@ -210,7 +211,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
         Publish(new ToggleSubtitlesEvent(SubtitleService.IsSubtitleActive) { IsHandled = true, ActiveSubtitle = newsub });
         foreach (var item in AvailableSubs)
             if (item.IsChecked) item.IsChecked = false;
-        var sub = (AvailableSubs.FirstOrDefault(s => ((SubtitleInfo?)s.Tag)?.StreamInfo == newsub?.StreamInfo));
+        var sub = AvailableSubs.FirstOrDefault(s => ((SubtitleInfo?)s.Tag)?.StreamInfo == newsub?.StreamInfo);
         if (sub != null) sub.IsChecked = true;
         MouseCursor = Cursors.Arrow;
     }
@@ -289,7 +290,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
         _metadata = _metaDataService.GetMetadata(Url);
         if (_metadata == null) return;
         var tags = _metadata.Tags;
-        foreach(var menuitem in TagMenuItems)
+        foreach (var menuitem in TagMenuItems)
         {
             if (menuitem is not MenuItem mi) break;
             if (mi.Tag is not string tagname) continue;
@@ -313,7 +314,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
                 Header = Localization.Properties.Resources.DeactivateSubtitles,
                 Command = new RelayCommand((_) => ClearSubtitle()),
                 Tag = null,
-                IsChecked = (current == null),
+                IsChecked = current == null,
                 HorizontalContentAlignment = HorizontalAlignment.Left,
                 VerticalContentAlignment = VerticalAlignment.Center
             });
@@ -325,7 +326,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
                     Header = $"[{++i}] {item.SubtitleName}",
                     Command = new RelayCommand((_) => ClickSubtitle(item)),
                     Tag = item,
-                    IsChecked = (current?.StreamInfo == item.StreamInfo),
+                    IsChecked = current?.StreamInfo == item.StreamInfo,
                     HorizontalContentAlignment = HorizontalAlignment.Left,
                     VerticalContentAlignment = VerticalAlignment.Center
                 });

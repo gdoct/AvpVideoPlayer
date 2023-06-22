@@ -1,13 +1,14 @@
 ﻿using AvpVideoPlayer.Api;
 using AvpVideoPlayer.Localization.Properties;
 using AvpVideoPlayer.Utility;
+using AvpVideoPlayer.ViewModels.Controls;
 using AvpVideoPlayer.ViewModels.Events;
 using Microsoft.Xaml.Behaviors.Core;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Views;
 
 public class MainWindowViewModel : EventBasedViewModel
 {
@@ -29,7 +30,7 @@ public class MainWindowViewModel : EventBasedViewModel
         Subscribe<SelectVideoEvent>(OnSelectVideo);
         _title = Resources.ApplicationName;
         OnKeyDownCommand = new ActionCommand(OnKeyDown);
-        KeyboardController = isActualApp ? new KeyboardController(this._eventHub) : null;
+        KeyboardController = isActualApp ? new KeyboardController(_eventHub) : null;
         LibraryViewModel = libraryViewModel;
         VideoPlayerViewModel = videoPlayerViewModel;
     }

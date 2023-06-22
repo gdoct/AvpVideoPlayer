@@ -1,6 +1,7 @@
 ﻿using AvpVideoPlayer.Api;
 using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.ViewModels.Events;
+using AvpVideoPlayer.ViewModels.IO;
 using System;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Windows;
 using System.Windows.Shapes;
 using System.Xml;
 
-namespace AvpVideoPlayer.ViewModels;
+namespace AvpVideoPlayer.ViewModels.Controls;
 
 public class LibraryViewModel : EventBasedViewModel
 {
@@ -38,7 +39,7 @@ public class LibraryViewModel : EventBasedViewModel
         Subscribe<FullScreenEvent>(OnFullScreen);
         AddSubscription(EventsOfType<SelectVideoEvent>()
                                  .Throttle(TimeSpan.FromMilliseconds(100))
-                                 .Subscribe(OnSelectVideo)        
+                                 .Subscribe(OnSelectVideo)
                        );
 
         AddSubscription(EventsOfType<SelectedFileChangedEvent>()

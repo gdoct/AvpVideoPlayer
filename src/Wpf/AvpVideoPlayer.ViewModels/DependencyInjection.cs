@@ -1,4 +1,5 @@
-﻿using AvpVideoPlayer.Api;
+﻿using AvpVideoPlayer.ViewModels.Controls;
+using AvpVideoPlayer.ViewModels.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace AvpVideoPlayer.Api;
+namespace AvpVideoPlayer.ViewModels.Views;
 
 public interface IKeyboardController
 {
