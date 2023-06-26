@@ -1,6 +1,6 @@
 namespace AvpVideoPlayer.Utility.Tests
 {
-    using Newtonsoft.Json.Linq;
+    using AvpVideoPlayer.ViewModels;
     using System;
     using Xunit;
 

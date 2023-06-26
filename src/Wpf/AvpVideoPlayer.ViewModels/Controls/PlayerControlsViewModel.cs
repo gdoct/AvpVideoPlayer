@@ -1,15 +1,14 @@
 ﻿using AvpVideoPlayer.Api;
 using AvpVideoPlayer.Localization.Properties;
 using AvpVideoPlayer.Video.Snapshot;
-using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.ViewModels.Events;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace AvpVideoPlayer.ViewModels.Controls;
 

@@ -1,5 +1,4 @@
 ﻿using AvpVideoPlayer.Api;
-using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.ViewModels.Events;
 using System.Windows.Input;
 

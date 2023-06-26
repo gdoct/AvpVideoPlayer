@@ -1,5 +1,4 @@
 ﻿using AvpVideoPlayer.Api;
-using AvpVideoPlayer.Utility;
 using System;
 using System.Drawing;
 using System.Windows;

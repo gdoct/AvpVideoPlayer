@@ -1,5 +1,4 @@
 ﻿using AvpVideoPlayer.Api;
-using AvpVideoPlayer.Utility;
 using System.IO;
 
 namespace AvpVideoPlayer.ViewModels.IO;

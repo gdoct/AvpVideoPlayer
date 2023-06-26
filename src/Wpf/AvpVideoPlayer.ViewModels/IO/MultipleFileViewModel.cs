@@ -7,7 +7,7 @@ namespace AvpVideoPlayer.ViewModels.IO
     {
         private bool _isSelected;
 
-        public MultipleFileViewModel(string path, string name, FileTypes fileTypes) : base(fileTypes)
+        protected MultipleFileViewModel(string path, string name, FileTypes fileTypes) : base(fileTypes)
         {
             Path = path;
             Name = name;

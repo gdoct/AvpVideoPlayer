@@ -1,11 +1,9 @@
-﻿using Microsoft.Xaml.Behaviors.Core;
-using System.Collections.ObjectModel;
+﻿using AvpVideoPlayer.Api;
 using AvpVideoPlayer.MetaData;
-using System.Windows.Input;
-using AvpVideoPlayer.Utility;
-using AvpVideoPlayer.Api;
 using AvpVideoPlayer.ViewModels.Events;
+using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace AvpVideoPlayer.ViewModels.Controls;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace AvpVideoPlayer.Utility;
+namespace AvpVideoPlayer.ViewModels;
 
 public class RelayCommand : ICommand
 {

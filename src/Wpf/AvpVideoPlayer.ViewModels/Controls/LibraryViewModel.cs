@@ -1,14 +1,10 @@
 ﻿using AvpVideoPlayer.Api;
-using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.ViewModels.Events;
 using AvpVideoPlayer.ViewModels.IO;
 using System;
 using System.IO;
-using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
-using System.Windows.Shapes;
-using System.Xml;
 
 namespace AvpVideoPlayer.ViewModels.Controls;
 

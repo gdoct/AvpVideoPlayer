@@ -12,7 +12,7 @@ public class IdleTimeDetector : IIdleTimeDetector
             lastInputTicks,
             idleTicks = 0;
 
-        LASTINPUTINFO lastInputInfo = new();
+        LastInputInfo lastInputInfo = new();
         lastInputInfo.cbSize = (uint)Marshal.SizeOf(lastInputInfo);
         lastInputInfo.dwTime = 0;
 
@@ -31,10 +31,10 @@ public class IdleTimeDetector : IIdleTimeDetector
         };
     }
     [DllImport("user32.dll")]
-    private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+    private static extern bool GetLastInputInfo(ref LastInputInfo plii);
 }
 
-internal struct LASTINPUTINFO
+internal struct LastInputInfo
 {
     public uint cbSize;
     public uint dwTime;

@@ -1,6 +1,5 @@
 ﻿using AvpVideoPlayer.Api;
 using AvpVideoPlayer.MetaData;
-using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.ViewModels.Events;
 using AvpVideoPlayer.ViewModels.IO;
 using System;

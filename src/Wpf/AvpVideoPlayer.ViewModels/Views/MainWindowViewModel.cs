@@ -1,11 +1,9 @@
 ﻿using AvpVideoPlayer.Api;
 using AvpVideoPlayer.Localization.Properties;
-using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.ViewModels.Controls;
 using AvpVideoPlayer.ViewModels.Events;
 using Microsoft.Xaml.Behaviors.Core;
 using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
