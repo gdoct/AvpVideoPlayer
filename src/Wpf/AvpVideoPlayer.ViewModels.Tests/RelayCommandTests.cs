@@ -45,5 +45,51 @@ namespace AvpVideoPlayer.Utility.Tests
                 throw;
             }
         }
+
+        [Fact]
+        public void CanExecute_StateUnderTest_ExpectedBehavior()
+        {
+            // Arrange
+            var relayCommand = new RelayCommand((_) => { }, null);
+            object? parameter = null;
+
+            // Act
+            var result = relayCommand.CanExecute(
+                parameter);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void Execute_StateUnderTest_ExpectedBehavior()
+        {
+            // Arrange\
+            var test = false;
+            var relayCommand = new RelayCommand((_) => { test = true; }, null);
+            object? parameter = null;
+
+            // Act
+            relayCommand.Execute(
+                parameter);
+
+            // Assert
+            Assert.True(test);
+        }
+
+        [Fact]
+        public void CanExecuteChanged_StateUnderTest_ExpectedBehavior()
+        {
+            // Arrange\
+            var test = false;
+            var relayCommand = new RelayCommand((_) => { }, null);
+            object? parameter = null;
+            relayCommand.CanExecuteChanged += (s, e) => { test = true; };
+            // Act
+            relayCommand.Execute(parameter);
+
+            // Assert
+            Assert.False(test);
+        }
     }
 }
