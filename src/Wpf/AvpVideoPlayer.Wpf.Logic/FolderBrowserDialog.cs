@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace AvpVideoPlayer.Utility;
+namespace AvpVideoPlayer.Wpf.Logic;
 
 public delegate int BrowseCallbackProc(IntPtr hwnd, int uMsg, IntPtr lParam, IntPtr lpData);
 
@@ -47,7 +47,7 @@ public class FolderBrowserDialog
                 }
             case BFFM_SELCHANGED:
                 {
-                    IntPtr pathPtr = Marshal.AllocHGlobal((int)(260 * Marshal.SystemDefaultCharSize));
+                    IntPtr pathPtr = Marshal.AllocHGlobal(260 * Marshal.SystemDefaultCharSize);
                     if (SHGetPathFromIDList(lp, pathPtr))
                         SendMessage(new HandleRef(null, hWnd), BFFM_SETSTATUSTEXTW, 0, pathPtr);
                     Marshal.FreeHGlobal(pathPtr);
@@ -160,7 +160,7 @@ public enum BrowseInfoFlags : uint
     /// <summary>
     /// Use the new user interface, including an edit box. This flag is equivalent to <bold>BIF_EDITBOX | BIF_NEWDIALOGSTYLE</bold>
     /// </summary>
-    BIF_USENEWUI = (BIF_EDITBOX | BIF_NEWDIALOGSTYLE),
+    BIF_USENEWUI = BIF_EDITBOX | BIF_NEWDIALOGSTYLE,
     /// <summary>
     /// hen combined with <bold>BIF_NEWDIALOGSTYLE</bold>, adds a usage hint to the dialog box, in place of the edit box. <bold>BIF_EDITBOX</bold> overrides this flag.
     /// </summary>

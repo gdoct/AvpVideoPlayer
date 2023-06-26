@@ -1,11 +1,12 @@
 ﻿using System.Runtime.InteropServices;
+using AvpVideoPlayer.Api;
 
-namespace AvpVideoPlayer.Utility;
+namespace AvpVideoPlayer.Wpf.Logic;
 
 // https://stackoverflow.com/a/4965166
-public static class IdleTimeDetector
+public class IdleTimeDetector : IIdleTimeDetector
 {
-    public static IdleTimeInfo GetIdleTimeInfo()
+    public IdleTimeInfo GetIdleTimeInfo()
     {
         int systemUptime = Environment.TickCount,
             lastInputTicks,
@@ -31,15 +32,6 @@ public static class IdleTimeDetector
     }
     [DllImport("user32.dll")]
     private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
-}
-
-public class IdleTimeInfo
-{
-    public TimeSpan IdleTime { get; internal set; }
-
-    public DateTime LastInputTime { get; internal set; }
-
-    public int SystemUptimeMilliseconds { get; internal set; }
 }
 
 internal struct LASTINPUTINFO

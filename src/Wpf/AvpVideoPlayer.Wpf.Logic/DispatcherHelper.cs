@@ -1,10 +1,11 @@
-﻿using System.Windows;
+﻿using AvpVideoPlayer.Api;
+using System.Windows;
 
-namespace AvpVideoPlayer.Utility;
+namespace AvpVideoPlayer.Wpf.Logic;
 
-public static class DispatcherHelper
+public class DispatcherHelper : IDispatcherHelper
 {
-    public static void Invoke(Action action)
+    public void Invoke(Action action)
     {
         var dispatcher = Application.Current?.Dispatcher;
         if (dispatcher != null)

@@ -36,6 +36,8 @@ public class VideoPlayerViewModel : EventBasedViewModel
     private readonly IMetaDataService _metaDataService;
     private readonly ITaggingService _taggingService;
     private readonly PlayerControlsViewModel _playerControlsViewModel;
+    private readonly IDispatcherHelper _dispatcherHelper;
+    private readonly IIdleTimeDetector _idleTimeDetector;
     private bool IsStream = false;
 
     public ICommand OnMouseMoveCommand { get; }
@@ -51,13 +53,16 @@ public class VideoPlayerViewModel : EventBasedViewModel
                                 IViewRegistrationService viewRegistrationService,
                                 IUserConfiguration userConfiguration,
                                 IMetaDataService metaDataService,
-                                ITaggingService taggingService) : base(eventHub)
+                                ITaggingService taggingService,
+                                IDispatcherHelper dispatcherHelper,
+                                IIdleTimeDetector idleTimeDetector) : base(eventHub)
     {
         VideoPlayerDoubleClickCommand = new RelayCommand(OnDoubleClick);
         _metaDataService = metaDataService;
         _taggingService = taggingService;
         _playerControlsViewModel = playerControlsViewModel;
-
+        _dispatcherHelper = dispatcherHelper;
+        _idleTimeDetector = idleTimeDetector;
         _viewRegistrationService = viewRegistrationService;
         _userConfiguration = userConfiguration;
         _repeat = _userConfiguration.Repeat;
@@ -79,7 +84,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
         Subscribe<VolumeChangeRequestEvent>(e => OnSetVolume(e.Data));
         Subscribe<FullScreenEvent>(e => OnFullscreen(e));
         Subscribe<TagsChangedEvent>(OnTagsChanged);
-        DispatcherHelper.Invoke(LoadTags);
+        _dispatcherHelper.Invoke(LoadTags);
         if (null != Application.Current)
             Application.Current.Exit += (_, __) => { View?.Stop(); };
 
@@ -88,7 +93,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
 
     private void OnTagsChanged(TagsChangedEvent obj)
     {
-        DispatcherHelper.Invoke(LoadTags);
+        _dispatcherHelper.Invoke(LoadTags);
     }
 
     private void OnManageLibrary()
@@ -300,7 +305,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
 
     private void OnAvailableSubtitlesChanged()
     {
-        DispatcherHelper.Invoke(() => OnAvailableSubtitlesChangedImpl());
+        _dispatcherHelper.Invoke(() => OnAvailableSubtitlesChangedImpl());
     }
     private void OnAvailableSubtitlesChangedImpl()
     {
@@ -487,7 +492,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
                 RaisePropertyChanged(nameof(Subtitle));
             }
 
-            if (IdleTimeDetector.GetIdleTimeInfo().IdleTime > MOUSE_TIMEOUT)
+            if (_idleTimeDetector.GetIdleTimeInfo().IdleTime > MOUSE_TIMEOUT)
             {
                 MouseCursor = Cursors.None;
             }

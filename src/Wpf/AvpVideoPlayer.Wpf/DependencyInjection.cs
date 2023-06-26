@@ -1,5 +1,5 @@
 ﻿using AvpVideoPlayer.Api;
-using AvpVideoPlayer.Utility;
+using AvpVideoPlayer.Wpf.Logic;
 using AvpVideoPlayer.Wpf.Views;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +11,8 @@ public static class DependencyInjection
     {
         return services.AddSingleton<MainWindow>()
                        .AddSingleton<DialogBox>()
-                       .AddSingleton<IViewRegistrationService>(ViewRegistrationService.Instance);
+                       .AddSingleton<IViewRegistrationService>(ViewRegistrationService.Instance)
+                       .AddSingleton<IDispatcherHelper, DispatcherHelper>()
+                       .AddSingleton<IIdleTimeDetector, IdleTimeDetector>();
     }
 }

@@ -31,10 +31,11 @@ public class PlayerControlsViewModel : EventBasedViewModel
     private ImageSource? _positionImage;
     private bool _isProgressVisible = true;
 
-    public PlayerControlsViewModel(IEventHub eventHub, IViewRegistrationService viewRegistrationService, ISnapshotService snapshotService) : base(eventHub)
+    public PlayerControlsViewModel(IEventHub eventHub, IViewRegistrationService viewRegistrationService, ISnapshotService snapshotService, IDispatcherHelper dispatcherHelper) : base(eventHub)
     {
         _viewRegistrationService = viewRegistrationService;
         _snapshotService = snapshotService;
+        _dispatcherHelper = dispatcherHelper;
         PlayCommand = new RelayCommand((_) => Play());
         PauseCommand = new RelayCommand((_) => Pause());
         StopCommand = new RelayCommand((_) => Stop());
@@ -91,12 +92,12 @@ public class PlayerControlsViewModel : EventBasedViewModel
         }
     }
 
-    private static void RunDelayed(Action action, int delay = 200)
+    private void RunDelayed(Action action, int delay = 200)
     {
         Task.Run(async () =>
         {
             await Task.Delay(delay);
-            DispatcherHelper.Invoke(action);
+            _dispatcherHelper.Invoke(action);
         });
     }
 
@@ -144,6 +145,7 @@ public class PlayerControlsViewModel : EventBasedViewModel
     public ICommand PauseCommand { get; }
     public ICommand PositionMouseOverCommand { get; }
 
+    private readonly IDispatcherHelper _dispatcherHelper;
     private readonly IViewRegistrationService _viewRegistrationService;
     private readonly ISnapshotService _snapshotService;
 

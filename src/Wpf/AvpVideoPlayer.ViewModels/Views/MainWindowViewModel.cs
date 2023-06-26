@@ -63,7 +63,6 @@ public class MainWindowViewModel : EventBasedViewModel
 
     private void OnFullScreen(FullScreenEvent e)
     {
-        this.Log($"MainWindowViewModel::OnFullScreen {nameof(e.IsFullScreen)}={e.IsFullScreen}, local={IsFullscreen}");
         if (e.IsFullScreen != IsFullscreen)
         {
             if (e.Data)

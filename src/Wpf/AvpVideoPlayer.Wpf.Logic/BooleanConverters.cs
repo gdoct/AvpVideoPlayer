@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace AvpVideoPlayer.Utility;
+namespace AvpVideoPlayer.Wpf.Logic;
 
 public sealed class BoolToVisibilityConverter : BooleanConverter<Visibility> { public BoolToVisibilityConverter() : base(Visibility.Visible, Visibility.Collapsed) { } }
 public class BoolToStringConverter : BooleanConverter<string> { }

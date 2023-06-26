@@ -1,5 +1,4 @@
-﻿using AvpVideoPlayer.Utility;
-using static AvpVideoPlayer.Utility.M3UParser;
+﻿using AvpVideoPlayer.Api;
 using System.Collections.Generic;
 using System.IO;
 

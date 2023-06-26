@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace AvpVideoPlayer.Utility;
+namespace AvpVideoPlayer.Wpf.Logic;
 
 /// <summary>
 /// class to add sorting to the listview control
@@ -37,11 +37,11 @@ public static class GridViewSort
                     {
                         if (e.OldValue != null && e.NewValue == null)
                         {
-                            listView.RemoveHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                            listView.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
                         }
                         if (e.OldValue == null && e.NewValue != null)
                         {
-                            listView.AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                            listView.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
                         }
                     }
                 }
@@ -74,11 +74,11 @@ public static class GridViewSort
                         bool newValue = (bool)e.NewValue;
                         if (oldValue && !newValue)
                         {
-                            listView.RemoveHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                            listView.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
                         }
                         if (!oldValue && newValue)
                         {
-                            listView.AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                            listView.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
                         }
                     }
                 }

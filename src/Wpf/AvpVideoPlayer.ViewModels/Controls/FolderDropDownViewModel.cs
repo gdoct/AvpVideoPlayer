@@ -1,4 +1,5 @@
-﻿using AvpVideoPlayer.Utility;
+﻿using AvpVideoPlayer.Api;
+using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.ViewModels.IO;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,14 @@ public class FolderDropDownViewModel : INotifyPropertyChanged
     private bool _loading = false;
 
     private FolderViewModel? _selectedFolderItem;
+    private readonly IDispatcherHelper _dispatcherHelper;
+
     public FolderViewModel? SelectedFolderItem { get => _selectedFolderItem; set => SetProperty(ref _selectedFolderItem, value); }
     public event EventHandler<string>? SelectedFolderChanged;
 
-    public FolderDropDownViewModel()
+    public FolderDropDownViewModel(IDispatcherHelper dispatcherHelper)
     {
+        _dispatcherHelper = dispatcherHelper;
     }
 
     public ObservableCollection<FolderViewModel> Folders { get; } = new ObservableCollection<FolderViewModel>();
@@ -32,7 +36,7 @@ public class FolderDropDownViewModel : INotifyPropertyChanged
             if (_loading) return;
             if (_currentPath == value) return;
             _loading = true;
-            DispatcherHelper.Invoke(() =>
+            _dispatcherHelper.Invoke(() =>
             {
                 SetProperty(ref _currentPath, value);
                 LoadFolder();

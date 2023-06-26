@@ -21,20 +21,23 @@ public class MainWindowViewModelTests
         var ts = new Mock<ITaggingService>();
         ts.Setup(ts => ts.GetTags()).Returns(new List<string>());
         var eh = new Mock<IEventHub>();
+        var dh = Mock.Of<IDispatcherHelper>();
         eh.Setup(eh => eh.Events).Returns(Mock.Of<IObservable<EventBase>>());
         var lv = new LibraryViewModel(Mock.Of<IUserConfiguration>(),
                                       eh.Object,
                                       Mock.Of<IDialogService>(),
+                                      dh,
                                       new SearchBoxViewModel(eh.Object),
-                                      new FolderDropDownViewModel(),
-                                      new FileListViewModel(eh.Object, md.Object, new M3UService()));
+                                      new FolderDropDownViewModel(dh),
+                                      new FileListViewModel(eh.Object, md.Object, new M3UService(), dh));
         var vpv = new VideoPlayerViewModel(eh.Object,
-                                           new PlayerControlsViewModel(eh.Object, Mock.Of<IViewRegistrationService>(),
-                                           Mock.Of<ISnapshotService>()),
+                                           new PlayerControlsViewModel(eh.Object, Mock.Of<IViewRegistrationService>(), Mock.Of<ISnapshotService>(), dh),
                                            Mock.Of<IViewRegistrationService>(),
                                            Mock.Of<IUserConfiguration>(),
                                            Mock.Of<IMetaDataService>(),
-                                           ts.Object);
+                                           ts.Object,
+                                           dh,
+                                           Mock.Of<IIdleTimeDetector>());
         _testClass = new MainWindowViewModel(eh.Object, lv, vpv);
     }
 
@@ -44,21 +47,24 @@ public class MainWindowViewModelTests
         var md = new Mock<IMetaDataService>();
         var ts = new Mock<ITaggingService>();
         ts.Setup(ts => ts.GetTags()).Returns(new List<string>());
+        var dh = Mock.Of<IDispatcherHelper>();
         var eh = new Mock<IEventHub>();
         eh.Setup(eh => eh.Events).Returns(Mock.Of<IObservable<EventBase>>());
         var lv = new LibraryViewModel(Mock.Of<IUserConfiguration>(),
                                       eh.Object,
                                       Mock.Of<IDialogService>(),
+                                      dh,
                                       new SearchBoxViewModel(eh.Object),
-                                      new FolderDropDownViewModel(),
-                                      new FileListViewModel(eh.Object, md.Object, new M3UService()));
+                                      new FolderDropDownViewModel(dh),
+                                      new FileListViewModel(eh.Object, md.Object, new M3UService(), dh));
         var vpv = new VideoPlayerViewModel(eh.Object,
-                                           new PlayerControlsViewModel(eh.Object, Mock.Of<IViewRegistrationService>(),
-                                           Mock.Of<ISnapshotService>()),
+                                           new PlayerControlsViewModel(eh.Object, Mock.Of<IViewRegistrationService>(), Mock.Of<ISnapshotService>(), dh),
                                            Mock.Of<IViewRegistrationService>(),
                                            Mock.Of<IUserConfiguration>(),
                                            Mock.Of<IMetaDataService>(),
-                                           ts.Object);
+                                           ts.Object, 
+                                           dh,
+                                           Mock.Of<IIdleTimeDetector>());
         var instance = new MainWindowViewModel(eh.Object, lv, vpv);
         Assert.NotNull(instance);
     }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
 namespace AvpVideoPlayer.Utility;
 
@@ -25,17 +26,7 @@ public class RelayCommand : ICommand
         }
     }
 
-    public event EventHandler? CanExecuteChanged
-    {
-        add
-        {
-            CommandManager.RequerySuggested += value;
-        }
-        remove
-        {
-            CommandManager.RequerySuggested -= value;
-        }
-    }
+    public event EventHandler? CanExecuteChanged;
 
     public void Execute(object? parameter)
     {

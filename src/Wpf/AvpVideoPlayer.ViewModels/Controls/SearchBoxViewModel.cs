@@ -1,8 +1,7 @@
 ﻿using AvpVideoPlayer.Api;
-using AvpVideoPlayer.ViewModels.Events;
 using AvpVideoPlayer.Utility;
+using AvpVideoPlayer.ViewModels.Events;
 using System.Windows.Input;
-using System;
 
 namespace AvpVideoPlayer.ViewModels.Controls;
 

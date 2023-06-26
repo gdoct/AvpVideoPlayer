@@ -1,6 +1,6 @@
 ﻿using AvpVideoPlayer.Api;
 
-namespace AvpVideoPlayer.Utility;
+namespace AvpVideoPlayer.Wpf.Logic;
 
 public class ViewRegistrationService : IViewRegistrationService
 {

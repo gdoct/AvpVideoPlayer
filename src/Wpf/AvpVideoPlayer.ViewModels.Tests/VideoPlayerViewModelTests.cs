@@ -16,32 +16,40 @@ public class VideoPlayerViewModelTests
 
     public VideoPlayerViewModelTests()
     {
+        var dh = Mock.Of<IDispatcherHelper>();
+        var itd = Mock.Of<IIdleTimeDetector>();
         var eh = new Mock<IEventHub>();
         var ts = new Mock<ITaggingService>();
         ts.Setup(ts => ts.GetTags()).Returns(new List<string>());
         eh.Setup(eh => eh.Events).Returns(Mock.Of<IObservable<EventBase>>());
-        _testClass = new VideoPlayerViewModel(eh.Object, new PlayerControlsViewModel(eh.Object,
-                                                                                     Mock.Of<IViewRegistrationService>(),
-                                           Mock.Of<ISnapshotService>()), Mock.Of<IViewRegistrationService>(),
-                                           Mock.Of<IUserConfiguration>(),
-                                           Mock.Of<IMetaDataService>(),
-                                           ts.Object);
+        _testClass = new VideoPlayerViewModel(eh.Object,
+                                              new PlayerControlsViewModel(eh.Object, Mock.Of<IViewRegistrationService>(), Mock.Of<ISnapshotService>(), dh),
+                                              Mock.Of<IViewRegistrationService>(),
+                                              Mock.Of<IUserConfiguration>(),
+                                              Mock.Of<IMetaDataService>(),
+                                              ts.Object,
+                                              dh,
+                                              itd);
     }
 
     [Fact]
     public void CanConstruct()
     {
+        var dh = Mock.Of<IDispatcherHelper>();
+        var itd = Mock.Of<IIdleTimeDetector>();
         var eh = new Mock<IEventHub>();
         var ts = new Mock<ITaggingService>();
         ts.Setup(ts => ts.GetTags()).Returns(new List<string>());
         eh.Setup(eh => eh.Events).Returns(Mock.Of<IObservable<EventBase>>());
         var instance = new VideoPlayerViewModel(eh.Object,
                                                 new PlayerControlsViewModel(eh.Object, Mock.Of<IViewRegistrationService>(),
-                                           Mock.Of<ISnapshotService>()),
+                                           Mock.Of<ISnapshotService>(), dh),
                                                 Mock.Of<IViewRegistrationService>(),
                                                 Mock.Of<IUserConfiguration>(),
                                            Mock.Of<IMetaDataService>(),
-                                           ts.Object);
+                                           ts.Object,
+                                              dh,
+                                              itd);
         Assert.NotNull(instance);
     }
 

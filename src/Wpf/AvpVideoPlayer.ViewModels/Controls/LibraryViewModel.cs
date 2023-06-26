@@ -23,8 +23,15 @@ public class LibraryViewModel : EventBasedViewModel
     private bool _fullscreen = false;
     private readonly FolderDropDownViewModel _folderDropDownViewModel;
     private readonly FileListViewModel _fileListViewModel;
+    private readonly IDispatcherHelper _dispatcherHelper;
 
-    public LibraryViewModel(IUserConfiguration userSettingsService, IEventHub eventHub, IDialogService dialogService, SearchBoxViewModel searchBoxViewModel, FolderDropDownViewModel folderDropDownViewModel, FileListViewModel fileListViewModel) : base(eventHub)
+    public LibraryViewModel(IUserConfiguration userSettingsService,
+                            IEventHub eventHub,
+                            IDialogService dialogService,
+                            IDispatcherHelper dispatcherHelper,
+                            SearchBoxViewModel searchBoxViewModel,
+                            FolderDropDownViewModel folderDropDownViewModel,
+                            FileListViewModel fileListViewModel) : base(eventHub)
     {
         _userSettingsService = userSettingsService;
         _dialogService = dialogService;
@@ -33,6 +40,7 @@ public class LibraryViewModel : EventBasedViewModel
         _folderDropDownViewModel.SelectedFolderChanged += FolderDropDownViewModel_PathChanged;
         _fileListViewModel = fileListViewModel;
         _fileListViewModel.SelectedFileChanged += OnSelectedFileChanged;
+        _dispatcherHelper = dispatcherHelper;
         RestoreUserPreferences();
         Subscribe<DeleteCurrentVideoEvent>(OnDeleteCurrentVideo);
         Subscribe<PlayStateChangedEvent>(UpdatePlayState);
@@ -131,13 +139,13 @@ public class LibraryViewModel : EventBasedViewModel
         {
             Publish(new PathChangedEvent(file.Path));
             _userSettingsService.LastPath = file.Path;
-            DispatcherHelper.Invoke(() =>
+            _dispatcherHelper.Invoke(() =>
                 LoadFolderContents(new DirectoryInfo(file.Path)));
 
         }
         else if (file is PlayListViewModel || file is VideoStreamCategoryViewModel)
         {
-            DispatcherHelper.Invoke(() =>
+            _dispatcherHelper.Invoke(() =>
                 LoadPlaylistContents(file));
         }
         else if (file is VideoFileViewModel)

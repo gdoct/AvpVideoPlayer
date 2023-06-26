@@ -5,12 +5,11 @@
 		<RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<UseWPF>true</UseWPF>
+		<UseWpf>true</UseWpf>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AvpVideoPlayer.Api\AvpVideoPlayer.Api.csproj" />
-		<ProjectReference Include="..\AvpVideoPlayer.Events\AvpVideoPlayer.EventHub.csproj" />
+	  <ProjectReference Include="..\AvpVideoPlayer.Api\AvpVideoPlayer.Api.csproj" />
 	</ItemGroup>
 
 </Project>

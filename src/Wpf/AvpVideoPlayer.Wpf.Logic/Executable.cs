@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
-namespace AvpVideoPlayer.Utility;
+namespace AvpVideoPlayer.Wpf.Logic;
 
 [ExcludeFromCodeCoverage]
 public static class Executable

@@ -24,10 +24,12 @@ public class FileListViewModel : EventBasedViewModel
     private string? _path;
     private string? _filter;
     private FileListListViewItem? _selectedItem = null;
-    private List<M3UParser.ChannelInfo> _channels = new();
+    private List<ChannelInfo> _channels = new();
     private string _playlist = string.Empty;
+    private readonly IDispatcherHelper _dispatcherHelper;
 
-    public FileListViewModel(IEventHub eventHub, IMetaDataService metaDataService, IM3UService m3uservice) : base(eventHub)
+    public FileListViewModel(IEventHub eventHub, IMetaDataService metaDataService, IM3UService m3uservice,
+                            IDispatcherHelper dispatcherHelper) : base(eventHub)
     {
         listviewCollection = new CollectionViewSource
         {
@@ -37,6 +39,7 @@ public class FileListViewModel : EventBasedViewModel
         _metaDataService = metaDataService ?? throw new ArgumentNullException(nameof(metaDataService));
         _m3uservice = m3uservice ?? throw new ArgumentNullException(nameof(m3uservice));
         _fileSystemWatcher = new FileSystemWatcher() { IncludeSubdirectories = true };
+        _dispatcherHelper = dispatcherHelper;
         _fileSystemWatcher.Changed += FileSystemWatcher_Changed;
         _fileSystemWatcher.Renamed += FileSystemWatcher_Changed;
         _fileSystemWatcher.Created += FileSystemWatcher_Changed;
@@ -137,7 +140,7 @@ public class FileListViewModel : EventBasedViewModel
 
     private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
     {
-        DispatcherHelper.Invoke(() => Refresh(false));
+        _dispatcherHelper.Invoke(() => Refresh(false));
     }
 
     private void ListView_Filter(object sender, FilterEventArgs e)
@@ -200,7 +203,7 @@ public class FileListViewModel : EventBasedViewModel
             {
                 _fileSystemWatcher.EnableRaisingEvents = false;
             }
-            DispatcherHelper.Invoke(() => LoadContentsIntoListView(value, true));
+            _dispatcherHelper.Invoke(() => LoadContentsIntoListView(value, true));
         }
     }
 

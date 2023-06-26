@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace AvpVideoPlayer.Utility;
+namespace AvpVideoPlayer.Wpf.Logic;
 public static class VisualChildExtensions
 {
     public static IEnumerable<T> FindVisualChildren<T>(this DependencyObject depObj)
@@ -28,6 +28,6 @@ public static class VisualChildExtensions
     }
 
     public static childItem? FindVisualChild<childItem>(this DependencyObject obj)
-        where childItem : DependencyObject => 
+        where childItem : DependencyObject =>
         obj.FindVisualChildren<childItem>().FirstOrDefault();
 }

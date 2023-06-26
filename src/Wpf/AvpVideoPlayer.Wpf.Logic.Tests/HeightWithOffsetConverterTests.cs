@@ -1,8 +1,9 @@
 namespace AvpVideoPlayer.Utility.Tests;
 
+using AvpVideoPlayer.Wpf.Logic;
 using System;
-using Xunit;
 using System.Globalization;
+using Xunit;
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
 #pragma warning disable CS8604 // Possible null reference argument.
 

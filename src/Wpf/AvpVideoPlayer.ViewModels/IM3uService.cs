@@ -1,9 +1,9 @@
-﻿using AvpVideoPlayer.Utility;
+﻿using AvpVideoPlayer.Api;
 using System.Collections.Generic;
 
 namespace AvpVideoPlayer.ViewModels;
 
 public interface IM3UService
 {
-    List<M3UParser.ChannelInfo> ParsePlaylist(string path);
+    List<ChannelInfo> ParsePlaylist(string path);
 }

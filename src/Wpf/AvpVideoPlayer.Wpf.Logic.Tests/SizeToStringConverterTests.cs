@@ -1,8 +1,9 @@
 namespace AvpVideoPlayer.Utility.Tests;
 #pragma warning disable CS8604 // Possible null reference argument.
+using AvpVideoPlayer.Wpf.Logic;
 using System;
-using Xunit;
 using System.Globalization;
+using Xunit;
 
 public class SizeToStringConverterTests
 {

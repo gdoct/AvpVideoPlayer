@@ -1,10 +1,11 @@
 namespace AvpVideoPlayer.Utility.Tests;
+
+using AvpVideoPlayer.Wpf.Logic;
 #pragma warning disable CS8604 // Possible null reference argument.
-using T = System.String;
 using System;
-using Xunit;
-using AvpVideoPlayer.Utility;
 using System.Globalization;
+using Xunit;
+using T = System.String;
 
 public class BoolToVisibilityConverterTests
 {

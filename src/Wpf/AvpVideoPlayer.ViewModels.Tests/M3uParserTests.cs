@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace AvpVideoPlayer.Utility.Tests
+namespace AvpVideoPlayer.ViewModels.Tests
 {
     public class M3uParserTests
     {

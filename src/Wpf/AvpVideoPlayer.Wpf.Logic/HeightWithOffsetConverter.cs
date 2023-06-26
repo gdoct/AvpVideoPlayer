@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
 
-namespace AvpVideoPlayer.Utility;
+namespace AvpVideoPlayer.Wpf.Logic;
 
 public class HeightWithOffsetConverter : IValueConverter
 {
