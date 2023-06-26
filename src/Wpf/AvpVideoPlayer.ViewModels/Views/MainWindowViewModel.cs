@@ -4,6 +4,7 @@ using AvpVideoPlayer.Utility;
 using AvpVideoPlayer.ViewModels.Controls;
 using AvpVideoPlayer.ViewModels.Events;
 using Microsoft.Xaml.Behaviors.Core;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -53,12 +54,14 @@ public class MainWindowViewModel : EventBasedViewModel
 
     public WindowStyle WindowStyle { get => _windowStyle; set => SetProperty(ref _windowStyle, value); }
 
-    private static int ConvertWindowToFontSize(Size size)
+    internal static int ConvertWindowToFontSize(Size size)
     {
-        if (size.Width < 400 || size.Height < 400) return 12;
-        if (size.Width < 1000 || size.Height < 1000) return 30;
-        if (size.Width < 1500 || size.Height < 1500) return 48;
-        return 64;
+        var q = ((size.Width / size.Height < 1.777777) ?
+            size.Height : size.Width) / 40d;
+        // find aspect ratio constraining side
+        // assume 16:9 which is ok for subtitiles
+        return
+        (int)Math.Min(64, Math.Max(8, q));
     }
 
     private void OnFullScreen(FullScreenEvent e)

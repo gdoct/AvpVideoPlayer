@@ -80,4 +80,16 @@ public class MainWindowViewModelTests
     {
         _testClass.CheckProperty(x => x.WindowState, WindowState.Minimized, WindowState.Maximized);
     }
+
+    [Theory]
+    [InlineData(640, 399, 9)]
+    [InlineData(1024, 768, 19)]
+    [InlineData(1920, 1080, 48)]
+    [InlineData(3840, 2160, 64)]
+    public void SetsCorrectFontSize(int width, int height, int expected)
+    {
+        var sz = new Size(width, height);
+        var result = MainWindowViewModel.ConvertWindowToFontSize(sz);
+        Assert.Equal(expected, result);
+    }
 }
