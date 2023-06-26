@@ -55,9 +55,7 @@ public class MainWindowViewModel : EventBasedViewModel
     public WindowStyle WindowStyle { get => _windowStyle; set => SetProperty(ref _windowStyle, value); }
 
     internal static int ConvertWindowToFontSize(Size size) =>
-        // find aspect ratio constraining side
-        // assume 16:9 which is ok for subtitiles
-        (int)Math.Min(64, Math.Max(8, ((size.Width / size.Height < 1.777777) ?
+        (int) Math.Min(64, Math.Max(8, ((size.Width / size.Height < 1.777777) ?
             size.Height : size.Width) / 40d));
 
     private void OnFullScreen(FullScreenEvent e)
