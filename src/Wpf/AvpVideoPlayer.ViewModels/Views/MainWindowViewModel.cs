@@ -54,6 +54,12 @@ public class MainWindowViewModel : EventBasedViewModel
 
     public WindowStyle WindowStyle { get => _windowStyle; set => SetProperty(ref _windowStyle, value); }
 
+    /// <summary>
+    /// Compute the size of subtitles given a window size
+    /// Assumes 16:9 resolution for displaying subtitles
+    /// </summary>
+    /// <param name="size">a valid size of a window</param>
+    /// <returns>the optimal font size</returns>
     internal static int ConvertWindowToFontSize(Size size) =>
         (int) Math.Min(64, Math.Max(8, ((size.Width / size.Height < 1.777777) ?
             size.Height : size.Width) / 40d));
