@@ -14,7 +14,7 @@ public class LibraryManagerViewModel : BaseViewModel
     {
         _context = context;
         PurgeCommand = new ActionCommand(Purge);
-        BrowseExportPathCommand = new ActionCommand(BrowseExportPath);
+        BrowseExportPathCommand = new ActionCommand(() => { });
         ExportPathCommand = new ActionCommand(ExportByTag);
         Tags = new(new TaggingService(_context).GetTags());
     }
@@ -72,15 +72,6 @@ public class LibraryManagerViewModel : BaseViewModel
         }
 
         StatusMessage = $"Processed: {processed}/{count}, duplicates: {duplicates}";
-    }
-
-    private void BrowseExportPath()
-    {
-        var path = Utility.FolderBrowserDialog.ShowDialog("Select export folder", ExportPath, IntPtr.Zero);
-        if (path != null)
-        {
-            ExportPath = path;
-        }
     }
 
 

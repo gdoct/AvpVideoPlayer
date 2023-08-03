@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using AvpVideoPlayer.Utility;
+using AvpVideoPlayer.Wpf.Logic;
 
 namespace AvpVideoPlayer.Wpf.Views;
-    
+
 public class CustomComboBox : ComboBox
 {
     public DataTemplate SelectionBoxTemplate

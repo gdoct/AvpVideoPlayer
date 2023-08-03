@@ -1,5 +1,6 @@
 namespace AvpVideoPlayer.ViewModels.Tests;
 using AvpVideoPlayer.Api;
+using AvpVideoPlayer.ViewModels.IO;
 using Xunit;
 
 public class FiletypeViewModelTests

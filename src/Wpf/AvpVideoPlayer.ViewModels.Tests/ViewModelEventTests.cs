@@ -1,11 +1,11 @@
 ﻿using AvpVideoPlayer.Api;
 using AvpVideoPlayer.ViewModels.Events;
+using AvpVideoPlayer.ViewModels.IO;
 using System;
-using System.Collections.Generic;
-using Xunit;
-using AvpVideoPlayer.EventHub;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reactive.Linq;
+using Xunit;
 
 namespace AvpVideoPlayer.ViewModels.Tests;
 

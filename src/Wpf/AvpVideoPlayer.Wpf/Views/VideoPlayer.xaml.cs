@@ -1,5 +1,5 @@
-﻿using AvpVideoPlayer.Utility;
-using AvpVideoPlayer.ViewModels;
+﻿using AvpVideoPlayer.ViewModels.Views;
+using AvpVideoPlayer.Wpf.Logic;
 using System.Windows.Controls;
 
 namespace AvpVideoPlayer.Wpf.Views;

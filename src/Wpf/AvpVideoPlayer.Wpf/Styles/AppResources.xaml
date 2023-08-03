@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-                    xmlns:wpf="clr-namespace:AvpVideoPlayer.Utility;assembly=AvpVideoPlayer.Utility">
+                    xmlns:wpf="clr-namespace:AvpVideoPlayer.Wpf.Logic;assembly=AvpVideoPlayer.Wpf.Logic"
+>
     <wpf:BoolToVisibilityConverter x:Key="BooleanToInvisibilityConverter" 
                                        ValueWhenTrue="Collapsed" 
                                        ValueWhenFalse="Visible" />

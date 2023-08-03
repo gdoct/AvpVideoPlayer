@@ -26,7 +26,6 @@
 	<ProjectReference Include="..\AvpVideoPlayer.Localization\AvpVideoPlayer.Localization.csproj" />
 	<ProjectReference Include="..\AvpVideoPlayer.MetaData\AvpVideoPlayer.MetaData.csproj" />
 	<ProjectReference Include="..\AvpVideoPlayer.Video\AvpVideoPlayer.Video.csproj" />
-	<ProjectReference Include="..\AvpVideoPlayer.Utility\AvpVideoPlayer.Utility.csproj" />
   </ItemGroup>
 
 </Project>

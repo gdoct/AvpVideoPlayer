@@ -5,6 +5,7 @@ using Moq;
 using Xunit;
 using System;
 using AvpVideoPlayer.Video.Snapshot;
+using AvpVideoPlayer.ViewModels.Controls;
 
 public class PlayerControlsViewModelTests
 {
@@ -15,7 +16,7 @@ public class PlayerControlsViewModelTests
         var eh = new Mock<IEventHub>();
         eh.Setup(eh => eh.Events).Returns(Mock.Of<IObservable<EventBase>>());
         _testClass = new PlayerControlsViewModel(eh.Object, Mock.Of <IViewRegistrationService>(),
-                                           Mock.Of<ISnapshotService>());
+                                           Mock.Of<ISnapshotService>(), Mock.Of<IDispatcherHelper>());
     }
 
     [Fact]
@@ -24,7 +25,7 @@ public class PlayerControlsViewModelTests
         var eh = new Mock<IEventHub>();
         eh.Setup(eh => eh.Events).Returns(Mock.Of<IObservable<EventBase>>());
         var instance = new PlayerControlsViewModel(eh.Object, Mock.Of<IViewRegistrationService>(),
-                                           Mock.Of<ISnapshotService>());
+                                           Mock.Of<ISnapshotService>(), Mock.Of<IDispatcherHelper>());
         Assert.NotNull(instance);
     }
 

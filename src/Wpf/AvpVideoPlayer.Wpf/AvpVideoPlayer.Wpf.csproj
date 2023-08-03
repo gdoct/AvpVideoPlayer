@@ -49,7 +49,7 @@
 		<ProjectReference Include="..\AvpVideoPlayer.Configuration\AvpVideoPlayer.Configuration.csproj" />
 		<ProjectReference Include="..\AvpVideoPlayer.Localization\AvpVideoPlayer.Localization.csproj" />
 		<ProjectReference Include="..\AvpVideoPlayer.ViewModels\AvpVideoPlayer.ViewModels.csproj" />
-		<ProjectReference Include="..\AvpVideoPlayer.Utility\AvpVideoPlayer.Utility.csproj" />
+		<ProjectReference Include="..\AvpVideoPlayer.Wpf.Logic\AvpVideoPlayer.Wpf.Logic.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -113,10 +113,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Page Update="MainWindowBeta.xaml">
-			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</Page>
 		<Page Update="MainWindow.xaml">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Page>
