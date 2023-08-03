@@ -4,7 +4,7 @@ using AvpVideoPlayer.Subtitles.SubtitlesParser.Classes.Parsers;
 namespace AvpVideoPlayer.Subtitles;
 
 /// <inheritdoc cref="ISubtitleContext"/>
-internal class EmbeddedSubtitleContext
+internal class SubParserSubtitleContext
 {
     public static ISubtitleContext? ExtractEmbeddedSubtitle(SubtitleInfo subtitleInfo)
     {
