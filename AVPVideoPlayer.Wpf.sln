@@ -44,13 +44,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.MetaData", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.MetaData.Tests", "src\Wpf\AvpVideoPlayer.MetaData.Tests\AvpVideoPlayer.MetaData.Tests.csproj", "{900536E9-DAAC-4FB3-A906-FB7B38EE4468}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.MetaData", "src\Wpf\AvpVideoPlayer.MetaData\AvpVideoPlayer.MetaData.csproj", "{C2A19BF7-496E-40AD-B328-11B27919ED0A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.MetaData.Tests", "src\Wpf\AvpVideoPlayer.MetaData.Tests\AvpVideoPlayer.MetaData.Tests.csproj", "{900536E9-DAAC-4FB3-A906-FB7B38EE4468}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.Subtitles", "Src\AvpVideoPlayer.Subtitles\AvpVideoPlayer.Subtitles.csproj", "{2BB1C0B9-B3A7-4A25-B184-F20BBA0E2122}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.Subtitles.Tests", "Src\AvpVideoPlayer.Subtitles.Tests\AvpVideoPlayer.Subtitles.Tests.csproj", "{EC44BD0F-E5C0-47AB-AFF8-532295C620C2}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.Wpf.Logic", "src\Wpf\AvpVideoPlayer.Wpf.Logic\AvpVideoPlayer.Wpf.Logic.csproj", "{064E58D8-9481-4BA1-85E1-A95F1DA21EB0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvpVideoPlayer.Wpf.Logic.Tests", "src\Wpf\AvpVideoPlayer.Wpf.Logic.Tests\AvpVideoPlayer.Wpf.Logic.Tests.csproj", "{C194AE16-687E-4F57-8664-DB3631CAA192}"
