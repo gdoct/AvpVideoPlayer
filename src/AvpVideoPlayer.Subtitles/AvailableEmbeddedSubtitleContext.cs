@@ -35,7 +35,7 @@ internal class AvailableEmbeddedSubtitleContext : ISubtitleContext
             lock (_syncRoot)
             {
                 if (ActualContext != null) return;
-                var sub = EmbeddedSubtitleContext.ExtractEmbeddedSubtitle(SubtitleInfo);
+                var sub = SubParserSubtitleContext.ExtractEmbeddedSubtitle(SubtitleInfo);
                 ActualContext = sub;
             }
         });

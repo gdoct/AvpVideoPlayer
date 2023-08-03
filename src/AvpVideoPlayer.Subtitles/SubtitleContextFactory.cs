@@ -16,7 +16,7 @@ public class SubtitleContextFactory : ISubtitleContextFactory
 
     public IEnumerable<ISubtitleContext> FromVideofile(string filename)
     {
-        return EmbeddedSubtitleContext.ListEmbeddedSubtitles(filename)
+        return SubParserSubtitleContext.ListEmbeddedSubtitles(filename)
                                       .Select(s => new AvailableEmbeddedSubtitleContext(s));
     }
 
