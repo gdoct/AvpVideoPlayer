@@ -1,6 +1,6 @@
 ﻿namespace AvpVideoPlayer.Subtitles.Tests;
 
-public class EmbeddedSubtitleContextTests
+public class SubParserSubtitleContextTests
 {
 
     [Fact]
