@@ -1,5 +1,6 @@
 ﻿using System.IO;
-namespace AvpVideoPlayer.Video.Subtitles;
+
+namespace AvpVideoPlayer.Subtitles;
 
 public class SubtitleContextFactory : ISubtitleContextFactory
 {
@@ -15,7 +16,7 @@ public class SubtitleContextFactory : ISubtitleContextFactory
 
     public IEnumerable<ISubtitleContext> FromVideofile(string filename)
     {
-        return EmbeddedSubtitleContext.ListEmbeddedSubtitles(filename)
+        return SubParserSubtitleContext.ListEmbeddedSubtitles(filename)
                                       .Select(s => new AvailableEmbeddedSubtitleContext(s));
     }
 
@@ -23,5 +24,4 @@ public class SubtitleContextFactory : ISubtitleContextFactory
     {
         return new EmptySubtitleContext();
     }
-
 }

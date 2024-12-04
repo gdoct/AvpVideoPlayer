@@ -50,7 +50,7 @@ public class EventHub : IEventHub
             {
                 throw new ArgumentNullException(nameof(publishedEvent));
             }
-            Log(publishedEvent.ToString());
+           // Log(publishedEvent.ToString());
 
             _eventSource.OnNext(publishedEvent);
         }
@@ -60,8 +60,4 @@ public class EventHub : IEventHub
         }
     }
 
-    static void Log(string s)
-    {
-        System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:T}] {s}");
-    }
 }

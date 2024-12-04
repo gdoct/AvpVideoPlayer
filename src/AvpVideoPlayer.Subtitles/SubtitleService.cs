@@ -1,7 +1,7 @@
 ﻿using AvpVideoPlayer.Api;
 using System.IO;
 
-namespace AvpVideoPlayer.Video.Subtitles;
+namespace AvpVideoPlayer.Subtitles;
 
 public class SubtitleService
 {
@@ -33,7 +33,7 @@ public class SubtitleService
     /// <param name="filename"></param>
     public SubtitleInfo? AddSubtitlesFromFile(string? filename)
     {
-        if (string.IsNullOrWhiteSpace(filename) 
+        if (string.IsNullOrWhiteSpace(filename)
             || LoadedSubtitles.Keys.Any(k => k.VideoFilename == filename && k.Index == 0)
             || !File.Exists(filename))
         {

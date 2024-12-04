@@ -1,10 +1,9 @@
 ﻿using AvpVideoPlayer.Api;
-using SubtitlesParser.Classes;
-using SubtitlesParser.Classes.Parsers;
-using System.IO;
+using AvpVideoPlayer.Subtitles.SubtitlesParser.Classes;
+using AvpVideoPlayer.Subtitles.SubtitlesParser.Classes.Parsers;
 using System.Text.RegularExpressions;
 
-namespace AvpVideoPlayer.Video.Subtitles;
+namespace AvpVideoPlayer.Subtitles;
 
 /// <inheritdoc cref="ISubtitleContext"/>
 internal class FileSubtitleContext : ISubtitleContext

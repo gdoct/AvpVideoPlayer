@@ -30,7 +30,7 @@
     </i:Interaction.Triggers>
     <Grid Style="{StaticResource DarkGridStyle}" VerticalAlignment="Stretch" >
         <GroupBox Style="{StaticResource SlideOutMenuStyle}" Panel.ZIndex="2" >
-            <Border Background="DarkSlateGray" CornerRadius="5" BorderThickness="4" BorderBrush="{StaticResource LessDarkBackgroundBrush}">
+            <Border Background="LightGray" CornerRadius="5" BorderThickness="4" BorderBrush="{StaticResource LessDarkBackgroundBrush}">
                 <Border Margin="10 10 20 8">
                     <views:Library x:Name="Library" DataContext="{Binding LibraryViewModel}" />
                 </Border>

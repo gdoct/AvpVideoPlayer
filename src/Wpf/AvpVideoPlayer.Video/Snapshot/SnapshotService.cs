@@ -85,7 +85,6 @@ internal class SnapshotService : IDisposable, ISnapshotService
         }
         catch (Exception)
         {
-            this.Log("************ downloading thumbnails was cancelled");
         }
     }
 
@@ -118,13 +117,5 @@ internal class SnapshotService : IDisposable, ISnapshotService
         // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         Dispose(disposing: true);
         GC.SuppressFinalize(this);
-    }
-}
-
-static class Logger
-{
-    public static void Log(this object _, string s)
-    {
-        System.Diagnostics.Debug.WriteLine($"[{DateTime.Now:T}] {s}");
     }
 }
