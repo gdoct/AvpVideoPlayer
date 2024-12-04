@@ -72,7 +72,7 @@
             <Style x:Key="{x:Type GridViewColumnHeader}" TargetType="GridViewColumnHeader">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="Foreground" Value="{DynamicResource LightForegroundBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource DarkForegroundBrush}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="GridViewColumnHeader">
@@ -196,13 +196,13 @@
             </ControlTemplate>
 
             <ControlTemplate x:Key="ActivatedItem" TargetType="{x:Type ListViewItem}">
-                <StackPanel Background="{StaticResource LessDarkBackgroundBrush}">
+                <StackPanel Background="{StaticResource LightBackgroundBrush}">
                     <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
                 </StackPanel>
             </ControlTemplate>
 
             <ControlTemplate x:Key="SelectedItem" TargetType="{x:Type ListViewItem}">
-                <StackPanel Background="{StaticResource DarkBackgroundBrush}">
+                <StackPanel Background="{StaticResource LightBackgroundBrush}">
                     <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
                 </StackPanel>
             </ControlTemplate>
@@ -252,7 +252,7 @@
                                     utility:GridViewSort.PropertyName="File.LastWriteTime" >
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding Path=File.LastWriteTime, Mode=OneWay}" Background="Transparent" Foreground="{StaticResource LightForegroundBrush}" />
+                            <Label Content="{Binding Path=File.LastWriteTime, Mode=OneWay}" Background="Transparent" Foreground="{StaticResource DarkForegroundBrush}" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
@@ -261,7 +261,7 @@
                                     utility:GridViewSort.PropertyName="Tags">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding Path=Tags, Mode=OneWay}" Foreground="{StaticResource LightForegroundBrush}" Background="Transparent" />
+                            <Label Content="{Binding Path=Tags, Mode=OneWay}" Foreground="{StaticResource DarkForegroundBrush}" Background="Transparent" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
@@ -270,7 +270,7 @@
                                     utility:GridViewSort.PropertyName="File.Size">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding Path=File.Size, Mode=OneWay, Converter={StaticResource SizeToStringConverter}}" Foreground="{StaticResource LightForegroundBrush}" Background="Transparent" />
+                            <Label Content="{Binding Path=File.Size, Mode=OneWay, Converter={StaticResource SizeToStringConverter}}" Foreground="{StaticResource DarkForegroundBrush}" Background="Transparent" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>

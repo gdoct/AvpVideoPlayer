@@ -144,7 +144,7 @@
         <Setter Property="VerticalContentAlignment"
           Value="Center" />
         <Setter Property="Foreground"
-          Value="{DynamicResource LightForegroundBrush}" />
+          Value="{DynamicResource DarkForegroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="GridViewColumnHeader">

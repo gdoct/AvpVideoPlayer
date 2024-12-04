@@ -14,6 +14,6 @@
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
         <Image Width="24" Source="{Binding FileType, Converter={StaticResource FileTypeToIconConverter}}" Margin="0 -3" />
-        <TextBlock Text="{Binding Name}" Foreground="{StaticResource LightForegroundBrush}" Margin="4 3" />
+        <TextBlock Text="{Binding Name}" Foreground="{StaticResource DarkForegroundBrush}" Margin="4 3" />
     </StackPanel>
 </UserControl>

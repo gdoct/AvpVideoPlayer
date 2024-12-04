@@ -37,6 +37,7 @@ public class VideoPlayerViewModel : EventBasedViewModel
     private readonly PlayerControlsViewModel _playerControlsViewModel;
     private readonly IDispatcherHelper _dispatcherHelper;
     private readonly IIdleTimeDetector _idleTimeDetector;
+    private readonly DispatcherTimer _playTimer;
     private bool IsStream = false;
 
     public ICommand OnMouseMoveCommand { get; }
@@ -87,7 +88,8 @@ public class VideoPlayerViewModel : EventBasedViewModel
         if (null != Application.Current)
             Application.Current.Exit += (_, __) => { View?.Stop(); };
 
-        new DispatcherTimer().Tick += TimerTick;
+        _playTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500), IsEnabled = true };
+        _playTimer.Tick += TimerTick;
     }
 
     private void OnTagsChanged(TagsChangedEvent obj)

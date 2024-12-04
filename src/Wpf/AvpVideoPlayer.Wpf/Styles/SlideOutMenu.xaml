@@ -15,7 +15,7 @@
     <Storyboard x:Key="HidePanelStoryboard">
         <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" 
                                               Storyboard.TargetName="SlideOutArea" 
-                                              BeginTime="00:00:00" Duration="00:00:01">
+                                              BeginTime="00:00:01" Duration="00:00:05">
             <SplineThicknessKeyFrame KeyTime="00:00:00" Value="-25,-50,0,0" />
             <SplineThicknessKeyFrame KeyTime="00:00:00.5" Value="-25,-50,0,0" />
             <SplineThicknessKeyFrame KeyTime="00:00:00.7" Value="-225,-50,0,0" />
